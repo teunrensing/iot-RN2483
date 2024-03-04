@@ -54,7 +54,8 @@ Go to **Tools->Processor** and select **ATmega32U4 (3.3V, 8MHz)**.
  */
 
 // Libraries and includes
-#include <TheThingsNetwork.h>
+//#include <TheThingsNetwork.h>
+#include "TheThingsNetwork_HANIot.h"
 #include <CayenneLPP.h>         // include for Cayenne library
 #include "SparkFun_Si7021_Breakout_Library.h" // include for temperature and humidity sensor
 #include <Wire.h>
@@ -74,7 +75,7 @@ Go to **Tools->Processor** and select **ATmega32U4 (3.3V, 8MHz)**.
 const char *appEui = "70B3D57ED0013DED";
 const char *appKey = "2B8AF92FB36094A682B2CF99A4FC0CEF";
 
-TheThingsNetwork ttn(loraSerial, debugSerial, freqPlan);  // TTN object for LoRaWAN radio
+TheThingsNetwork_HANIoT ttn(loraSerial, debugSerial, freqPlan);  // TTN object for LoRaWAN radio
 //TheThingsNetwork ttn(loraSerial, debugSerial, freqPlan, 9);  // TTN object for LoRaWAN radio using SF9
 
 // Cayennel LPP
