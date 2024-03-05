@@ -54,8 +54,8 @@ Go to **Tools->Processor** and select **ATmega32U4 (3.3V, 8MHz)**.
  */
 
 // Libraries and includes
-#include <TheThingsNetwork.h>
-//#include "TheThingsNetwork_HANIot.h"
+//#include <TheThingsNetwork.h>
+#include "TheThingsNetwork.h"
 #include <CayenneLPP.h>         // include for Cayenne library
 #include "SparkFun_Si7021_Breakout_Library.h" // include for temperature and humidity sensor
 #include <Wire.h>
@@ -75,8 +75,8 @@ Go to **Tools->Processor** and select **ATmega32U4 (3.3V, 8MHz)**.
 const char *appEui = "0000000000000000";
 const char *appKey = "C30F1715DFA6B9F21C2DCB07AC65FF00";
 
-//TheThingsNetwor_Iot ttn(loraSerial, debugSerial, freqPlan);  // TTN object for LoRaWAN radio
-TheThingsNetwork ttn(loraSerial, debugSerial, freqPlan, 9);  // TTN object for LoRaWAN radio using SF9
+TheThingsNetwork ttn(loraSerial, debugSerial, freqPlan);  // TTN object for LoRaWAN radio
+//TheThingsNetwork ttn(loraSerial, debugSerial, freqPlan, 9);  // TTN object for LoRaWAN radio using SF9
 
 // Cayennel LPP
 #define APPLICATION_PORT_CAYENNE  99   ///< LoRaWAN port to which CayenneLPP packets shall be sent
@@ -123,7 +123,7 @@ Weather sensor;                  ///< temperature and humidity sensor
 float x,y,z;                      ///< Variables to hold acellerometer axis values.
 
 // Set up application specific
-#define REGULAR_INTERVAL  60000   ///< Regular transmission interval in ms
+#define REGULAR_INTERVAL  10000   ///< Regular transmission interval in ms
 
 #define INTERVAL_ROTARY_MASK 0x07 ///< Binary mask: 0000 0111
 #define INTERVAL_ROTARY_1 1       ///< 1 minute interval
@@ -131,10 +131,10 @@ float x,y,z;                      ///< Variables to hold acellerometer axis valu
 #define INTERVAL_ROTARY_3 3       ///< 15 minutes interval
 #define INTERVAL_ROTARY_4 4       ///< 60 minutes interval
 
-#define INTERVAL_1        60000   ///< 1 minute interval
-#define INTERVAL_2        300000  ///< 5 minutes interval
-#define INTERVAL_3        900000  ///< 15 minutes interval
-#define INTERVAL_4        3600000 ///< 60 minutes interval
+#define INTERVAL_1        10000   ///< 1 minute interval
+#define INTERVAL_2        10000  ///< 5 minutes interval
+#define INTERVAL_3        10000  ///< 15 minutes interval
+#define INTERVAL_4        10000 ///< 60 minutes interval
 
 uint32_t currentInterval = REGULAR_INTERVAL;
 uint32_t nextInterval    = REGULAR_INTERVAL;
