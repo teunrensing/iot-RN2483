@@ -404,53 +404,53 @@ uint16_t TheThingsNetwork::getVDD()
   return 0;
 }
 
-uint8_t TheThingsNetwork::getBW()
-{
-  if (readResponse(RADIO_TABLE, RADIO_TABLE, RADIO_GET_BW, buffer, sizeof(buffer)) > 0) {
-    return atoi(buffer);
-  }
-  return 0;
-}
+//uint8_t TheThingsNetwork::getBW()
+//{
+//  if (readResponse(RADIO_TABLE, RADIO_TABLE, RADIO_GET_BW, buffer, sizeof(buffer)) > 0) {
+//    return atoi(buffer);
+//  }
+//  return 0;
+//} removed
 
-uint8_t TheThingsNetwork::getCR()
-{
-  if (readResponse(RADIO_TABLE, RADIO_TABLE, RADIO_GET_CR, buffer, sizeof(buffer)) > 2) {
-    return atoi(buffer+2); // skip the first two chars "4/"
-  }
-  return 0;
-}
+//uint8_t TheThingsNetwork::getCR()
+//{
+//  if (readResponse(RADIO_TABLE, RADIO_TABLE, RADIO_GET_CR, buffer, sizeof(buffer)) > 2) {
+//    return atoi(buffer+2); // skip the first two chars "4/"
+//  }
+//  return 0;
+//} removed
 
-uint32_t TheThingsNetwork::getFrequency()
-{
-  if (readResponse(RADIO_TABLE, RADIO_TABLE, RADIO_GET_FREQ, buffer, sizeof(buffer)) > 0) {
-    return atol(buffer);
-  }
-  return 0;
-}
+//uint32_t TheThingsNetwork::getFrequency()
+//{
+//  if (readResponse(RADIO_TABLE, RADIO_TABLE, RADIO_GET_FREQ, buffer, sizeof(buffer)) > 0) {
+//    return atol(buffer);
+//  }
+//  return 0;
+//}
 
-uint32_t TheThingsNetwork::getFCU()
-{
-  if (readResponse(MAC_TABLE, MAC_GET_SET_TABLE, MAC_UPCTR, buffer, sizeof(buffer)) > 0) {
-    return strtoul(buffer, NULL, 10);
-  }
-  return 0;
-}
+//uint32_t TheThingsNetwork::getFCU()
+//{
+//  if (readResponse(MAC_TABLE, MAC_GET_SET_TABLE, MAC_UPCTR, buffer, sizeof(buffer)) > 0) {
+//    return strtoul(buffer, NULL, 10);
+//  }
+//  return 0;
+//} removed
 
-uint32_t TheThingsNetwork::getFCD()
-{
-  if (readResponse(MAC_TABLE, MAC_GET_SET_TABLE, MAC_DNCTR, buffer, sizeof(buffer)) > 0) {
-    return strtoul(buffer, NULL, 10);
-  }
-  return 0;
-}
+//uint32_t TheThingsNetwork::getFCD()
+//{
+//  if (readResponse(MAC_TABLE, MAC_GET_SET_TABLE, MAC_DNCTR, buffer, sizeof(buffer)) > 0) {
+//    return strtoul(buffer, NULL, 10);
+//  }
+//  return 0;
+//} removed
 
-uint32_t TheThingsNetwork::getWatchDogTimer()
-{
-  if (readResponse(RADIO_TABLE, RADIO_TABLE, RADIO_GET_WDT, buffer, sizeof(buffer)) > 0) {
-    return atol(buffer);
-  }
-  return 0;
-}
+//uint32_t TheThingsNetwork::getWatchDogTimer()
+//{
+//  if (readResponse(RADIO_TABLE, RADIO_TABLE, RADIO_GET_WDT, buffer, sizeof(buffer)) > 0) {
+//    return atol(buffer);
+//  }
+//  return 0;
+//} removed
 
 enum ttn_modem_status_t TheThingsNetwork::getStatus()
 {
@@ -464,45 +464,46 @@ enum ttn_modem_status_t TheThingsNetwork::getStatus()
   return TTN_MODEM_READ_ERR; // unable to read status
 }
 
-int8_t TheThingsNetwork::getPower()
-{
-  if (readResponse(RADIO_TABLE, RADIO_TABLE, RADIO_GET_PWR, buffer, sizeof(buffer)) > 0) {
-    return atoi(buffer);
-  }
-  return -128;
-}
+//int8_t TheThingsNetwork::getPower()
+//{
+//  if (readResponse(RADIO_TABLE, RADIO_TABLE, RADIO_GET_PWR, buffer, sizeof(buffer)) > 0) {
+//    return atoi(buffer);
+//  }
+//  return -128;
+//} removed
 
-int16_t TheThingsNetwork::getRSSI()
-{
-  if (readResponse(RADIO_TABLE, RADIO_TABLE, RADIO_GET_RSSI, buffer, sizeof(buffer)) > 0) {
-    return atoi(buffer);
-  }
-  return -255;
-}
+//int16_t TheThingsNetwork::getRSSI()
+//{
+//  if (readResponse(RADIO_TABLE, RADIO_TABLE, RADIO_GET_RSSI, buffer, sizeof(buffer)) > 0) {
+//    ;
+//  }
+//  return -255;
+//} removed
 
-int8_t TheThingsNetwork::getSNR()
-{
-  if (readResponse(RADIO_TABLE, RADIO_TABLE, RADIO_GET_SNR, buffer, sizeof(buffer)) > 0) {
-    return atoi(buffer);
-  }
-  return -128;
-}
 
-int8_t TheThingsNetwork::getDR()
-{
-  if (readResponse(MAC_TABLE, MAC_GET_SET_TABLE, MAC_DR, buffer, sizeof(buffer))){
-    return atoi(buffer);
-  }
-  return -1;
-}
+//int8_t TheThingsNetwork::getSNR()
+//{
+//  if (readResponse(RADIO_TABLE, RADIO_TABLE, RADIO_GET_SNR, buffer, sizeof(buffer)) > 0) {
+//    return atoi(buffer);
+//  }
+//  return -128;
+//} removed
 
-int8_t TheThingsNetwork::getPowerIndex()
-{
-  if (readResponse(MAC_TABLE, MAC_GET_SET_TABLE, MAC_PWRIDX, buffer, sizeof(buffer)) > 0) {
-    return atoi(buffer);
-  }
-  return -1;
-}
+//int8_t TheThingsNetwork::getDR()
+//{
+//  if (readResponse(MAC_TABLE, MAC_GET_SET_TABLE, MAC_DR, buffer, sizeof(buffer))){
+//    return atoi(buffer);
+//  }
+//  return -1;
+//} removed
+
+//int8_t TheThingsNetwork::getPowerIndex()
+//{
+//  if (readResponse(MAC_TABLE, MAC_GET_SET_TABLE, MAC_PWRIDX, buffer, sizeof(buffer)) > 0) {
+//    return atoi(buffer);
+//  }
+//  return -1;
+//} removed
 
 bool TheThingsNetwork::getChannelStatus (uint8_t channel)
 {
@@ -992,205 +993,216 @@ void TheThingsNetwork::configureEU868()
   sendMacSet(MAC_PWRIDX, TTN_PWRIDX_EU868);
 }
 
-void TheThingsNetwork::configureUS915(uint8_t fsb)
-{
-  uint8_t ch;
-  uint8_t chLow = fsb > 0 ? (fsb - 1) * 8 : 0;
-  uint8_t chHigh = fsb > 0 ? chLow + 7 : 71;
-  uint8_t ch500 = fsb + 63;
-  for (ch = 0; ch < 72; ch++)
-  {
-    if (ch == ch500 || (ch <= chHigh && ch >= chLow))
-    {
-      setChannelStatus(ch, true);
-      if (ch < 63)
-      {
-        sendChSet(MAC_CHANNEL_DRRANGE, ch, "0 3");
-      }
-    }
-    else
-    {
-    	setChannelStatus(ch, false);
-    }
-  }
-  sendMacSet(MAC_PWRIDX, TTN_PWRIDX_US915);
-}
+//void TheThingsNetwork::configureUS915(uint8_t fsb)
+//{
+//  uint8_t ch;
+//  uint8_t chLow = fsb > 0 ? (fsb - 1) * 8 : 0;
+//  uint8_t chHigh = fsb > 0 ? chLow + 7 : 71;
+//  uint8_t ch500 = fsb + 63;
+//  for (ch = 0; ch < 72; ch++)
+//  {
+//    if (ch == ch500 || (ch <= chHigh && ch >= chLow))
+//    {
+//      setChannelStatus(ch, true);
+//      if (ch < 63)
+//      {
+//        sendChSet(MAC_CHANNEL_DRRANGE, ch, "0 3");
+//      }
+//    }
+//    else
+//    {
+//    	setChannelStatus(ch, false);
+//    }
+//  }
+//  sendMacSet(MAC_PWRIDX, TTN_PWRIDX_US915);
+//} // region not EU
 
-void TheThingsNetwork::configureAU915(uint8_t fsb)
-{
-  uint8_t ch;
-  uint8_t chLow = fsb > 0 ? (fsb - 1) * 8 : 0;
-  uint8_t chHigh = fsb > 0 ? chLow + 7 : 71;
-  uint8_t ch500 = fsb + 63;
-  for (ch = 0; ch < 72; ch++)
-  {
-    if (ch == ch500 || (ch <= chHigh && ch >= chLow))
-    {
-      setChannelStatus(ch, true);
-      if (ch < 63)
-      {
-        sendChSet(MAC_CHANNEL_DRRANGE, ch, "0 3");
-      }
-    }
-    else
-    {
-    	setChannelStatus(ch, false);
-    }
-  }
-  sendMacSet(MAC_PWRIDX, TTN_PWRIDX_AU915);
-}
+//void TheThingsNetwork::configureAU915(uint8_t fsb)
+//{
+//  uint8_t ch;
+//  uint8_t chLow = fsb > 0 ? (fsb - 1) * 8 : 0;
+//  uint8_t chHigh = fsb > 0 ? chLow + 7 : 71;
+//  uint8_t ch500 = fsb + 63;
+//  for (ch = 0; ch < 72; ch++)
+//  {
+//    if (ch == ch500 || (ch <= chHigh && ch >= chLow))
+//    {
+//      setChannelStatus(ch, true);
+//      if (ch < 63)
+//      {
+//        sendChSet(MAC_CHANNEL_DRRANGE, ch, "0 3");
+//      }
+//    }
+//    else
+//    {
+//    	setChannelStatus(ch, false);
+//    }
+//  }
+//  sendMacSet(MAC_PWRIDX, TTN_PWRIDX_AU915);
+//} // region not EU
 
-void TheThingsNetwork::configureAS920_923()
-{
-  /* RN2903AS 1.0.3rc9 defaults
-   * CH0 = 923.2MHz
-   * CH1 = 923.4MHz
-   */
-  setADR(false); // TODO: remove when ADR is implemented for this plan
-  sendMacSet(MAC_RX2, 2, 923200000);
+//void TheThingsNetwork::configureAS920_923()
+//{
+//  /* RN2903AS 1.0.3rc9 defaults
+//   * CH0 = 923.2MHz
+//   * CH1 = 923.4MHz
+//   */
+//  setADR(false); // TODO: remove when ADR is implemented for this plan
+//  sendMacSet(MAC_RX2, 2, 923200000);
+//
+//  char buf[10];
+//  uint32_t freq = 922000000;
+//  uint8_t ch;
+//  for (ch = 0; ch < 8; ch++)
+//  {
+//    sendChSet(MAC_CHANNEL_DCYCLE, ch, 799);
+//    if (ch > 1)
+//    {
+//      sprintf(buf, "%lu", freq);
+//      sendChSet(MAC_CHANNEL_FREQ, ch, buf);
+//      sendChSet(MAC_CHANNEL_DRRANGE, ch, "0 5");
+//      setChannelStatus(ch, true);
+//      freq = freq + 200000;
+//    }
+//  }
+//  // TODO: SF7BW250/DR6 channel, not properly supported by RN2903AS yet
+//  //sendChSet(MAC_CHANNEL_DCYCLE, 8, 799);
+//  //sendChSet(MAC_CHANNEL_FREQ, 8, 922100000);
+//  //sendChSet(MAC_CHANNEL_DRRANGE, 8, "6 6");
+//  //setChannelStatus(8, true);
+//  // TODO: Add FSK channel on 921800000
+//  sendMacSet(MAC_PWRIDX, TTN_PWRIDX_AS920_923);
+//} // region not EU
 
-  char buf[10];
-  uint32_t freq = 922000000;
-  uint8_t ch;
-  for (ch = 0; ch < 8; ch++)
-  {
-    sendChSet(MAC_CHANNEL_DCYCLE, ch, 799);
-    if (ch > 1)
-    {
-      sprintf(buf, "%lu", freq);
-      sendChSet(MAC_CHANNEL_FREQ, ch, buf);
-      sendChSet(MAC_CHANNEL_DRRANGE, ch, "0 5");
-      setChannelStatus(ch, true);
-      freq = freq + 200000;
-    }
-  }
-  // TODO: SF7BW250/DR6 channel, not properly supported by RN2903AS yet
-  //sendChSet(MAC_CHANNEL_DCYCLE, 8, 799);
-  //sendChSet(MAC_CHANNEL_FREQ, 8, 922100000);
-  //sendChSet(MAC_CHANNEL_DRRANGE, 8, "6 6");
-  //setChannelStatus(8, true);
-  // TODO: Add FSK channel on 921800000
-  sendMacSet(MAC_PWRIDX, TTN_PWRIDX_AS920_923);
-}
+//void TheThingsNetwork::configureAS923_925()
+//{
+//  /* RN2903AS 1.0.3rc9 defaults
+//   * CH0 = 923.2MHz
+//   * CH1 = 923.4MHz
+//   */
+//  setADR(false); // TODO: remove when ADR is implemented for this plan
+//  sendMacSet(MAC_RX2, 2, 923200000);
+//
+//  char buf[10];
+//  uint32_t freq = 923600000;
+//  uint8_t ch;
+//  for (ch = 0; ch < 8; ch++)
+//  {
+//    sendChSet(MAC_CHANNEL_DCYCLE, ch, 799);
+//    if (ch > 1)
+//    {
+//      sprintf(buf, "%lu", freq);
+//      sendChSet(MAC_CHANNEL_FREQ, ch, buf);
+//      sendChSet(MAC_CHANNEL_DRRANGE, ch, "0 5");
+//      setChannelStatus(ch, true);
+//      freq = freq + 200000;
+//    }
+//  }
+//  // TODO: SF7BW250/DR6 channel, not properly supported by RN2903AS yet
+//  //sendChSet(MAC_CHANNEL_DCYCLE, 8, 799);
+//  //sendChSet(MAC_CHANNEL_FREQ, 8, 924500000);
+//  //sendChSet(MAC_CHANNEL_DRRANGE, 8, "6 6");
+//  //setChannelStatus(8, true);
+//  // TODO: Add FSK channel on 924800000
+//  sendMacSet(MAC_PWRIDX, TTN_PWRIDX_AS923_925);
+//} // region not EU
 
-void TheThingsNetwork::configureAS923_925()
-{
-  /* RN2903AS 1.0.3rc9 defaults
-   * CH0 = 923.2MHz
-   * CH1 = 923.4MHz
-   */
-  setADR(false); // TODO: remove when ADR is implemented for this plan
-  sendMacSet(MAC_RX2, 2, 923200000);
+//void TheThingsNetwork::configureKR920_923()
+//{
+//  setADR(false); // TODO: remove when ADR is implemented for this plan
+//  sendMacSet(MAC_RX2, 0, 921900000); // KR still uses SF12 for now. Might change to SF9 later.
+//
+//  //disable two default LoRaWAN channels
+//  setChannelStatus(0, false);
+//  setChannelStatus(1, false);
+//
+//  char buf[10];
+//  uint32_t freq = 922100000;
+//  uint8_t ch;
+//  for (ch = 2; ch < 9; ch++)
+//  {
+//    sendChSet(MAC_CHANNEL_DCYCLE, ch, 799);
+//    sprintf(buf, "%lu", freq);
+//    sendChSet(MAC_CHANNEL_FREQ, ch, buf);
+//    sendChSet(MAC_CHANNEL_DRRANGE, ch, "0 5");
+//    setChannelStatus(ch, true);
+//    freq = freq + 200000;
+//  }
+//  sendMacSet(MAC_PWRIDX, TTN_PWRIDX_KR920_923);
+//} // region not EU
 
-  char buf[10];
-  uint32_t freq = 923600000;
-  uint8_t ch;
-  for (ch = 0; ch < 8; ch++)
-  {
-    sendChSet(MAC_CHANNEL_DCYCLE, ch, 799);
-    if (ch > 1)
-    {
-      sprintf(buf, "%lu", freq);
-      sendChSet(MAC_CHANNEL_FREQ, ch, buf);
-      sendChSet(MAC_CHANNEL_DRRANGE, ch, "0 5");
-      setChannelStatus(ch, true);
-      freq = freq + 200000;
-    }
-  }
-  // TODO: SF7BW250/DR6 channel, not properly supported by RN2903AS yet
-  //sendChSet(MAC_CHANNEL_DCYCLE, 8, 799);
-  //sendChSet(MAC_CHANNEL_FREQ, 8, 924500000);
-  //sendChSet(MAC_CHANNEL_DRRANGE, 8, "6 6");
-  //setChannelStatus(8, true);
-  // TODO: Add FSK channel on 924800000
-  sendMacSet(MAC_PWRIDX, TTN_PWRIDX_AS923_925);
-}
+//void TheThingsNetwork::configureIN865_867()
+//{
+//  setADR(false); // TODO: remove when ADR is implemented for this plan
+//  sendMacSet(MAC_RX2, 2, 866550000); // SF10
+//
+//  // Disable the three default LoRaWAN channels
+//  setChannelStatus(0, false);
+//  setChannelStatus(1, false);
+//  setChannelStatus(2, false);
+//
+//  // Channel 3
+//  sendChSet(MAC_CHANNEL_DCYCLE, 3, 299);
+//  sendChSet(MAC_CHANNEL_FREQ, 3, 865062500);
+//  sendChSet(MAC_CHANNEL_DRRANGE, 3, "0 5");
+//  setChannelStatus(3, true);
+//
+//  // Channel 4
+//  sendChSet(MAC_CHANNEL_DCYCLE, 4, 299);
+//  sendChSet(MAC_CHANNEL_FREQ, 4, 865402500);
+//  sendChSet(MAC_CHANNEL_DRRANGE, 4, "0 5");
+//  setChannelStatus(4, true);
+//
+//  // Channel 5
+//  sendChSet(MAC_CHANNEL_DCYCLE, 5, 299);
+//  sendChSet(MAC_CHANNEL_FREQ, 5, 865985000);
+//  sendChSet(MAC_CHANNEL_DRRANGE, 5, "0 5");
+//  setChannelStatus(5, true);
+//
+//  sendMacSet(MAC_PWRIDX, TTN_PWRIDX_IN865_867);
+//} // region not EU
 
-void TheThingsNetwork::configureKR920_923()
-{
-  setADR(false); // TODO: remove when ADR is implemented for this plan
-  sendMacSet(MAC_RX2, 0, 921900000); // KR still uses SF12 for now. Might change to SF9 later.
-
-  //disable two default LoRaWAN channels
-  setChannelStatus(0, false);
-  setChannelStatus(1, false);
-
-  char buf[10];
-  uint32_t freq = 922100000;
-  uint8_t ch;
-  for (ch = 2; ch < 9; ch++)
-  {
-    sendChSet(MAC_CHANNEL_DCYCLE, ch, 799);
-    sprintf(buf, "%lu", freq);
-    sendChSet(MAC_CHANNEL_FREQ, ch, buf);
-    sendChSet(MAC_CHANNEL_DRRANGE, ch, "0 5");
-    setChannelStatus(ch, true);
-    freq = freq + 200000;
-  }
-  sendMacSet(MAC_PWRIDX, TTN_PWRIDX_KR920_923);
-}
-
-void TheThingsNetwork::configureIN865_867()
-{
-  setADR(false); // TODO: remove when ADR is implemented for this plan
-  sendMacSet(MAC_RX2, 2, 866550000); // SF10
-
-  // Disable the three default LoRaWAN channels
-  setChannelStatus(0, false);
-  setChannelStatus(1, false);
-  setChannelStatus(2, false);
-
-  // Channel 3
-  sendChSet(MAC_CHANNEL_DCYCLE, 3, 299);
-  sendChSet(MAC_CHANNEL_FREQ, 3, 865062500);
-  sendChSet(MAC_CHANNEL_DRRANGE, 3, "0 5");
-  setChannelStatus(3, true);
-
-  // Channel 4
-  sendChSet(MAC_CHANNEL_DCYCLE, 4, 299);
-  sendChSet(MAC_CHANNEL_FREQ, 4, 865402500);
-  sendChSet(MAC_CHANNEL_DRRANGE, 4, "0 5");
-  setChannelStatus(4, true);
-
-  // Channel 5
-  sendChSet(MAC_CHANNEL_DCYCLE, 5, 299);
-  sendChSet(MAC_CHANNEL_FREQ, 5, 865985000);
-  sendChSet(MAC_CHANNEL_DRRANGE, 5, "0 5");
-  setChannelStatus(5, true);
-
-  sendMacSet(MAC_PWRIDX, TTN_PWRIDX_IN865_867);
-}
+//void TheThingsNetwork::configureChannels(uint8_t fsb)
+//{
+//  switch (fp)
+//  {
+//  case TTN_FP_EU868:
+//    configureEU868();
+//    break;
+//  case TTN_FP_US915:
+//    configureUS915(fsb);
+//    break;
+//  case TTN_FP_AU915:
+//    configureAU915(fsb);
+//    break;
+//  case TTN_FP_AS920_923:
+//    configureAS920_923();
+//    break;
+//  case TTN_FP_AS923_925:
+//    configureAS923_925();
+//    break;
+//  case TTN_FP_KR920_923:
+//    configureKR920_923();
+//    break;
+//  case TTN_FP_IN865_867:
+//    configureIN865_867();
+//    break;
+//  default:
+//    debugPrintMessage(ERR_MESSAGE, ERR_INVALID_FP);
+//    break;
+//  }
+//  sendMacSet(MAC_RETX, TTN_RETX);
+//} ↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓
 
 void TheThingsNetwork::configureChannels(uint8_t fsb)
 {
-  switch (fp)
-  {
-  case TTN_FP_EU868:
-    configureEU868();
-    break;
-  case TTN_FP_US915:
-    configureUS915(fsb);
-    break;
-  case TTN_FP_AU915:
-    configureAU915(fsb);
-    break;
-  case TTN_FP_AS920_923:
-    configureAS920_923();
-    break;
-  case TTN_FP_AS923_925:
-    configureAS923_925();
-    break;
-  case TTN_FP_KR920_923:
-    configureKR920_923();
-    break;
-  case TTN_FP_IN865_867:
-    configureIN865_867();
-    break;
-  default:
-    debugPrintMessage(ERR_MESSAGE, ERR_INVALID_FP);
-    break;
-  }
-  sendMacSet(MAC_RETX, TTN_RETX);
+    if (fp = TTN_FP_EU868) {
+        configureEU868();
+    }
+    else {
+        debugPrintMessage(ERR_MESSAGE, ERR_INVALID_FP);
+    }
+    sendMacSet(MAC_RETX, TTN_RETX);
 }
 
 bool TheThingsNetwork::setChannel(uint8_t channel, uint32_t frequency, uint8_t dr_min, uint8_t dr_max){

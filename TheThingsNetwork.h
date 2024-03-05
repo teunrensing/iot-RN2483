@@ -41,12 +41,12 @@ enum ttn_response_t
 enum ttn_fp_t
 {
   TTN_FP_EU868,
-  TTN_FP_US915,
-  TTN_FP_AU915,
-  TTN_FP_AS920_923,
-  TTN_FP_AS923_925,
-  TTN_FP_KR920_923,
-  TTN_FP_IN865_867
+  //TTN_FP_US915, // region not EU
+  //TTN_FP_AU915, // region not EU
+  //TTN_FP_AS920_923, // region not EU
+  //TTN_FP_AS923_925, // region not EU
+  //TTN_FP_KR920_923, // region not EU
+  //TTN_FP_IN865_867 // region not EU
 };
 
 enum lorawan_class_t
@@ -140,22 +140,22 @@ public:
   void showStatus();
   size_t getHardwareEui(char *buffer, size_t size);
   size_t getAppEui(char *buffer, size_t size);
-  size_t getVersion(char *buffer, size_t size); // removed
-  enum ttn_modem_status_t getStatus(); // removed
+  //size_t getVersion(char *buffer, size_t size); // removed
+  //enum ttn_modem_status_t getStatus(); // removed
   uint16_t getVDD();
-  int16_t getRSSI(); // removed       
-  uint32_t getFrequency(); // removed
-  uint32_t getWatchDogTimer(); // removed
-  uint32_t getFCU(); // removed
-  uint32_t getFCD();// removed 
-  uint8_t getBW(); // removed
-  uint8_t getCR(); // removed
-  int8_t getPower(); // removed
-  int8_t getSNR(); // removed
-  int8_t getDR(); // removed
-  int8_t getPowerIndex(); // removed
-  bool getChannelStatus (uint8_t channel); // removed
-  ttn_response_code_t getLastError(); // removed
+  //int16_t getRSSI(); // removed       
+  //uint32_t getFrequency(); // removed
+  //uint32_t getWatchDogTimer(); // removed
+  //uint32_t getFCU(); // removed
+  //uint32_t getFCD();// removed 
+  //uint8_t getBW(); // removed
+  //uint8_t getCR(); // removed
+  //int8_t getPower(); // removed
+  //int8_t getSNR(); // removed
+  //int8_t getDR(); // removed
+  //int8_t getPowerIndex(); // removed
+  //bool getChannelStatus (uint8_t channel); // removed
+  //ttn_response_code_t getLastError(); // removed
   void onMessage(void (*cb)(const uint8_t *payload, size_t size, port_t port));
   bool provision(const char *appEui, const char *appKey); // (, bool resetFirst = true) removed
   // (added) bool provision(const char *devEui, const char *appEui, const char *appKey);
@@ -164,7 +164,7 @@ public:
   // (added) bool join(int8_t retries = -1, uint32_t retryDelay = 10000);
   bool personalize(const char *devAddr, const char *nwkSKey, const char *appSKey); // (, bool resetFirst = true) removed
   bool personalize();
-  bool setClass(lorawan_class_t p_lw_class); // removed
+  //bool setClass(lorawan_class_t p_lw_class); // removed
   ttn_response_t sendBytes(const uint8_t *payload, size_t length, port_t port = 1, bool confirm = false, uint8_t sf = 0);
   ttn_response_t poll(port_t port = 1, bool confirm = false); //(, bool modem_only = false) removed
   void sleep(uint32_t mseconds);
