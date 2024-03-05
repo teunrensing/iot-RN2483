@@ -72,8 +72,8 @@ Go to **Tools->Processor** and select **ATmega32U4 (3.3V, 8MHz)**.
 
 // Set your AppEUI and AppKey
 // HAN KISS-xx: devEui is device specific
-const char *appEui = "70B3D57ED0013DED";
-const char *appKey = "2B8AF92FB36094A682B2CF99A4FC0CEF";
+const char *appEui = "0000000000000000";
+const char *appKey = "C30F1715DFA6B9F21C2DCB07AC65FF00";
 
 TheThingsNetwork_HANIoT ttn(loraSerial, debugSerial, freqPlan);  // TTN object for LoRaWAN radio
 //TheThingsNetwork ttn(loraSerial, debugSerial, freqPlan, 9);  // TTN object for LoRaWAN radio using SF9
