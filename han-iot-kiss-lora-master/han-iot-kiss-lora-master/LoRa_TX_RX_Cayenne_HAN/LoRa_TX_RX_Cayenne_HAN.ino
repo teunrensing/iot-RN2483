@@ -123,7 +123,7 @@ Weather sensor;                  ///< temperature and humidity sensor
 float x,y,z;                      ///< Variables to hold acellerometer axis values.
 
 // Set up application specific
-#define REGULAR_INTERVAL  100000   ///< Regular transmission interval in ms
+#define REGULAR_INTERVAL  1000000   ///< Regular transmission interval in ms
 
 #define INTERVAL_ROTARY_MASK 0x07 ///< Binary mask: 0000 0111
 #define INTERVAL_ROTARY_1 1       ///< 1 minute interval
