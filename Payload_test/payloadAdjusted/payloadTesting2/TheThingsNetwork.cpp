@@ -325,7 +325,7 @@ const char *const mac_tx_table[] PROGMEM = {mac_tx_type_cnf, mac_tx_type_ucnf};
 
 int pgmstrcmp(const char *str1, uint8_t str2Index, uint8_t table = CMP_TABLE)
 {
-  if (0 == strlen(str1))
+  if (0 == strlen(str1))z
 	  return -1;
 
   char str2[128];
