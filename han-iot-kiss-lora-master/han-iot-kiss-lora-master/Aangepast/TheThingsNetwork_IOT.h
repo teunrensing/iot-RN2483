@@ -12,17 +12,21 @@
 #include <pgmspace.h>
 #endif
 
-#define TTN_DEFAULT_SF 7
-#define TTN_DEFAULT_FSB 2
+// These default can be adjusted to just using
+#define TTN_DEFAULT_SF 7 // = Spreading factor
+#define TTN_DEFAULT_FSB 2 // 
 #define TTN_RETX "7"
 
 #define TTN_PWRIDX_EU868 "1"
-#define TTN_PWRIDX_US915 "5"
-#define TTN_PWRIDX_AU915 "5"
-#define TTN_PWRIDX_AS920_923 "1" // TODO: should be 0, but the current RN2903AS firmware doesn't accept that value (probably still using EU868: 1=14dBm)
-#define TTN_PWRIDX_AS923_925 "1" // TODO: should be 0
-#define TTN_PWRIDX_KR920_923 "1" // TODO: should be 0
-#define TTN_PWRIDX_IN865_867 "1" // TODO: should be 0
+
+/* Next all removed because EU868 is used.
+// #define TTN_PWRIDX_US915 "5"
+// #define TTN_PWRIDX_AU915 "5"
+// #define TTN_PWRIDX_AS920_923 "1" // TODO: should be 0, but the current RN2903AS firmware doesn't accept that value (probably still using EU868: 1=14dBm)
+// #define TTN_PWRIDX_AS923_925 "1" // TODO: should be 0
+// #define TTN_PWRIDX_KR920_923 "1" // TODO: should be 0
+// #define TTN_PWRIDX_IN865_867 "1" // TODO: should be 0
+*/
 
 #define TTN_BUFFER_SIZE 300
 #define TTN_DEFAULT_TIMEOUT 10000	// Default modem timeout in ms
@@ -38,6 +42,8 @@ enum ttn_response_t
   TTN_UNSUCCESSFUL_RECEIVE = 3
 };
 
+
+// Maybe we can replace every ttn_fp_t in de cpp file with TTN_FP_EU868, to delete this enum.
 enum ttn_fp_t
 {
   TTN_FP_EU868,
@@ -92,9 +98,9 @@ class TheThingsNetwork
 private:
   Stream *modemStream;
   Stream *debugStream = NULL;
-  ttn_fp_t fp;
-  uint8_t sf;
-  uint8_t fsb;
+  ttn_fp_t fp; // See line 45. Enum could be deleted
+  uint8_t sf; // Constant, so could be deleted
+  uint8_t fsb; // Constant? So could be deleted
   bool adr;
   char buffer[512];
   bool baudDetermined = false;
@@ -111,13 +117,15 @@ private:
 
   void autoBaud();
   void configureEU868();
+  /* Next all removed because EU868 is used.
   void configureUS915(uint8_t fsb);
   void configureAU915(uint8_t fsb);
   void configureAS920_923();
   void configureAS923_925();
   void configureKR920_923();
   void configureIN865_867();
-  void configureChannels(uint8_t fsb);
+  */
+  void configureChannels(uint8_t fsb); // We could delete this function, because one channel is used
   bool setSF(uint8_t sf);
   bool waitForOk();
 

@@ -707,7 +707,8 @@ bool TheThingsNetwork::personalize(const char *devAddr, const char *nwkSKey, con
 
 bool TheThingsNetwork::personalize()
 {
-  configureChannels(fsb);
+  //configureChannels(fsb); 
+  configureEU868();
   setSF(sf);
   sendJoinSet(MAC_JOIN_MODE_ABP);
   readLine(buffer, sizeof(buffer));
@@ -744,7 +745,8 @@ bool TheThingsNetwork::provision(const char *appEui, const char *appKey, bool re
 bool TheThingsNetwork::join(int8_t retries, uint32_t retryDelay)
 {
   int8_t attempts = 0;
-  configureChannels(fsb);
+  //configureChannels(fsb); // Not neccessary with one 
+  configureEU868();
   setSF(sf);
   while (retries == -1 || attempts <= retries)
   {
@@ -992,175 +994,177 @@ void TheThingsNetwork::configureEU868()
   sendMacSet(MAC_PWRIDX, TTN_PWRIDX_EU868);
 }
 
-void TheThingsNetwork::configureUS915(uint8_t fsb)
-{
-  uint8_t ch;
-  uint8_t chLow = fsb > 0 ? (fsb - 1) * 8 : 0;
-  uint8_t chHigh = fsb > 0 ? chLow + 7 : 71;
-  uint8_t ch500 = fsb + 63;
-  for (ch = 0; ch < 72; ch++)
-  {
-    if (ch == ch500 || (ch <= chHigh && ch >= chLow))
-    {
-      setChannelStatus(ch, true);
-      if (ch < 63)
-      {
-        sendChSet(MAC_CHANNEL_DRRANGE, ch, "0 3");
-      }
-    }
-    else
-    {
-    	setChannelStatus(ch, false);
-    }
-  }
-  sendMacSet(MAC_PWRIDX, TTN_PWRIDX_US915);
-}
+// void TheThingsNetwork::configureUS915(uint8_t fsb)
+// {
+//   uint8_t ch;
+//   uint8_t chLow = fsb > 0 ? (fsb - 1) * 8 : 0;
+//   uint8_t chHigh = fsb > 0 ? chLow + 7 : 71;
+//   uint8_t ch500 = fsb + 63;
+//   for (ch = 0; ch < 72; ch++)
+//   {
+//     if (ch == ch500 || (ch <= chHigh && ch >= chLow))
+//     {
+//       setChannelStatus(ch, true);
+//       if (ch < 63)
+//       {
+//         sendChSet(MAC_CHANNEL_DRRANGE, ch, "0 3");
+//       }
+//     }
+//     else
+//     {
+//     	setChannelStatus(ch, false);
+//     }
+//   }
+//   sendMacSet(MAC_PWRIDX, TTN_PWRIDX_US915);
+// }
 
-void TheThingsNetwork::configureAU915(uint8_t fsb)
-{
-  uint8_t ch;
-  uint8_t chLow = fsb > 0 ? (fsb - 1) * 8 : 0;
-  uint8_t chHigh = fsb > 0 ? chLow + 7 : 71;
-  uint8_t ch500 = fsb + 63;
-  for (ch = 0; ch < 72; ch++)
-  {
-    if (ch == ch500 || (ch <= chHigh && ch >= chLow))
-    {
-      setChannelStatus(ch, true);
-      if (ch < 63)
-      {
-        sendChSet(MAC_CHANNEL_DRRANGE, ch, "0 3");
-      }
-    }
-    else
-    {
-    	setChannelStatus(ch, false);
-    }
-  }
-  sendMacSet(MAC_PWRIDX, TTN_PWRIDX_AU915);
-}
+// void TheThingsNetwork::configureAU915(uint8_t fsb)
+// {
+//   uint8_t ch;
+//   uint8_t chLow = fsb > 0 ? (fsb - 1) * 8 : 0;
+//   uint8_t chHigh = fsb > 0 ? chLow + 7 : 71;
+//   uint8_t ch500 = fsb + 63;
+//   for (ch = 0; ch < 72; ch++)
+//   {
+//     if (ch == ch500 || (ch <= chHigh && ch >= chLow))
+//     {
+//       setChannelStatus(ch, true);
+//       if (ch < 63)
+//       {
+//         sendChSet(MAC_CHANNEL_DRRANGE, ch, "0 3");
+//       }
+//     }
+//     else
+//     {
+//     	setChannelStatus(ch, false);
+//     }
+//   }
+//   sendMacSet(MAC_PWRIDX, TTN_PWRIDX_AU915);
+// }
 
-void TheThingsNetwork::configureAS920_923()
-{
-  /* RN2903AS 1.0.3rc9 defaults
-   * CH0 = 923.2MHz
-   * CH1 = 923.4MHz
-   */
-  setADR(false); // TODO: remove when ADR is implemented for this plan
-  sendMacSet(MAC_RX2, 2, 923200000);
+// void TheThingsNetwork::configureAS920_923()
+// {
+//   /* RN2903AS 1.0.3rc9 defaults
+//    * CH0 = 923.2MHz
+//    * CH1 = 923.4MHz
+//    */
+//   setADR(false); // TODO: remove when ADR is implemented for this plan
+//   sendMacSet(MAC_RX2, 2, 923200000);
 
-  char buf[10];
-  uint32_t freq = 922000000;
-  uint8_t ch;
-  for (ch = 0; ch < 8; ch++)
-  {
-    sendChSet(MAC_CHANNEL_DCYCLE, ch, 799);
-    if (ch > 1)
-    {
-      sprintf(buf, "%lu", freq);
-      sendChSet(MAC_CHANNEL_FREQ, ch, buf);
-      sendChSet(MAC_CHANNEL_DRRANGE, ch, "0 5");
-      setChannelStatus(ch, true);
-      freq = freq + 200000;
-    }
-  }
-  // TODO: SF7BW250/DR6 channel, not properly supported by RN2903AS yet
-  //sendChSet(MAC_CHANNEL_DCYCLE, 8, 799);
-  //sendChSet(MAC_CHANNEL_FREQ, 8, 922100000);
-  //sendChSet(MAC_CHANNEL_DRRANGE, 8, "6 6");
-  //setChannelStatus(8, true);
-  // TODO: Add FSK channel on 921800000
-  sendMacSet(MAC_PWRIDX, TTN_PWRIDX_AS920_923);
-}
+//   char buf[10];
+//   uint32_t freq = 922000000;
+//   uint8_t ch;
+//   for (ch = 0; ch < 8; ch++)
+//   {
+//     sendChSet(MAC_CHANNEL_DCYCLE, ch, 799);
+//     if (ch > 1)
+//     {
+//       sprintf(buf, "%lu", freq);
+//       sendChSet(MAC_CHANNEL_FREQ, ch, buf);
+//       sendChSet(MAC_CHANNEL_DRRANGE, ch, "0 5");
+//       setChannelStatus(ch, true);
+//       freq = freq + 200000;
+//     }
+//   }
+//   // TODO: SF7BW250/DR6 channel, not properly supported by RN2903AS yet
+//   //sendChSet(MAC_CHANNEL_DCYCLE, 8, 799);
+//   //sendChSet(MAC_CHANNEL_FREQ, 8, 922100000);
+//   //sendChSet(MAC_CHANNEL_DRRANGE, 8, "6 6");
+//   //setChannelStatus(8, true);
+//   // TODO: Add FSK channel on 921800000
+//   sendMacSet(MAC_PWRIDX, TTN_PWRIDX_AS920_923);
+// }
 
-void TheThingsNetwork::configureAS923_925()
-{
-  /* RN2903AS 1.0.3rc9 defaults
-   * CH0 = 923.2MHz
-   * CH1 = 923.4MHz
-   */
-  setADR(false); // TODO: remove when ADR is implemented for this plan
-  sendMacSet(MAC_RX2, 2, 923200000);
+// void TheThingsNetwork::configureAS923_925()
+// {
+//   /* RN2903AS 1.0.3rc9 defaults
+//    * CH0 = 923.2MHz
+//    * CH1 = 923.4MHz
+//    */
+//   setADR(false); // TODO: remove when ADR is implemented for this plan
+//   sendMacSet(MAC_RX2, 2, 923200000);
 
-  char buf[10];
-  uint32_t freq = 923600000;
-  uint8_t ch;
-  for (ch = 0; ch < 8; ch++)
-  {
-    sendChSet(MAC_CHANNEL_DCYCLE, ch, 799);
-    if (ch > 1)
-    {
-      sprintf(buf, "%lu", freq);
-      sendChSet(MAC_CHANNEL_FREQ, ch, buf);
-      sendChSet(MAC_CHANNEL_DRRANGE, ch, "0 5");
-      setChannelStatus(ch, true);
-      freq = freq + 200000;
-    }
-  }
-  // TODO: SF7BW250/DR6 channel, not properly supported by RN2903AS yet
-  //sendChSet(MAC_CHANNEL_DCYCLE, 8, 799);
-  //sendChSet(MAC_CHANNEL_FREQ, 8, 924500000);
-  //sendChSet(MAC_CHANNEL_DRRANGE, 8, "6 6");
-  //setChannelStatus(8, true);
-  // TODO: Add FSK channel on 924800000
-  sendMacSet(MAC_PWRIDX, TTN_PWRIDX_AS923_925);
-}
+//   char buf[10];
+//   uint32_t freq = 923600000;
+//   uint8_t ch;
+//   for (ch = 0; ch < 8; ch++)
+//   {
+//     sendChSet(MAC_CHANNEL_DCYCLE, ch, 799);
+//     if (ch > 1)
+//     {
+//       sprintf(buf, "%lu", freq);
+//       sendChSet(MAC_CHANNEL_FREQ, ch, buf);
+//       sendChSet(MAC_CHANNEL_DRRANGE, ch, "0 5");
+//       setChannelStatus(ch, true);
+//       freq = freq + 200000;
+//     }
+//   }
+//   // TODO: SF7BW250/DR6 channel, not properly supported by RN2903AS yet
+//   //sendChSet(MAC_CHANNEL_DCYCLE, 8, 799);
+//   //sendChSet(MAC_CHANNEL_FREQ, 8, 924500000);
+//   //sendChSet(MAC_CHANNEL_DRRANGE, 8, "6 6");
+//   //setChannelStatus(8, true);
+//   // TODO: Add FSK channel on 924800000
+//   sendMacSet(MAC_PWRIDX, TTN_PWRIDX_AS923_925);
+// }
 
-void TheThingsNetwork::configureKR920_923()
-{
-  setADR(false); // TODO: remove when ADR is implemented for this plan
-  sendMacSet(MAC_RX2, 0, 921900000); // KR still uses SF12 for now. Might change to SF9 later.
+// void TheThingsNetwork::configureKR920_923()
+// {
+//   setADR(false); // TODO: remove when ADR is implemented for this plan
+//   sendMacSet(MAC_RX2, 0, 921900000); // KR still uses SF12 for now. Might change to SF9 later.
 
-  //disable two default LoRaWAN channels
-  setChannelStatus(0, false);
-  setChannelStatus(1, false);
+//   //disable two default LoRaWAN channels
+//   setChannelStatus(0, false);
+//   setChannelStatus(1, false);
 
-  char buf[10];
-  uint32_t freq = 922100000;
-  uint8_t ch;
-  for (ch = 2; ch < 9; ch++)
-  {
-    sendChSet(MAC_CHANNEL_DCYCLE, ch, 799);
-    sprintf(buf, "%lu", freq);
-    sendChSet(MAC_CHANNEL_FREQ, ch, buf);
-    sendChSet(MAC_CHANNEL_DRRANGE, ch, "0 5");
-    setChannelStatus(ch, true);
-    freq = freq + 200000;
-  }
-  sendMacSet(MAC_PWRIDX, TTN_PWRIDX_KR920_923);
-}
+//   char buf[10];
+//   uint32_t freq = 922100000;
+//   uint8_t ch;
+//   for (ch = 2; ch < 9; ch++)
+//   {
+//     sendChSet(MAC_CHANNEL_DCYCLE, ch, 799);
+//     sprintf(buf, "%lu", freq);
+//     sendChSet(MAC_CHANNEL_FREQ, ch, buf);
+//     sendChSet(MAC_CHANNEL_DRRANGE, ch, "0 5");
+//     setChannelStatus(ch, true);
+//     freq = freq + 200000;
+//   }
+//   sendMacSet(MAC_PWRIDX, TTN_PWRIDX_KR920_923);
+// }
 
-void TheThingsNetwork::configureIN865_867()
-{
-  setADR(false); // TODO: remove when ADR is implemented for this plan
-  sendMacSet(MAC_RX2, 2, 866550000); // SF10
+// void TheThingsNetwork::configureIN865_867()
+// {
+//   setADR(false); // TODO: remove when ADR is implemented for this plan
+//   sendMacSet(MAC_RX2, 2, 866550000); // SF10
 
-  // Disable the three default LoRaWAN channels
-  setChannelStatus(0, false);
-  setChannelStatus(1, false);
-  setChannelStatus(2, false);
+//   // Disable the three default LoRaWAN channels
+//   setChannelStatus(0, false);
+//   setChannelStatus(1, false);
+//   setChannelStatus(2, false);
 
-  // Channel 3
-  sendChSet(MAC_CHANNEL_DCYCLE, 3, 299);
-  sendChSet(MAC_CHANNEL_FREQ, 3, 865062500);
-  sendChSet(MAC_CHANNEL_DRRANGE, 3, "0 5");
-  setChannelStatus(3, true);
+//   // Channel 3
+//   sendChSet(MAC_CHANNEL_DCYCLE, 3, 299);
+//   sendChSet(MAC_CHANNEL_FREQ, 3, 865062500);
+//   sendChSet(MAC_CHANNEL_DRRANGE, 3, "0 5");
+//   setChannelStatus(3, true);
 
-  // Channel 4
-  sendChSet(MAC_CHANNEL_DCYCLE, 4, 299);
-  sendChSet(MAC_CHANNEL_FREQ, 4, 865402500);
-  sendChSet(MAC_CHANNEL_DRRANGE, 4, "0 5");
-  setChannelStatus(4, true);
+//   // Channel 4
+//   sendChSet(MAC_CHANNEL_DCYCLE, 4, 299);
+//   sendChSet(MAC_CHANNEL_FREQ, 4, 865402500);
+//   sendChSet(MAC_CHANNEL_DRRANGE, 4, "0 5");
+//   setChannelStatus(4, true);
 
-  // Channel 5
-  sendChSet(MAC_CHANNEL_DCYCLE, 5, 299);
-  sendChSet(MAC_CHANNEL_FREQ, 5, 865985000);
-  sendChSet(MAC_CHANNEL_DRRANGE, 5, "0 5");
-  setChannelStatus(5, true);
+//   // Channel 5
+//   sendChSet(MAC_CHANNEL_DCYCLE, 5, 299);
+//   sendChSet(MAC_CHANNEL_FREQ, 5, 865985000);
+//   sendChSet(MAC_CHANNEL_DRRANGE, 5, "0 5");
+//   setChannelStatus(5, true);
 
-  sendMacSet(MAC_PWRIDX, TTN_PWRIDX_IN865_867);
-}
+//   sendMacSet(MAC_PWRIDX, TTN_PWRIDX_IN865_867);
+// }
 
+
+// We could delete this function, because one channel is used
 void TheThingsNetwork::configureChannels(uint8_t fsb)
 {
   switch (fp)
@@ -1168,24 +1172,24 @@ void TheThingsNetwork::configureChannels(uint8_t fsb)
   case TTN_FP_EU868:
     configureEU868();
     break;
-  case TTN_FP_US915:
-    configureUS915(fsb);
-    break;
-  case TTN_FP_AU915:
-    configureAU915(fsb);
-    break;
-  case TTN_FP_AS920_923:
-    configureAS920_923();
-    break;
-  case TTN_FP_AS923_925:
-    configureAS923_925();
-    break;
-  case TTN_FP_KR920_923:
-    configureKR920_923();
-    break;
-  case TTN_FP_IN865_867:
-    configureIN865_867();
-    break;
+  // case TTN_FP_US915:
+  //   configureUS915(fsb);
+  //   break;
+  // case TTN_FP_AU915:
+  //   configureAU915(fsb);
+  //   break;
+  // case TTN_FP_AS920_923:
+  //   configureAS920_923();
+  //   break;
+  // case TTN_FP_AS923_925:
+  //   configureAS923_925();
+  //   break;
+  // case TTN_FP_KR920_923:
+  //   configureKR920_923();
+  //   break;
+  // case TTN_FP_IN865_867:
+  //   configureIN865_867();
+  //   break;
   default:
     debugPrintMessage(ERR_MESSAGE, ERR_INVALID_FP);
     break;
