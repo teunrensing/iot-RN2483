@@ -55,6 +55,7 @@ Go to **Tools->Processor** and select **ATmega32U4 (3.3V, 8MHz)**.
 
 // Libraries and includes
 #include <TheThingsNetwork.h>
+#include "TheThingsNetwork.h"
 #include <CayenneLPP.h>         // include for Cayenne library
 #include "SparkFun_Si7021_Breakout_Library.h" // include for temperature and humidity sensor
 #include <Wire.h>
@@ -122,7 +123,7 @@ Weather sensor;                  ///< temperature and humidity sensor
 float x,y,z;                      ///< Variables to hold acellerometer axis values.
 
 // Set up application specific
-#define REGULAR_INTERVAL  10000   ///< Regular transmission interval in ms
+#define REGULAR_INTERVAL  100000   ///< Regular transmission interval in ms
 
 #define INTERVAL_ROTARY_MASK 0x07 ///< Binary mask: 0000 0111
 #define INTERVAL_ROTARY_1 1       ///< 1 minute interval

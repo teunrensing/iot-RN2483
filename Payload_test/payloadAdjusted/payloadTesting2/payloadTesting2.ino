@@ -55,7 +55,7 @@ Go to **Tools->Processor** and select **ATmega32U4 (3.3V, 8MHz)**.
 
 // Libraries and includes
 //#include <TheThingsNetwork.h>
-#include "TheThingsNetwork.h"
+#include "TheThingsNetwork_IOT.h"
 #include <CayenneLPP.h>         // include for Cayenne library
 #include "SparkFun_Si7021_Breakout_Library.h" // include for temperature and humidity sensor
 #include <Wire.h>
