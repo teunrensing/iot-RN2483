@@ -24,6 +24,8 @@
 #define TTN_PWRIDX_KR920_923 "1" // TODO: should be 0
 #define TTN_PWRIDX_IN865_867 "1" // TODO: should be 0
 
+#define CMP_TABLE 9
+
 #define TTN_BUFFER_SIZE 300
 #define TTN_DEFAULT_TIMEOUT 10000	// Default modem timeout in ms
 
@@ -138,6 +140,9 @@ public:
   void reset(bool adr = true);
   void resetHard(uint8_t resetPin);
   void showStatus();
+
+  int pgmstrcmp(const char *str1, uint8_t str2Index, uint8_t table = CMP_TABLE);
+
   size_t getHardwareEui(char *buffer, size_t size);
   size_t getAppEui(char *buffer, size_t size);
   size_t getVersion(char *buffer, size_t size); // removed
@@ -152,7 +157,7 @@ public:
   uint8_t getCR(); // removed
   int8_t getPower(); // removed
   int8_t getSNR(); // removed
-  int8_t getDR(); // removed
+  //int8_t getDR(); // removed
   int8_t getPowerIndex(); // removed
   bool getChannelStatus (uint8_t channel); // removed
   ttn_response_code_t getLastError(); // removed

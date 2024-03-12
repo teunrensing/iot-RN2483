@@ -488,13 +488,13 @@ int8_t TheThingsNetwork::getSNR()
   return -128;
 }
 
-int8_t TheThingsNetwork::getDR()
-{
-  if (readResponse(MAC_TABLE, MAC_GET_SET_TABLE, MAC_DR, buffer, sizeof(buffer))){
-    return atoi(buffer);
-  }
-  return -1;
-}
+// int8_t TheThingsNetwork::getDR()
+// {
+//   if (readResponse(MAC_TABLE, MAC_GET_SET_TABLE, MAC_DR, buffer, sizeof(buffer))){
+//     return atoi(buffer);
+//   }
+//   return -1;
+// }
 
 int8_t TheThingsNetwork::getPowerIndex()
 {
