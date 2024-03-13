@@ -288,7 +288,7 @@ const char *const mac_options[] PROGMEM = {mac_devaddr, mac_deveui, mac_appeui, 
 const char mac_join_mode_otaa[] PROGMEM = "otaa";
 const char mac_join_mode_abp[] PROGMEM = "abp";
 
-const char *const mac_join_mode[] PROGMEM = {mac_join_mode_otaa, mac_join_mode_abp};
+const char *const mac_join_mode[] PROGMEM = {mac_join_mode_otaa, mac_join_mode_abp}; // Maybe we dont use the mac_join_mode_abp mode so look for that
 
 #define MAC_JOIN_MODE_OTAA 0
 #define MAC_JOIN_MODE_ABP 1
@@ -370,13 +370,14 @@ uint8_t receivedPort(const char *s)
   }
   return port;
 }
-
-TheThingsNetwork::TheThingsNetwork(Stream &modemStream, Stream &debugStream, ttn_fp_t fp, uint8_t sf, uint8_t fsb)
+//Use the function if the program doesnt't work on the devboard and make the enum ttn_fp_t avalible again.
+//TheThingsNetwork::TheThingsNetwork(Stream &modemStream, Stream &debugStream, ttn_fp_t fp, uint8_t sf, uint8_t fsb)
+TheThingsNetwork::TheThingsNetwork(Stream &modemStream, Stream &debugStream, uint8_t sf, uint8_t fsb)
 {
   this->debugStream = &debugStream;
   this->modemStream = &modemStream;
   this->modemStream->setTimeout(TTN_DEFAULT_TIMEOUT);
-  this->fp = fp;
+ // this->fp = fp;//Test if it works now, if not reverse the changes
   this->sf = sf;
   this->fsb = fsb;
   this->adr = false;

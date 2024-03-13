@@ -44,6 +44,9 @@ enum ttn_response_t
 
 
 // Maybe we can replace every ttn_fp_t in de cpp file with TTN_FP_EU868, to delete this enum.
+// Test the changes on the devboard first!
+// Use the instance of it on line 103 when the code doesn't work. 
+/*
 enum ttn_fp_t
 {
   TTN_FP_EU868,
@@ -53,7 +56,7 @@ enum ttn_fp_t
   TTN_FP_AS923_925,
   TTN_FP_KR920_923,
   TTN_FP_IN865_867
-};
+};*/
 
 enum lorawan_class_t
 {
@@ -98,7 +101,7 @@ class TheThingsNetwork
 private:
   Stream *modemStream;
   Stream *debugStream = NULL;
-  ttn_fp_t fp; // See line 45. Enum could be deleted
+  //ttn_fp_t fp; // See line 45. Enum could be deleted
   uint8_t sf; // Constant, so could be deleted. note: ik denk het niet, want in de cpp file in de functie op regel 380 wordt er een waarde toegekend die niet constant is.
   uint8_t fsb; // Constant? So could be deleted. note: het zelfde verhaal als hierboven
   bool adr;
@@ -141,8 +144,9 @@ private:
 
 public:
   bool needsHardReset = false;
-
-  TheThingsNetwork(Stream &modemStream, Stream &debugStream, ttn_fp_t fp, uint8_t sf = TTN_DEFAULT_SF, uint8_t fsb = TTN_DEFAULT_FSB);
+  // use this function again when you use the enum ttn_fp_t
+  //TheThingsNetwork(Stream &modemStream, Stream &debugStream, ttn_fp_t fp, uint8_t sf = TTN_DEFAULT_SF, uint8_t fsb = TTN_DEFAULT_FSB);
+  TheThingsNetwork(Stream &modemStream, Stream &debugStream, uint8_t sf = TTN_DEFAULT_SF, uint8_t fsb = TTN_DEFAULT_FSB);//removed ttn_fp_t fp
   void reset(bool adr = true);
   void resetHard(uint8_t resetPin);
   void showStatus();
