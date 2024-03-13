@@ -25,11 +25,12 @@ const char mac_tx_ok[] PROGMEM = "mac_tx_ok";
 const char mac_rx[] PROGMEM = "mac_rx";
 const char mac_err[] PROGMEM = "mac_err";
 const char rn2483[] PROGMEM = "RN2483";
-const char rn2483a[] PROGMEM = "RN2483A";
-const char rn2903[] PROGMEM = "RN2903";
-const char rn2903as[] PROGMEM = "RN2903AS";
+//const char rn2483a[] PROGMEM = "RN2483A";//Not in use
+//const char rn2903[] PROGMEM = "RN2903";//Not in use
+//const char rn2903as[] PROGMEM = "RN2903AS";//Not in use
 
-const char *const compare_table[] PROGMEM = {ok, on, off, accepted, mac_tx_ok, mac_rx, mac_err, rn2483, rn2483a, rn2903, rn2903as};
+//const char *const compare_table[] PROGMEM = {ok, on, off, accepted, mac_tx_ok, mac_rx, mac_err, rn2483, rn2483a, rn2903, rn2903as};//This needs to change because some chars ar not used
+const char *const compare_table[] PROGMEM = {ok, on, off, accepted, mac_tx_ok, mac_rx, mac_err, rn2483};
 
 #define CMP_OK 0
 #define CMP_ON 1
@@ -39,9 +40,10 @@ const char *const compare_table[] PROGMEM = {ok, on, off, accepted, mac_tx_ok, m
 #define CMP_MAC_RX 5
 #define CMP_MAC_ERR 6
 #define CMP_RN2483 7
-#define CMP_RN2483A 8
-#define CMP_RN2903 9
-#define CMP_RN2903AS 10
+//The defines below can be removed, because they are not in use
+//#define CMP_RN2483A 8
+//#define CMP_RN2903 9
+//#define CMP_RN2903AS 10
 
 // CMP OK
 const char busy[] PROGMEM = "busy";
@@ -960,7 +962,8 @@ bool TheThingsNetwork::checkValidModuleConnected(bool autoBaudFirst)
   char *model = strtok(buffer, " ");
   debugPrintIndex(SHOW_MODEL, model);
   // check if module is valid (must be RN2483, RN2483A, RN2903 or RN2903AS)
-  if(pgmstrcmp(model, CMP_RN2483) == 0 || pgmstrcmp(model, CMP_RN2483A) == 0 || pgmstrcmp(model, CMP_RN2903) == 0 || pgmstrcmp(model, CMP_RN2903AS) == 0)
+  //if(pgmstrcmp(model, CMP_RN2483) == 0 || pgmstrcmp(model, CMP_RN2483A) == 0 || pgmstrcmp(model, CMP_RN2903) == 0 || pgmstrcmp(model, CMP_RN2903AS) == 0)
+ if(pgmstrcmp(model, CMP_RN2483) == 0)// Changed because the others are not in use
   {
     debugPrintMessage(SUCCESS_MESSAGE, SCS_VALID_MODULE);
     return true;                                                // module responded and is valid (recognized/supported)
@@ -1165,7 +1168,7 @@ void TheThingsNetwork::configureEU868()
 
 
 // We could delete this function, because one channel is used
-void TheThingsNetwork::configureChannels(uint8_t fsb)
+/*void TheThingsNetwork::configureChannels(uint8_t fsb)
 {
   switch (fp)
   {
@@ -1196,7 +1199,7 @@ void TheThingsNetwork::configureChannels(uint8_t fsb)
   }
   sendMacSet(MAC_RETX, TTN_RETX);
 }
-
+*/
 bool TheThingsNetwork::setChannel(uint8_t channel, uint32_t frequency, uint8_t dr_min, uint8_t dr_max){
 
   bool done = true;
@@ -1277,7 +1280,8 @@ bool TheThingsNetwork::setADR(bool adr){
 bool TheThingsNetwork::setSF(uint8_t sf)
 {
   uint8_t dr;
-  switch (fp)
+  // The switch below is not in use because we use only the case of EU868
+  /*switch (fp)
   {
   case TTN_FP_EU868:
   case TTN_FP_IN865_867:
@@ -1291,7 +1295,8 @@ bool TheThingsNetwork::setSF(uint8_t sf)
   case TTN_FP_AU915:
     dr = 10 - sf;
     break;
-  }
+  }*/
+  dr = 12 - sf;
   char s[2];
   s[0] = '0' + dr;
   s[1] = '\0';

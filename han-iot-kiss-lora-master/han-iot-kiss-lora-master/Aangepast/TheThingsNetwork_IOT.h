@@ -99,8 +99,8 @@ private:
   Stream *modemStream;
   Stream *debugStream = NULL;
   ttn_fp_t fp; // See line 45. Enum could be deleted
-  uint8_t sf; // Constant, so could be deleted
-  uint8_t fsb; // Constant? So could be deleted
+  uint8_t sf; // Constant, so could be deleted. note: ik denk het niet, want in de cpp file in de functie op regel 380 wordt er een waarde toegekend die niet constant is.
+  uint8_t fsb; // Constant? So could be deleted. note: het zelfde verhaal als hierboven
   bool adr;
   char buffer[512];
   bool baudDetermined = false;
@@ -125,7 +125,7 @@ private:
   void configureKR920_923();
   void configureIN865_867();
   */
-  void configureChannels(uint8_t fsb); // We could delete this function, because one channel is used
+  //void configureChannels(uint8_t fsb); // We could delete this function, because one channel is used
   bool setSF(uint8_t sf);
   bool waitForOk();
 
