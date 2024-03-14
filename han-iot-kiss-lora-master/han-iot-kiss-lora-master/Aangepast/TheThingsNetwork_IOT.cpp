@@ -1280,6 +1280,7 @@ bool TheThingsNetwork::setADR(bool adr){
 
 bool TheThingsNetwork::setSF(uint8_t sf)
 {
+  //sf default = 7, maybe this function can be reduced more
   uint8_t dr;
   // The switch below is not in use because we use only the case of EU868
   /*switch (fp)
