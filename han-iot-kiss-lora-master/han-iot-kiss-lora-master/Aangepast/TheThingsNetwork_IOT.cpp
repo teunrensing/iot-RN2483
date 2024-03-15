@@ -407,53 +407,53 @@ uint16_t TheThingsNetwork::getVDD()
   return 0;
 }
 
-uint8_t TheThingsNetwork::getBW()
-{
-  if (readResponse(RADIO_TABLE, RADIO_TABLE, RADIO_GET_BW, buffer, sizeof(buffer)) > 0) {
-    return atoi(buffer);
-  }
-  return 0;
-}
+// uint8_t TheThingsNetwork::getBW()
+// {
+//   if (readResponse(RADIO_TABLE, RADIO_TABLE, RADIO_GET_BW, buffer, sizeof(buffer)) > 0) {
+//     return atoi(buffer);
+//   }
+//   return 0;
+// }
 
-uint8_t TheThingsNetwork::getCR()
-{
-  if (readResponse(RADIO_TABLE, RADIO_TABLE, RADIO_GET_CR, buffer, sizeof(buffer)) > 2) {
-    return atoi(buffer+2); // skip the first two chars "4/"
-  }
-  return 0;
-}
+// uint8_t TheThingsNetwork::getCR()
+// {
+//   if (readResponse(RADIO_TABLE, RADIO_TABLE, RADIO_GET_CR, buffer, sizeof(buffer)) > 2) {
+//     return atoi(buffer+2); // skip the first two chars "4/"
+//   }
+//   return 0;
+// }
 
-uint32_t TheThingsNetwork::getFrequency()
-{
-  if (readResponse(RADIO_TABLE, RADIO_TABLE, RADIO_GET_FREQ, buffer, sizeof(buffer)) > 0) {
-    return atol(buffer);
-  }
-  return 0;
-}
+// uint32_t TheThingsNetwork::getFrequency()
+// {
+//   if (readResponse(RADIO_TABLE, RADIO_TABLE, RADIO_GET_FREQ, buffer, sizeof(buffer)) > 0) {
+//     return atol(buffer);
+//   }
+//   return 0;
+// }
 
-uint32_t TheThingsNetwork::getFCU()
-{
-  if (readResponse(MAC_TABLE, MAC_GET_SET_TABLE, MAC_UPCTR, buffer, sizeof(buffer)) > 0) {
-    return strtoul(buffer, NULL, 10);
-  }
-  return 0;
-}
+// uint32_t TheThingsNetwork::getFCU()
+// {
+//   if (readResponse(MAC_TABLE, MAC_GET_SET_TABLE, MAC_UPCTR, buffer, sizeof(buffer)) > 0) {
+//     return strtoul(buffer, NULL, 10);
+//   }
+//   return 0;
+// }
 
-uint32_t TheThingsNetwork::getFCD()
-{
-  if (readResponse(MAC_TABLE, MAC_GET_SET_TABLE, MAC_DNCTR, buffer, sizeof(buffer)) > 0) {
-    return strtoul(buffer, NULL, 10);
-  }
-  return 0;
-}
+// uint32_t TheThingsNetwork::getFCD()
+// {
+//   if (readResponse(MAC_TABLE, MAC_GET_SET_TABLE, MAC_DNCTR, buffer, sizeof(buffer)) > 0) {
+//     return strtoul(buffer, NULL, 10);
+//   }
+//   return 0;
+// }
 
-uint32_t TheThingsNetwork::getWatchDogTimer()
-{
-  if (readResponse(RADIO_TABLE, RADIO_TABLE, RADIO_GET_WDT, buffer, sizeof(buffer)) > 0) {
-    return atol(buffer);
-  }
-  return 0;
-}
+// uint32_t TheThingsNetwork::getWatchDogTimer()
+// {
+//   if (readResponse(RADIO_TABLE, RADIO_TABLE, RADIO_GET_WDT, buffer, sizeof(buffer)) > 0) {
+//     return atol(buffer);
+//   }
+//   return 0;
+// }
 
 enum ttn_modem_status_t TheThingsNetwork::getStatus()
 {
@@ -467,84 +467,84 @@ enum ttn_modem_status_t TheThingsNetwork::getStatus()
   return TTN_MODEM_READ_ERR; // unable to read status
 }
 
-int8_t TheThingsNetwork::getPower()
-{
-  if (readResponse(RADIO_TABLE, RADIO_TABLE, RADIO_GET_PWR, buffer, sizeof(buffer)) > 0) {
-    return atoi(buffer);
-  }
-  return -128;
-}
+// int8_t TheThingsNetwork::getPower()
+// {
+//   if (readResponse(RADIO_TABLE, RADIO_TABLE, RADIO_GET_PWR, buffer, sizeof(buffer)) > 0) {
+//     return atoi(buffer);
+//   }
+//   return -128;
+// }
 
-int16_t TheThingsNetwork::getRSSI()
-{
-  if (readResponse(RADIO_TABLE, RADIO_TABLE, RADIO_GET_RSSI, buffer, sizeof(buffer)) > 0) {
-    return atoi(buffer);
-  }
-  return -255;
-}
+// int16_t TheThingsNetwork::getRSSI()
+// {
+//   if (readResponse(RADIO_TABLE, RADIO_TABLE, RADIO_GET_RSSI, buffer, sizeof(buffer)) > 0) {
+//     return atoi(buffer);
+//   }
+//   return -255;
+// }
 
-int8_t TheThingsNetwork::getSNR()
-{
-  if (readResponse(RADIO_TABLE, RADIO_TABLE, RADIO_GET_SNR, buffer, sizeof(buffer)) > 0) {
-    return atoi(buffer);
-  }
-  return -128;
-}
+// int8_t TheThingsNetwork::getSNR()
+// {
+//   if (readResponse(RADIO_TABLE, RADIO_TABLE, RADIO_GET_SNR, buffer, sizeof(buffer)) > 0) {
+//     return atoi(buffer);
+//   }
+//   return -128;
+// }
 
-int8_t TheThingsNetwork::getDR()
-{
-  if (readResponse(MAC_TABLE, MAC_GET_SET_TABLE, MAC_DR, buffer, sizeof(buffer))){
-    return atoi(buffer);
-  }
-  return -1;
-}
+// int8_t TheThingsNetwork::getDR()
+// {
+//   if (readResponse(MAC_TABLE, MAC_GET_SET_TABLE, MAC_DR, buffer, sizeof(buffer))){
+//     return atoi(buffer);
+//   }
+//   return -1;
+// }
 
-int8_t TheThingsNetwork::getPowerIndex()
-{
-  if (readResponse(MAC_TABLE, MAC_GET_SET_TABLE, MAC_PWRIDX, buffer, sizeof(buffer)) > 0) {
-    return atoi(buffer);
-  }
-  return -1;
-}
+// int8_t TheThingsNetwork::getPowerIndex()
+// {
+//   if (readResponse(MAC_TABLE, MAC_GET_SET_TABLE, MAC_PWRIDX, buffer, sizeof(buffer)) > 0) {
+//     return atoi(buffer);
+//   }
+//   return -1;
+// }
 
-bool TheThingsNetwork::getChannelStatus (uint8_t channel)
-{
-  char str[5];
-  if (channel > 9)
-  {
-	str[0] = ((channel - (channel % 10)) / 10) + 48;
-	str[1] = (channel % 10) + 48;
-	str[2] = '\0';
-  }
-  else
-  {
-	str[0] = channel + 48;
-	str[1] = '\0';
-  }
-  sendCommand(MAC_TABLE, MAC_PREFIX, true, false);
-  sendCommand(MAC_TABLE, MAC_GET, true, false); // default "get " in between (same as radio get)
-  sendCommand(MAC_GET_SET_TABLE, MAC_CH, true, false);
-  sendCommand(MAC_CH_TABLE, MAC_CHANNEL_STATUS, true, false);
-  modemStream->write(str);
-  modemStream->write(SEND_MSG);
+// bool TheThingsNetwork::getChannelStatus (uint8_t channel)
+// {
+//   char str[5];
+//   if (channel > 9)
+//   {
+// 	str[0] = ((channel - (channel % 10)) / 10) + 48;
+// 	str[1] = (channel % 10) + 48;
+// 	str[2] = '\0';
+//   }
+//   else
+//   {
+// 	str[0] = channel + 48;
+// 	str[1] = '\0';
+//   }
+//   sendCommand(MAC_TABLE, MAC_PREFIX, true, false);
+//   sendCommand(MAC_TABLE, MAC_GET, true, false); // default "get " in between (same as radio get)
+//   sendCommand(MAC_GET_SET_TABLE, MAC_CH, true, false);
+//   sendCommand(MAC_CH_TABLE, MAC_CHANNEL_STATUS, true, false);
+//   modemStream->write(str);
+//   modemStream->write(SEND_MSG);
 
-  if (readLine(buffer, sizeof(buffer)))
-	  return (pgmstrcmp(buffer, CMP_ON) == 0); // true if on, false if off or an error occurs
-  else
-	  return false; // error
-}
+//   if (readLine(buffer, sizeof(buffer)))
+// 	  return (pgmstrcmp(buffer, CMP_ON) == 0); // true if on, false if off or an error occurs
+//   else
+// 	  return false; // error
+// }
 
-ttn_response_code_t TheThingsNetwork::getLastError(){
+// ttn_response_code_t TheThingsNetwork::getLastError(){
 
-	int match, pos;
-	for (pos=0; pos <= CMP_ERR_LAST; pos++){
-		match = pgmstrcmp(buffer, pos, CMP_ERR_TABLE);
-		if (match == 0)
-			break;
-	}
+// 	int match, pos;
+// 	for (pos=0; pos <= CMP_ERR_LAST; pos++){
+// 		match = pgmstrcmp(buffer, pos, CMP_ERR_TABLE);
+// 		if (match == 0)
+// 			break;
+// 	}
 
-	return (ttn_response_code_t)(-1* pos); // code order is equal
-}
+// 	return (ttn_response_code_t)(-1* pos); // code order is equal
+// }
 
 void TheThingsNetwork::debugPrintIndex(uint8_t index, const char *value)
 {
@@ -944,34 +944,34 @@ void TheThingsNetwork::showStatus()
   debugPrintIndex(SHOW_RX_DELAY_2, buffer);
 }
 
-bool TheThingsNetwork::checkValidModuleConnected(bool autoBaudFirst)
-{
-  // check if we want to autobaud first
-  if(autoBaudFirst)
-  {
-    autoBaud();
-  }
-  // send "sys get ver" to check if (and what) module is connected
-  getVersion(buffer, sizeof(buffer));
-  // check if we got a response (whatever it might be)
-  // needsHardReset flag is set by readLine() (called at some point down the line by getVersion())
-  if(this->needsHardReset)
-  {
-    return false;                                               // no response
-  }
-  // buffer contains "RN2xx3[xx] x.x.x ...", getting only model (RN2xx3[xx])
-  char *model = strtok(buffer, " ");
-  debugPrintIndex(SHOW_MODEL, model);
-  // check if module is valid (must be RN2483, RN2483A, RN2903 or RN2903AS)
-  //if(pgmstrcmp(model, CMP_RN2483) == 0 || pgmstrcmp(model, CMP_RN2483A) == 0 || pgmstrcmp(model, CMP_RN2903) == 0 || pgmstrcmp(model, CMP_RN2903AS) == 0)
- if(pgmstrcmp(model, CMP_RN2483) == 0)// Changed because the others are not in use
-  {
-    debugPrintMessage(SUCCESS_MESSAGE, SCS_VALID_MODULE);
-    return true;                                                // module responded and is valid (recognized/supported)
-  }
-  debugPrintMessage(ERR_MESSAGE, ERR_INVALID_MODULE);
-  return false;                                                 // module responded but is invalid (unrecognized/unsupported)
-}
+// bool TheThingsNetwork::checkValidModuleConnected(bool autoBaudFirst)
+// {
+//   // check if we want to autobaud first
+//   if(autoBaudFirst)
+//   {
+//     autoBaud();
+//   }
+//   // send "sys get ver" to check if (and what) module is connected
+//   getVersion(buffer, sizeof(buffer));
+//   // check if we got a response (whatever it might be)
+//   // needsHardReset flag is set by readLine() (called at some point down the line by getVersion())
+//   if(this->needsHardReset)
+//   {
+//     return false;                                               // no response
+//   }
+//   // buffer contains "RN2xx3[xx] x.x.x ...", getting only model (RN2xx3[xx])
+//   char *model = strtok(buffer, " ");
+//   debugPrintIndex(SHOW_MODEL, model);
+//   // check if module is valid (must be RN2483, RN2483A, RN2903 or RN2903AS)
+//   //if(pgmstrcmp(model, CMP_RN2483) == 0 || pgmstrcmp(model, CMP_RN2483A) == 0 || pgmstrcmp(model, CMP_RN2903) == 0 || pgmstrcmp(model, CMP_RN2903AS) == 0)
+//  if(pgmstrcmp(model, CMP_RN2483) == 0)// Changed because the others are not in use
+//   {
+//     debugPrintMessage(SUCCESS_MESSAGE, SCS_VALID_MODULE);
+//     return true;                                                // module responded and is valid (recognized/supported)
+//   }
+//   debugPrintMessage(ERR_MESSAGE, ERR_INVALID_MODULE);
+//   return false;                                                 // module responded but is invalid (unrecognized/unsupported)
+// }
 
 void TheThingsNetwork::configureEU868()
 {
@@ -1200,37 +1200,41 @@ void TheThingsNetwork::configureEU868()
   }
   sendMacSet(MAC_RETX, TTN_RETX);
 }
+*/ 
+
+/* Next two functions are not used in the code, as far as i know. So therefore deleted
+// bool TheThingsNetwork::setChannel(uint8_t channel, uint32_t frequency, uint8_t dr_min, uint8_t dr_max){
+
+//   bool done = true;
+
+//   if (channel > 15)
+// 	  return false;
+
+//   if (frequency){
+// 	char buf[11];
+// 	sprintf(buf, "%lu", frequency);
+// 	done &= sendChSet(MAC_CHANNEL_FREQ, channel, buf);
+//   }
+
+//   if (done && (dr_min < 16) && (dr_max < 16)){
+// 	char buf[11];
+// 	sprintf(buf, "%u %u", dr_min, dr_max);
+// 	done &= sendChSet(MAC_CHANNEL_DRRANGE, channel, buf);
+//   }
+//   else
+// 	done &= (dr_min == 255) && (dr_max == 255);
+
+//   return done;
+// }
+
+
+// bool TheThingsNetwork::setRx2Channel(uint32_t frequency, uint8_t dr){
+
+//   char buf[15];
+//   sprintf(buf, "%u %lu", dr, frequency);
+//   return sendMacSet(MAC_RX2, buf);
+// }
 */
-bool TheThingsNetwork::setChannel(uint8_t channel, uint32_t frequency, uint8_t dr_min, uint8_t dr_max){
-
-  bool done = true;
-
-  if (channel > 15)
-	  return false;
-
-  if (frequency){
-	char buf[11];
-	sprintf(buf, "%lu", frequency);
-	done &= sendChSet(MAC_CHANNEL_FREQ, channel, buf);
-  }
-
-  if (done && (dr_min < 16) && (dr_max < 16)){
-	char buf[11];
-	sprintf(buf, "%u %u", dr_min, dr_max);
-	done &= sendChSet(MAC_CHANNEL_DRRANGE, channel, buf);
-  }
-  else
-	done &= (dr_min == 255) && (dr_max == 255);
-
-  return done;
-}
-
-bool TheThingsNetwork::setRx2Channel(uint32_t frequency, uint8_t dr){
-
-  char buf[15];
-  sprintf(buf, "%u %lu", dr, frequency);
-  return sendMacSet(MAC_RX2, buf);
-}
 
 bool TheThingsNetwork::setChannelStatus (uint8_t channel, bool status){
   if (status)
@@ -1239,30 +1243,30 @@ bool TheThingsNetwork::setChannelStatus (uint8_t channel, bool status){
     return sendChSet(MAC_CHANNEL_STATUS, channel, "off");
 }
 
-bool TheThingsNetwork::setChannelDCycle (uint8_t channel, float duty_cycle){ // in percent
-  if (channel > 15 || duty_cycle > 100.0 || duty_cycle < 0.0)
-	return false;
+// bool TheThingsNetwork::setChannelDCycle (uint8_t channel, float duty_cycle){ // in percent
+//   if (channel > 15 || duty_cycle > 100.0 || duty_cycle < 0.0)
+// 	return false;
 
-  char buf[6]; // number 99999
-  if (0.0 == duty_cycle)
-	  (void)sprintf(buf, "%u", 65535u);
-  else
-	  (void)sprintf(buf, "%u", (uint16_t)((100.0/duty_cycle) - 1));
+//   char buf[6]; // number 99999
+//   if (0.0 == duty_cycle)
+// 	  (void)sprintf(buf, "%u", 65535u);
+//   else
+// 	  (void)sprintf(buf, "%u", (uint16_t)((100.0/duty_cycle) - 1));
 
-  return sendChSet(MAC_CHANNEL_DCYCLE, channel, buf);
-}
+//   return sendChSet(MAC_CHANNEL_DCYCLE, channel, buf);
+// }
 
-bool TheThingsNetwork::setPowerIndex(uint8_t index){
-  char buf[4];
-  sprintf(buf, "%u",index);
-  return sendMacSet(MAC_PWRIDX, buf);
-}
+// bool TheThingsNetwork::setPowerIndex(uint8_t index){
+//   char buf[4];
+//   sprintf(buf, "%u",index);
+//   return sendMacSet(MAC_PWRIDX, buf);
+// }
 
-bool TheThingsNetwork::setDR(uint8_t dr){
-  char buf[4];
-  sprintf(buf, "%u",dr);
-  return sendMacSet(MAC_DR, buf);
-}
+// bool TheThingsNetwork::setDR(uint8_t dr){
+//   char buf[4];
+//   sprintf(buf, "%u",dr);
+//   return sendMacSet(MAC_DR, buf);
+// }
 
 bool TheThingsNetwork::setADR(bool adr){
 	bool ret;
@@ -1305,6 +1309,7 @@ bool TheThingsNetwork::setSF(uint8_t sf)
   return sendMacSet(MAC_DR, s);
 }
 
+/* Next three functions not used 
 bool TheThingsNetwork::setRX1Delay(uint16_t delay){
 	  char buf[6];
 	  sprintf(buf, "%u",delay);
@@ -1322,6 +1327,7 @@ bool TheThingsNetwork::setFCD(uint32_t fcd){
   sprintf(buf, "%lu", fcd);
   return sendMacSet(MAC_DNCTR, buf);
 }
+*/
 
 void TheThingsNetwork::sendCommand(uint8_t table, uint8_t index, bool appendSpace, bool print)
 {
