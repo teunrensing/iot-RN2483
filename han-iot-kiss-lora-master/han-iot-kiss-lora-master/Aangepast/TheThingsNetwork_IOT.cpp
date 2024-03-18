@@ -260,7 +260,7 @@ const char *const mac_table[] PROGMEM = {mac_prefix, mac_reset, mac_tx, mac_join
 #define MAC_SET 8
 #define MAC_GET 9
 
-//#if defined(YES_DEBUG)
+
 const char mac_devaddr[] PROGMEM = "devaddr";
 const char mac_deveui[] PROGMEM = "deveui";
 const char mac_appeui[] PROGMEM = "appeui";
@@ -289,7 +289,7 @@ const char mac_dnctr[] PROGMEM = "dnctr";
 const char *const mac_options[] PROGMEM = {mac_devaddr, mac_deveui, mac_appeui, mac_nwkskey, mac_appskey, mac_appkey, mac_pwridx, mac_dr, mac_adr, mac_bat, mac_retx, mac_linkchk, mac_rxdelay1, mac_rxdelay2, mac_band,
 			mac_ar, mac_rx2, mac_ch, mac_gwnb, mac_mrgn, mac_class, mac_status, mac_upctr, mac_dnctr};
 
-//#endif
+
 
 #define MAC_DEVADDR 0
 #define MAC_DEVEUI 1
@@ -637,7 +637,9 @@ size_t TheThingsNetwork::readLine(char *buffer, size_t size, uint8_t attempts)
   if (!read)
   { // If attempts is activated return 0 and set RN state marker
     this->needsHardReset = true; // Inform the application about the radio module is not responsive.
+    #if defined(YES_DEBUG)
     debugPrintMessage(ERR_MESSAGE, ERR_NO_RESPONSE);
+    #endif
     return 0;
   }
   buffer[read - 1] = '\0'; // set \r to \0
@@ -718,7 +720,9 @@ void TheThingsNetwork::resetHard(uint8_t resetPin){
 
 void TheThingsNetwork::saveState()
 {
-  debugPrint(SENDING);
+  #if defined(YES_DEBUG)
+debugPrint(SENDING);
+#endif
   sendCommand(MAC_TABLE, MAC_PREFIX, true);
   sendCommand(MAC_TABLE, MAC_SAVE, false);
   modemStream->write(SEND_MSG);
@@ -738,7 +742,9 @@ bool TheThingsNetwork::personalize(const char *devAddr, const char *nwkSKey, con
   }
   if (strlen(devAddr) != 8 || strlen(appSKey) != 32 || strlen(nwkSKey) != 32)
   {
+    #if defined(YES_DEBUG)
     debugPrintMessage(ERR_MESSAGE, ERR_KEY_LENGTH);
+    #endif
     return false;
   }
   sendMacSet(MAC_DEVADDR, devAddr);
@@ -1403,11 +1409,13 @@ void TheThingsNetwork::sendCommand(uint8_t table, uint8_t index, bool appendSpac
   {
     modemStream->write(" ");
   }
+  #if defined(YES_DEBUG)
   if (print)
   {
     debugPrint(command);
     debugPrint(F(" "));
   }
+  #endif
 }
 
 bool TheThingsNetwork::sendMacSet(uint8_t index, uint8_t value1, unsigned long value2)
@@ -1424,13 +1432,17 @@ bool TheThingsNetwork::sendMacSet(uint8_t index, uint8_t value1, unsigned long v
 bool TheThingsNetwork::sendMacSet(uint8_t index, const char *value)
 {
   clearReadBuffer();
-  debugPrint(SENDING);
+  #if defined(YES_DEBUG)
+debugPrint(SENDING);
+#endif
   sendCommand(MAC_TABLE, MAC_PREFIX, true);
   sendCommand(MAC_TABLE, MAC_SET, true);
   sendCommand(MAC_GET_SET_TABLE, index, true);
   modemStream->write(value);
   modemStream->write(SEND_MSG);
+  #if defined(YES_DEBUG)
   debugPrintLn(value);
+  #endif
   return waitForOk();
 }
 
@@ -1467,7 +1479,9 @@ bool TheThingsNetwork::sendChSet(uint8_t index, uint8_t channel, const char *val
     ch[0] = channel + 48;
     ch[1] = '\0';
   }
+  #if defined(YES_DEBUG)
   debugPrint(F(SENDING));
+  #endif
   sendCommand(MAC_TABLE, MAC_PREFIX, true);
   sendCommand(MAC_TABLE, MAC_SET, true);
   sendCommand(MAC_GET_SET_TABLE, MAC_CH, true);
@@ -1476,16 +1490,20 @@ bool TheThingsNetwork::sendChSet(uint8_t index, uint8_t channel, const char *val
   modemStream->write(" ");
   modemStream->write(value);
   modemStream->write(SEND_MSG);
+  #if defined(YES_DEBUG)
   debugPrint(channel);
   debugPrint(F(" "));
   debugPrintLn(value);
+  #endif
   return waitForOk();
 }
 
 bool TheThingsNetwork::sendJoinSet(uint8_t type)
 {
   clearReadBuffer();
-  debugPrint(F(SENDING));
+  #if defined(YES_DEBUG)
+debugPrint(F(SENDING));
+#endif
   sendCommand(MAC_TABLE, MAC_PREFIX, true);
   sendCommand(MAC_TABLE, MAC_JOIN, true);
   sendCommand(MAC_JOIN_TABLE, type, false);
@@ -1497,7 +1515,9 @@ bool TheThingsNetwork::sendJoinSet(uint8_t type)
 bool TheThingsNetwork::sendPayload(uint8_t mode, uint8_t port, uint8_t *payload, size_t length)
 {
   clearReadBuffer();
-  debugPrint(F(SENDING));
+  #if defined(YES_DEBUG)
+debugPrint(F(SENDING));
+#endif
   sendCommand(MAC_TABLE, MAC_PREFIX, true);
   sendCommand(MAC_TABLE, MAC_TX, true);
   sendCommand(MAC_TX_TABLE, mode, true);
@@ -1522,8 +1542,10 @@ bool TheThingsNetwork::sendPayload(uint8_t mode, uint8_t port, uint8_t *payload,
   }
   modemStream->write(sport);
   modemStream->print(" ");
+  #if defined(YES_DEBUG)
   debugPrint(sport);
   debugPrint(F(" "));
+  #endif
   uint8_t i = 0;
   for (i = 0; i < length; i++)
   {
@@ -1531,13 +1553,17 @@ bool TheThingsNetwork::sendPayload(uint8_t mode, uint8_t port, uint8_t *payload,
     {
       modemStream->print("0");
       modemStream->print(payload[i], HEX);
+      #if defined(YES_DEBUG)
       debugPrint(F("0"));
       debugPrint(payload[i], HEX);
+      #endif
     }
     else
     {
       modemStream->print(payload[i], HEX);
+      #if defined(YES_DEBUG)
       debugPrint(payload[i], HEX);
+      #endif
     }
   }
   modemStream->write(SEND_MSG);
@@ -1552,14 +1578,18 @@ void TheThingsNetwork::sleep(uint32_t mseconds)
     return;
   }
 
-  debugPrint(F(SENDING));
+  #if defined(YES_DEBUG)
+debugPrint(F(SENDING));
+#endif
   sendCommand(SYS_TABLE, SYS_PREFIX, true);
   sendCommand(SYS_TABLE, SYS_SLEEP, true);
 
   sprintf(buffer, "%lu", mseconds);
   modemStream->write(buffer);
   modemStream->write(SEND_MSG);
+  #if defined(YES_DEBUG)
   debugPrintLn(buffer);
+  #endif
 }
 
 void TheThingsNetwork::wake()
@@ -1570,7 +1600,9 @@ void TheThingsNetwork::wake()
 void TheThingsNetwork::linkCheck(uint16_t seconds)
 {
   clearReadBuffer();
-  debugPrint(SENDING);
+  #if defined(YES_DEBUG)
+debugPrint(SENDING);
+#endif
   sendCommand(MAC_TABLE, MAC_PREFIX, true);
   sendCommand(MAC_TABLE, MAC_SET, true);
   sendCommand(MAC_GET_SET_TABLE, MAC_LINKCHK, true);
@@ -1578,7 +1610,9 @@ void TheThingsNetwork::linkCheck(uint16_t seconds)
   sprintf(buffer, "%u", seconds);
   modemStream->write(buffer);
   modemStream->write(SEND_MSG);
+  #if defined(YES_DEBUG)
   debugPrintLn(buffer);
+  #endif
   waitForOk();
 }
 
