@@ -14,7 +14,7 @@
 
 // These default can be adjusted to just using
 #define TTN_DEFAULT_SF 7 // = Spreading factor
-#define TTN_DEFAULT_FSB 2 // 
+#define TTN_DEFAULT_FSB 2
 #define TTN_RETX "7"
 
 #define TTN_PWRIDX_EU868 "1"
@@ -63,8 +63,8 @@ enum ttn_fp_t
 enum lorawan_class_t
 {
   CLASS_A,
-  CLASS_B,
-  CLASS_C
+  // CLASS_B,
+  // CLASS_C
 };
 
 enum ttn_response_code_t
@@ -150,17 +150,17 @@ public:
   */
 
   bool needsHardReset = false;
-  // use this function again when you use the enum ttn_fp_t
+
   //TheThingsNetwork(Stream &modemStream, Stream &debugStream, ttn_fp_t fp, uint8_t sf = TTN_DEFAULT_SF, uint8_t fsb = TTN_DEFAULT_FSB);
   TheThingsNetwork(Stream &modemStream, Stream &debugStream, uint8_t sf = TTN_DEFAULT_SF, uint8_t fsb = TTN_DEFAULT_FSB); //removed ttn_fp_t fp
-  void reset(bool adr = true); //yes
-  void resetHard(uint8_t resetPin); //yes
-  void showStatus(); //yes
-  size_t getHardwareEui(char *buffer, size_t size); // yes
-  size_t getAppEui(char *buffer, size_t size); // yes
+  void reset(bool adr = true); 
+  void resetHard(uint8_t resetPin); 
+  void showStatus(); 
+  size_t getHardwareEui(char *buffer, size_t size); 
+  size_t getAppEui(char *buffer, size_t size);
   size_t getVersion(char *buffer, size_t size);
   enum ttn_modem_status_t getStatus();
-  uint16_t getVDD(); // yes
+  uint16_t getVDD(); 
   // int16_t getRSSI();
   // uint32_t getFrequency();
   // uint32_t getWatchDogTimer();
@@ -174,23 +174,23 @@ public:
   // int8_t getPowerIndex();
   // bool getChannelStatus (uint8_t channel);
   // ttn_response_code_t getLastError();
-  void onMessage(void (*cb)(const uint8_t *payload, size_t size, port_t port)); // yes
+  void onMessage(void (*cb)(const uint8_t *payload, size_t size, port_t port)); //
   bool provision(const char *appEui, const char *appKey, bool resetFirst = true); // yes, but changes
   // Missing: bool provision(const char *devEui, const char *appEui, const char appKey);
   bool join(const char *appEui, const char *appKey, int8_t retries = -1, uint32_t retryDelay = 10000, lorawan_class_t = CLASS_A); // yes but changes
   // Missing: bool join(const char *devEui, const char *appEui, const char *appKey, int8_t retries = -1, uint32_t retryDelay = 10000);
-  bool join(int8_t retries = -1, uint32_t retryDelay = 10000); // yes
+  bool join(int8_t retries = -1, uint32_t retryDelay = 10000); 
   bool personalize(const char *devAddr, const char *nwkSKey, const char *appSKey, bool resetFirst = true); // yes but changes
-  bool personalize(); // yes
+  bool personalize(); 
   bool setClass(lorawan_class_t p_lw_class); // Used in join function
-  ttn_response_t sendBytes(const uint8_t *payload, size_t length, port_t port = 1, bool confirm = false, uint8_t sf = 0); // yes
-  ttn_response_t poll(port_t port = 1, bool confirm = false, bool modem_only = false); //yes
-  void sleep(uint32_t mseconds); // yes
-  void wake(); // yes
-  void saveState(); // yes
-  void linkCheck(uint16_t seconds); //yes
-  uint8_t getLinkCheckGateways(); // yes
-  uint8_t getLinkCheckMargin(); // yes
+  ttn_response_t sendBytes(const uint8_t *payload, size_t length, port_t port = 1, bool confirm = false, uint8_t sf = 0); 
+  ttn_response_t poll(port_t port = 1, bool confirm = false, bool modem_only = false);
+  void sleep(uint32_t mseconds);
+  void wake(); 
+  void saveState(); 
+  void linkCheck(uint16_t seconds);
+  uint8_t getLinkCheckGateways(); 
+  uint8_t getLinkCheckMargin();
   //bool setChannel(uint8_t channel, uint32_t frequency = 0l, uint8_t dr_min = 255, uint8_t dr_max = 255);
   // bool setRx2Channel(uint32_t frequency, uint8_t dr);
   // bool setChannelDCycle (uint8_t channel, float duty_cycle);

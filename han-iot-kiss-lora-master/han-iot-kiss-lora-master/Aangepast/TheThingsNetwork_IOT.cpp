@@ -26,6 +26,7 @@
 #define TTN_HEX_CHAR_TO_NIBBLE(c) ((c >= 'A') ? (c - 'A' + 0x0A) : (c - '0'))
 #define TTN_HEX_PAIR_TO_BYTE(h, l) ((TTN_HEX_CHAR_TO_NIBBLE(h) << 4) + TTN_HEX_CHAR_TO_NIBBLE(l))
 
+
 const char ok[] PROGMEM = "ok";
 const char on[] PROGMEM = "on";
 const char off[] PROGMEM = "off";
@@ -40,6 +41,7 @@ const char rn2483[] PROGMEM = "RN2483";
 
 //const char *const compare_table[] PROGMEM = {ok, on, off, accepted, mac_tx_ok, mac_rx, mac_err, rn2483, rn2483a, rn2903, rn2903as};//This needs to change because some chars ar not used
 const char *const compare_table[] PROGMEM = {ok, on, off, accepted, mac_tx_ok, mac_rx, mac_err, rn2483};
+
 
 #define CMP_OK 0
 #define CMP_ON 1
@@ -70,6 +72,7 @@ const char err[] PROGMEM = "err";
 
 const char *const compareerr_table[] PROGMEM = {ok, busy, fram_counter_err_rejoin_needed, invalid_class, invalid_data_len, invalid_param, keys_not_init, mac_paused, multicast_keys_not_set, no_free_ch, not_joined, silent, err};
 
+#if defined(YES_DEBUG)
 #define CMP_ERR_OK 0
 #define CMP_ERR_BUSY 1
 #define CMP_ERR_FRMCNT 2
@@ -85,6 +88,8 @@ const char *const compareerr_table[] PROGMEM = {ok, busy, fram_counter_err_rejoi
 #define CMP_ERR_ERR 12
 
 #define CMP_ERR_LAST CMP_ERR_ERR
+
+#endif
 
 #define SENDING "Sending: "
 #define SEND_MSG "\r\n"
@@ -167,38 +172,39 @@ const char *const error_msg[] PROGMEM = {invalid_sf, invalid_fp, unexpected_resp
 #define SCS_VALID_MODULE 4
 
 
-// Not used
-// const char radio_prefix[] PROGMEM = "radio";
-// const char radio_set[] PROGMEM = "set";
-// const char radio_get[] PROGMEM = "get";
-// const char radio_get_bw[] PROGMEM = "bw";
-// const char radio_get_prlen[] PROGMEM = "prlen";
-// const char radio_get_crc[] PROGMEM = "crc";
-// const char radio_get_cr[] PROGMEM = "cr";
-// const char radio_get_sf[] PROGMEM = "sf";
-// const char radio_get_freq[] PROGMEM = "freq";
-// const char radio_get_rxbw[] PROGMEM = "rxbw";
-// const char radio_get_wdt[] PROGMEM = "wdt";
-// const char radio_get_pwr[] PROGMEM = "pwr";
-// const char radio_get_rssi[] PROGMEM = "rssi";
-// const char radio_get_snr[] PROGMEM = "snr";
+#if defined(YES_DEBUG)
+const char radio_prefix[] PROGMEM = "radio";
+const char radio_set[] PROGMEM = "set";
+const char radio_get[] PROGMEM = "get";
+const char radio_get_bw[] PROGMEM = "bw";
+const char radio_get_prlen[] PROGMEM = "prlen";
+const char radio_get_crc[] PROGMEM = "crc";
+const char radio_get_cr[] PROGMEM = "cr";
+const char radio_get_sf[] PROGMEM = "sf";
+const char radio_get_freq[] PROGMEM = "freq";
+const char radio_get_rxbw[] PROGMEM = "rxbw";
+const char radio_get_wdt[] PROGMEM = "wdt";
+const char radio_get_pwr[] PROGMEM = "pwr";
+const char radio_get_rssi[] PROGMEM = "rssi";
+const char radio_get_snr[] PROGMEM = "snr";
 
-//const char *const radio_table[] PROGMEM = {radio_prefix, radio_set, radio_get, radio_get_bw, radio_get_prlen, radio_get_crc, radio_get_cr, radio_get_sf, radio_get_freq, radio_get_rxbw, radio_get_wdt, radio_get_pwr, radio_get_rssi, radio_get_snr};
+const char *const radio_table[] PROGMEM = {radio_prefix, radio_set, radio_get, radio_get_bw, radio_get_prlen, radio_get_crc, radio_get_cr, radio_get_sf, radio_get_freq, radio_get_rxbw, radio_get_wdt, radio_get_pwr, radio_get_rssi, radio_get_snr};
 
-// #define RADIO_PREFIX 0
-// #define RADIO_SET 1
-// #define RADIO_GET 2
-// #define RADIO_GET_BW 3
-// #define RADIO_GET_PRLEN 4
-// #define RADIO_GET_CRC 5
-// #define RADIO_GET_CR 6
-// #define RADIO_GET_SF 7
-// #define RADIO_GET_FREQ 8
-// #define RADIO_GET_RXBW 9
-// #define RADIO_GET_WDT 10
-// #define RADIO_GET_PWR 11
-// #define RADIO_GET_RSSI 12
-// #define RADIO_GET_SNR 13
+#define RADIO_PREFIX 0
+#define RADIO_SET 1
+#define RADIO_GET 2
+#define RADIO_GET_BW 3
+#define RADIO_GET_PRLEN 4
+#define RADIO_GET_CRC 5
+#define RADIO_GET_CR 6
+#define RADIO_GET_SF 7
+#define RADIO_GET_FREQ 8
+#define RADIO_GET_RXBW 9
+#define RADIO_GET_WDT 10
+#define RADIO_GET_PWR 11
+#define RADIO_GET_RSSI 12
+#define RADIO_GET_SNR 13
+#endif
 
 const char sys_prefix[] PROGMEM = "sys";
 const char sys_sleep[] PROGMEM = "sleep";
@@ -214,6 +220,8 @@ const char sys_set_get_nvm[] PROGMEM = "nvm";
 const char sys_set_pindig[] PROGMEM = "pindig";
 
 const char *const sys_table[] PROGMEM = {sys_prefix, sys_sleep, sys_reset, sys_erase_fw, sys_factory_rst, sys_set, sys_get, sys_get_ver, sys_get_vdd, sys_get_hweui, sys_set_get_nvm, sys_set_pindig};
+
+
 
 #define SYS_PREFIX 0
 #define SYS_SLEEP 1
@@ -252,6 +260,7 @@ const char *const mac_table[] PROGMEM = {mac_prefix, mac_reset, mac_tx, mac_join
 #define MAC_SET 8
 #define MAC_GET 9
 
+//#if defined(YES_DEBUG)
 const char mac_devaddr[] PROGMEM = "devaddr";
 const char mac_deveui[] PROGMEM = "deveui";
 const char mac_appeui[] PROGMEM = "appeui";
@@ -279,6 +288,8 @@ const char mac_dnctr[] PROGMEM = "dnctr";
 
 const char *const mac_options[] PROGMEM = {mac_devaddr, mac_deveui, mac_appeui, mac_nwkskey, mac_appskey, mac_appkey, mac_pwridx, mac_dr, mac_adr, mac_bat, mac_retx, mac_linkchk, mac_rxdelay1, mac_rxdelay2, mac_band,
 			mac_ar, mac_rx2, mac_ch, mac_gwnb, mac_mrgn, mac_class, mac_status, mac_upctr, mac_dnctr};
+
+//#endif
 
 #define MAC_DEVADDR 0
 #define MAC_DEVEUI 1
@@ -390,14 +401,14 @@ uint8_t receivedPort(const char *s)
   }
   return port;
 }
-//Use the function if the program doesnt't work on the devboard and make the enum ttn_fp_t available again.
+
 //TheThingsNetwork::TheThingsNetwork(Stream &modemStream, Stream &debugStream, ttn_fp_t fp, uint8_t sf, uint8_t fsb)
 TheThingsNetwork::TheThingsNetwork(Stream &modemStream, Stream &debugStream, uint8_t sf, uint8_t fsb)
 {
   this->debugStream = &debugStream;
   this->modemStream = &modemStream;
   this->modemStream->setTimeout(TTN_DEFAULT_TIMEOUT);
- // this->fp = fp; //Test if it works now, if not reverse the changes
+ // this->fp = fp; 
   this->sf = sf;
   this->fsb = fsb;
   this->adr = false;
@@ -776,7 +787,7 @@ bool TheThingsNetwork::provision(const char *appEui, const char *appKey, bool re
 bool TheThingsNetwork::join(int8_t retries, uint32_t retryDelay)
 {
   int8_t attempts = 0;
-  //configureChannels(fsb); // Not neccessary with one 
+  //configureChannels(fsb); // Not neccessary with one region
   configureEU868();
   setSF(sf);
   while (retries == -1 || attempts <= retries)
@@ -818,13 +829,13 @@ bool TheThingsNetwork::setClass(lorawan_class_t p_lw_class)
 
   // case CLASS_B: // Not yet supported. Use default case.
 
-  case CLASS_C:
-    {
-      bool result = sendMacSet(MAC_CLASS, "c");
-      // Older firmware does not support Class C. If setting change fails, keep on using Class A.
-      if(result) lw_class = p_lw_class;
-      return result;
-    }
+  // case CLASS_C:
+  //   {
+  //     bool result = sendMacSet(MAC_CLASS, "c");
+  //     // Older firmware does not support Class C. If setting change fails, keep on using Class A.
+  //     if(result) lw_class = p_lw_class;
+  //     return result;
+  //   }
 
   default:
     return false;
@@ -934,21 +945,21 @@ ttn_response_t TheThingsNetwork::poll(port_t port, bool confirm, bool modem_only
 	  }
 
 
-  case CLASS_C:
-	  {
-		  // Class C: check rx buffer for any received data
-		  memset(buffer, 0, sizeof(buffer));
+  // case CLASS_C:
+	//   {
+	// 	  // Class C: check rx buffer for any received data
+	// 	  memset(buffer, 0, sizeof(buffer));
 
-		  uint32_t timeout = this->modemStream->getTimeout();
-		  this->modemStream->setTimeout(100);
-		  this->modemStream->readBytesUntil('\n', buffer, sizeof(buffer));
-		  this->modemStream->setTimeout(timeout);
+	// 	  uint32_t timeout = this->modemStream->getTimeout();
+	// 	  this->modemStream->setTimeout(100);
+	// 	  this->modemStream->readBytesUntil('\n', buffer, sizeof(buffer));
+	// 	  this->modemStream->setTimeout(timeout);
 
-		  return parseBytes();
-	  }
+	// 	  return parseBytes();
+	//   }
 
   default:
-  case CLASS_B: // Not yet supported. Use default case.
+  // case CLASS_B: // Not yet supported. Use default case.
 	  return TTN_UNSUCCESSFUL_RECEIVE;
 
   }
@@ -1401,9 +1412,13 @@ void TheThingsNetwork::sendCommand(uint8_t table, uint8_t index, bool appendSpac
 
 bool TheThingsNetwork::sendMacSet(uint8_t index, uint8_t value1, unsigned long value2)
 {
+  #if defined(YES_DEBUG)
 	char buf[15];
 	sprintf(buf, "%u %lu", value1, value2);
 	return sendMacSet(index, buf);
+  #else
+  // Do nothing, debug off
+  #endif
 }
 
 bool TheThingsNetwork::sendMacSet(uint8_t index, const char *value)
