@@ -3,6 +3,15 @@
 
 #include "TheThingsNetwork_IOT.h"
 
+#define DEBUG_SESSION 0 // Set to 1 to use debug functions
+
+#if DEBUG_SESSION == 1
+#define YES_DEBUG
+#else
+#define NO_DEBUG
+#endif
+
+
 #define debugPrintLn(...)                \
   {                                      \
     if (debugStream)                     \
@@ -80,6 +89,8 @@ const char *const compareerr_table[] PROGMEM = {ok, busy, fram_counter_err_rejoi
 #define SENDING "Sending: "
 #define SEND_MSG "\r\n"
 
+
+#if defined(YES_DEBUG)
 const char eui[] PROGMEM = "EUI: ";
 const char battery[] PROGMEM = "Battery: ";
 const char appEui[] PROGMEM = "AppEUI: ";
@@ -94,6 +105,9 @@ const char devaddr[] PROGMEM = "DevAddr: ";
 
 const char *const show_table[] PROGMEM = {eui, battery, appEui, devEui, band, data_rate, rx_delay_1, rx_delay_2, version, model, devaddr};
 
+#endif
+
+
 #define SHOW_EUI 0
 #define SHOW_BATTERY 1
 #define SHOW_APPEUI 2
@@ -106,6 +120,7 @@ const char *const show_table[] PROGMEM = {eui, battery, appEui, devEui, band, da
 #define SHOW_MODEL 9
 #define SHOW_DEVADDR 10
 
+#if defined(YES_DEBUG)
 const char invalid_sf[] PROGMEM = "Invalid SF";
 const char invalid_fp[] PROGMEM = "Invalid frequency plan";
 const char unexpected_response[] PROGMEM = "Unexpected response: ";
@@ -120,6 +135,7 @@ const char no_response[] PROGMEM =  "No response from RN module.";
 const char invalid_module[] PROGMEM = "Invalid module (must be RN2xx3[xx]).";
 
 const char *const error_msg[] PROGMEM = {invalid_sf, invalid_fp, unexpected_response, send_command_failed, join_failed, join_not_accepted, personalize_not_accepted, response_is_not_ok, error_key_length, check_configuration, no_response, invalid_module};
+#endif
 
 #define ERR_INVALID_SF 0
 #define ERR_INVALID_FP 1
@@ -134,13 +150,15 @@ const char *const error_msg[] PROGMEM = {invalid_sf, invalid_fp, unexpected_resp
 #define ERR_NO_RESPONSE 10
 #define ERR_INVALID_MODULE 11
 
-const char personalize_accepted[] PROGMEM = "Personalize accepted. Status: ";
-const char join_accepted[] PROGMEM = "Join accepted. Status: ";
-const char successful_transmission[] PROGMEM = "Successful transmission";
-const char successful_transmission_received[] PROGMEM = "Successful transmission. Received ";
-const char valid_module[] PROGMEM = "Valid module connected.";
+#if defined(YES_DEBUG)
+ const char personalize_accepted[] PROGMEM = "Personalize accepted. Status: ";
+ const char join_accepted[] PROGMEM = "Join accepted. Status: ";
+ const char successful_transmission[] PROGMEM = "Successful transmission";
+ const char successful_transmission_received[] PROGMEM = "Successful transmission. Received ";
+ const char valid_module[] PROGMEM = "Valid module connected.";
 
-const char *const success_msg[] PROGMEM = {personalize_accepted, join_accepted, successful_transmission, successful_transmission_received, valid_module};
+ const char *const success_msg[] PROGMEM = {personalize_accepted, join_accepted, successful_transmission, successful_transmission_received, valid_module};
+#endif
 
 #define SCS_PERSONALIZE_ACCEPTED 0
 #define SCS_JOIN_ACCEPTED 1
@@ -148,37 +166,39 @@ const char *const success_msg[] PROGMEM = {personalize_accepted, join_accepted, 
 #define SCS_SUCCESSFUL_TRANSMISSION_RECEIVED 3
 #define SCS_VALID_MODULE 4
 
-const char radio_prefix[] PROGMEM = "radio";
-const char radio_set[] PROGMEM = "set";
-const char radio_get[] PROGMEM = "get";
-const char radio_get_bw[] PROGMEM = "bw";
-const char radio_get_prlen[] PROGMEM = "prlen";
-const char radio_get_crc[] PROGMEM = "crc";
-const char radio_get_cr[] PROGMEM = "cr";
-const char radio_get_sf[] PROGMEM = "sf";
-const char radio_get_freq[] PROGMEM = "freq";
-const char radio_get_rxbw[] PROGMEM = "rxbw";
-const char radio_get_wdt[] PROGMEM = "wdt";
-const char radio_get_pwr[] PROGMEM = "pwr";
-const char radio_get_rssi[] PROGMEM = "rssi";
-const char radio_get_snr[] PROGMEM = "snr";
 
-const char *const radio_table[] PROGMEM = {radio_prefix, radio_set, radio_get, radio_get_bw, radio_get_prlen, radio_get_crc, radio_get_cr, radio_get_sf, radio_get_freq, radio_get_rxbw, radio_get_wdt, radio_get_pwr, radio_get_rssi, radio_get_snr};
+// Not used
+// const char radio_prefix[] PROGMEM = "radio";
+// const char radio_set[] PROGMEM = "set";
+// const char radio_get[] PROGMEM = "get";
+// const char radio_get_bw[] PROGMEM = "bw";
+// const char radio_get_prlen[] PROGMEM = "prlen";
+// const char radio_get_crc[] PROGMEM = "crc";
+// const char radio_get_cr[] PROGMEM = "cr";
+// const char radio_get_sf[] PROGMEM = "sf";
+// const char radio_get_freq[] PROGMEM = "freq";
+// const char radio_get_rxbw[] PROGMEM = "rxbw";
+// const char radio_get_wdt[] PROGMEM = "wdt";
+// const char radio_get_pwr[] PROGMEM = "pwr";
+// const char radio_get_rssi[] PROGMEM = "rssi";
+// const char radio_get_snr[] PROGMEM = "snr";
 
-#define RADIO_PREFIX 0
-#define RADIO_SET 1
-#define RADIO_GET 2
-#define RADIO_GET_BW 3
-#define RADIO_GET_PRLEN 4
-#define RADIO_GET_CRC 5
-#define RADIO_GET_CR 6
-#define RADIO_GET_SF 7
-#define RADIO_GET_FREQ 8
-#define RADIO_GET_RXBW 9
-#define RADIO_GET_WDT 10
-#define RADIO_GET_PWR 11
-#define RADIO_GET_RSSI 12
-#define RADIO_GET_SNR 13
+//const char *const radio_table[] PROGMEM = {radio_prefix, radio_set, radio_get, radio_get_bw, radio_get_prlen, radio_get_crc, radio_get_cr, radio_get_sf, radio_get_freq, radio_get_rxbw, radio_get_wdt, radio_get_pwr, radio_get_rssi, radio_get_snr};
+
+// #define RADIO_PREFIX 0
+// #define RADIO_SET 1
+// #define RADIO_GET 2
+// #define RADIO_GET_BW 3
+// #define RADIO_GET_PRLEN 4
+// #define RADIO_GET_CRC 5
+// #define RADIO_GET_CR 6
+// #define RADIO_GET_SF 7
+// #define RADIO_GET_FREQ 8
+// #define RADIO_GET_RXBW 9
+// #define RADIO_GET_WDT 10
+// #define RADIO_GET_PWR 11
+// #define RADIO_GET_RSSI 12
+// #define RADIO_GET_SNR 13
 
 const char sys_prefix[] PROGMEM = "sys";
 const char sys_sleep[] PROGMEM = "sleep";
@@ -370,14 +390,14 @@ uint8_t receivedPort(const char *s)
   }
   return port;
 }
-//Use the function if the program doesnt't work on the devboard and make the enum ttn_fp_t avalible again.
+//Use the function if the program doesnt't work on the devboard and make the enum ttn_fp_t available again.
 //TheThingsNetwork::TheThingsNetwork(Stream &modemStream, Stream &debugStream, ttn_fp_t fp, uint8_t sf, uint8_t fsb)
 TheThingsNetwork::TheThingsNetwork(Stream &modemStream, Stream &debugStream, uint8_t sf, uint8_t fsb)
 {
   this->debugStream = &debugStream;
   this->modemStream = &modemStream;
   this->modemStream->setTimeout(TTN_DEFAULT_TIMEOUT);
- // this->fp = fp;//Test if it works now, if not reverse the changes
+ // this->fp = fp; //Test if it works now, if not reverse the changes
   this->sf = sf;
   this->fsb = fsb;
   this->adr = false;
@@ -548,6 +568,7 @@ enum ttn_modem_status_t TheThingsNetwork::getStatus()
 
 void TheThingsNetwork::debugPrintIndex(uint8_t index, const char *value)
 {
+  #if defined(YES_DEBUG)
   char message[100];
   strcpy_P(message, (char *)pgm_read_word(&(show_table[index])));
   debugPrint(message);
@@ -555,10 +576,14 @@ void TheThingsNetwork::debugPrintIndex(uint8_t index, const char *value)
   {
     debugPrintLn(value);
   }
+#else
+// Do nothing
+#endif
 }
 
 void TheThingsNetwork::debugPrintMessage(uint8_t type, uint8_t index, const char *value)
 {
+  #if defined(YES_DEBUG)
   char message[100];
   switch (type)
   {
@@ -578,6 +603,9 @@ void TheThingsNetwork::debugPrintMessage(uint8_t type, uint8_t index, const char
   {
     debugPrintLn();
   }
+  #else
+ // Do nothing, not debugging
+  #endif
 }
 
 void TheThingsNetwork::clearReadBuffer()
@@ -943,6 +971,7 @@ void TheThingsNetwork::showStatus()
   readResponse(MAC_TABLE, MAC_GET_SET_TABLE, MAC_RXDELAY2, buffer, sizeof(buffer));
   debugPrintIndex(SHOW_RX_DELAY_2, buffer);
 }
+
 
 // bool TheThingsNetwork::checkValidModuleConnected(bool autoBaudFirst)
 // {
@@ -1352,9 +1381,9 @@ void TheThingsNetwork::sendCommand(uint8_t table, uint8_t index, bool appendSpac
   case SYS_TABLE:
     strcpy_P(command, (char *)pgm_read_word(&(sys_table[index])));
     break;
-  case RADIO_TABLE:
-    strcpy_P(command, (char *)pgm_read_word(&(radio_table[index])));
-    break;
+  // case RADIO_TABLE:
+  //   strcpy_P(command, (char *)pgm_read_word(&(radio_table[index])));
+  //   break;
   default:
     return;
   }

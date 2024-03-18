@@ -58,6 +58,8 @@ enum ttn_fp_t
   TTN_FP_IN865_867
 };*/
 
+
+// Class A device used
 enum lorawan_class_t
 {
   CLASS_A,
@@ -150,7 +152,7 @@ public:
   bool needsHardReset = false;
   // use this function again when you use the enum ttn_fp_t
   //TheThingsNetwork(Stream &modemStream, Stream &debugStream, ttn_fp_t fp, uint8_t sf = TTN_DEFAULT_SF, uint8_t fsb = TTN_DEFAULT_FSB);
-  TheThingsNetwork(Stream &modemStream, Stream &debugStream, uint8_t sf = TTN_DEFAULT_SF, uint8_t fsb = TTN_DEFAULT_FSB);//removed ttn_fp_t fp
+  TheThingsNetwork(Stream &modemStream, Stream &debugStream, uint8_t sf = TTN_DEFAULT_SF, uint8_t fsb = TTN_DEFAULT_FSB); //removed ttn_fp_t fp
   void reset(bool adr = true); //yes
   void resetHard(uint8_t resetPin); //yes
   void showStatus(); //yes
