@@ -1,17 +1,18 @@
-#include <TheThingsNetwork.h>
+#include "TheThingsNetwork_IOT.h"
 
 const char* AppEUI = "0000000000000000";
-const char* DevEUI = "0000000000000000"; //DEFINE YOUR DEVEUI
-const char* AppKey = "0000000000000000";
+const char* DevEUI = "0004A30B001F2259"; //DEFINE YOUR DEVEUI
+const char* AppKey = "C30F1715DFA6B9F21C2DCB07AC65FF00";
 
 
-#define freqPlan TTN_FP_EU868
+#define loraSerial Serial1
+#define debugSerial Serial
 
-TheThingsNetwork ttn(loraSerial, debugSerial, freqPlan);
+TheThingsNetwork ttn(loraSerial, debugSerial);
 
 void setup() {
    loraSerial.begin(57600);
-  debugSerial.begin(9600);
+ debugSerial.begin(9600);
 
   // Initialize LED output pin
   pinMode(LED_BUILTIN, OUTPUT);
@@ -23,5 +24,7 @@ void setup() {
   ttn.showStatus();
 
   debugSerial.println("-- JOIN");
-  ttn.join(appEui, appKey);
+  ttn.join(AppEUI, AppKey);
 }
+
+void loop(){}
