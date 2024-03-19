@@ -1,16 +1,15 @@
-#include <TheThingsNetwork.h>
+#include "TheThingsNetwork_IOT.h"
 
-#define freqPlan TTN_FP_EU868
 #define LORA_SERIAL Serial1
 #define DEBUG_SERIAL Serial
 
 // Replace with your actual AppEUI and AppKey
 const char* AppEUI = "0000000000000000";
-const char* AppKey = "0000000000000000";
+const char* AppKey = "C30F1715DFA6B9F21C2DCB07AC65FF00";
 
 char DevEUI[17];
 
-TheThingsNetwork ttn(LORA_SERIAL, DEBUG_SERIAL, freqPlan);
+TheThingsNetwork ttn(LORA_SERIAL, DEBUG_SERIAL);
 
 void setup() {
   LORA_SERIAL.begin(57600);
@@ -26,36 +25,33 @@ void setup() {
   ttn.showStatus();
 
   // Extract DevEUI
-  if (!extractDevEUI()) {
+  if (!extractDevEUI(ttn)) {
     DEBUG_SERIAL.println("Failed to extract DevEUI.");
     // Handle error
     while (true);
   }
 
+if (extractDevEUI(ttn))
+{
   DEBUG_SERIAL.print("DevEUI: ");
   DEBUG_SERIAL.println(DevEUI);
+}
 
   // Join the network
-  DEBUG_SERIAL.println("-- JOIN");
+  DEBUG_SERIAL.println("-- JOINING");
   ttn.join(AppEUI, AppKey, DevEUI); // Use the extracted DevEUI
 }
 
 void loop() {
-  // Example of sending a payload
-  byte payload[] = {0x01, 0x02, 0x03, 0x04}; // Example payload
-  ttn.sendBytes(payload, sizeof(payload)); // Send the payload
 }
 
-bool extractDevEUI() {
+bool extractDevEUI(TheThingsNetwork& ttn) {
   // The showStatus function outputs to debugSerial, wait for it to become available
   delay(1000); // Wait for the status output to complete
 
-  while (DEBUG_SERIAL.available()) {
-    String line = DEBUG_SERIAL.readStringUntil('\n');
-    if (line.startsWith("DevEUI: ")) {
-      // Extract the DevEUI
-      String eui = line.substring(8); // Remove "DevEUI: " prefix
-      eui.toCharArray(DevEUI, sizeof(DevEUI));
+  while (DEBUG_SERIAL) {
+    size_t size = ttn.getHardwareEui(DevEUI, sizeof(DevEUI));
+    if (size > 0) {
       return true;
     }
   }
