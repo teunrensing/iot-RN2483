@@ -574,6 +574,13 @@ size_t TheThingsNetwork::getVersion(char *buffer, size_t size)
   return readResponse(SYS_TABLE, SYS_TABLE, SYS_GET_VER, buffer, size);
 }
 
+/**
+ * @brief Retrieves the supply voltage (VDD) from the device.
+ * 
+ * This function reads the supply voltage from the device.
+ * 
+ * @return The supply voltage value in millivolts.
+ */
 uint16_t TheThingsNetwork::getVDD()
 {
   if (readResponse(SYS_TABLE, SYS_TABLE, SYS_GET_VDD, buffer, sizeof(buffer)) > 0) {
@@ -630,6 +637,14 @@ uint16_t TheThingsNetwork::getVDD()
    return 0;
  }
 */
+/**
+ * @brief Retrieves the status of the modem.
+ * 
+ * This function reads the status of the modem from the device.
+ * 
+ * @return The status of the modem as an enum value of type ttn_modem_status_t.
+ *         If the status cannot be read, TTN_MODEM_READ_ERR is returned.
+ */
 enum ttn_modem_status_t TheThingsNetwork::getStatus()
 {
   if (readResponse(MAC_TABLE, MAC_GET_SET_TABLE, MAC_STATUS, buffer, sizeof(buffer)) > 0) {
@@ -641,86 +656,96 @@ enum ttn_modem_status_t TheThingsNetwork::getStatus()
   }
   return TTN_MODEM_READ_ERR; // unable to read status
 }
+/** 
+ *  @brief These functions are removed because they are not used and are not included in the default use case
+ int8_t TheThingsNetwork::getPower()
+ {
+   if (readResponse(RADIO_TABLE, RADIO_TABLE, RADIO_GET_PWR, buffer, sizeof(buffer)) > 0) {
+     return atoi(buffer);
+   }
+   return -128;
+ }
 
-// int8_t TheThingsNetwork::getPower()
-// {
-//   if (readResponse(RADIO_TABLE, RADIO_TABLE, RADIO_GET_PWR, buffer, sizeof(buffer)) > 0) {
-//     return atoi(buffer);
-//   }
-//   return -128;
-// }
+ int16_t TheThingsNetwork::getRSSI()
+ {
+   if (readResponse(RADIO_TABLE, RADIO_TABLE, RADIO_GET_RSSI, buffer, sizeof(buffer)) > 0) {
+     return atoi(buffer);
+   }
+   return -255;
+ }
 
-// int16_t TheThingsNetwork::getRSSI()
-// {
-//   if (readResponse(RADIO_TABLE, RADIO_TABLE, RADIO_GET_RSSI, buffer, sizeof(buffer)) > 0) {
-//     return atoi(buffer);
-//   }
-//   return -255;
-// }
+ int8_t TheThingsNetwork::getSNR()
+ {
+   if (readResponse(RADIO_TABLE, RADIO_TABLE, RADIO_GET_SNR, buffer, sizeof(buffer)) > 0) {
+     return atoi(buffer);
+   }
+   return -128;
+ }
 
-// int8_t TheThingsNetwork::getSNR()
-// {
-//   if (readResponse(RADIO_TABLE, RADIO_TABLE, RADIO_GET_SNR, buffer, sizeof(buffer)) > 0) {
-//     return atoi(buffer);
-//   }
-//   return -128;
-// }
+ int8_t TheThingsNetwork::getDR()
+ {
+   if (readResponse(MAC_TABLE, MAC_GET_SET_TABLE, MAC_DR, buffer, sizeof(buffer))){
+     return atoi(buffer);
+   }
+   return -1;
+ }
 
-// int8_t TheThingsNetwork::getDR()
-// {
-//   if (readResponse(MAC_TABLE, MAC_GET_SET_TABLE, MAC_DR, buffer, sizeof(buffer))){
-//     return atoi(buffer);
-//   }
-//   return -1;
-// }
+ int8_t TheThingsNetwork::getPowerIndex()
+ {
+   if (readResponse(MAC_TABLE, MAC_GET_SET_TABLE, MAC_PWRIDX, buffer, sizeof(buffer)) > 0) {
+     return atoi(buffer);
+   }
+   return -1;
+ }
 
-// int8_t TheThingsNetwork::getPowerIndex()
-// {
-//   if (readResponse(MAC_TABLE, MAC_GET_SET_TABLE, MAC_PWRIDX, buffer, sizeof(buffer)) > 0) {
-//     return atoi(buffer);
-//   }
-//   return -1;
-// }
+ bool TheThingsNetwork::getChannelStatus (uint8_t channel)
+ {
+   char str[5];
+   if (channel > 9)
+   {
+ 	str[0] = ((channel - (channel % 10)) / 10) + 48;
+ 	str[1] = (channel % 10) + 48;
+ 	str[2] = '\0';
+   }
+   else
+   {
+ 	str[0] = channel + 48;
+ 	str[1] = '\0';
+   }
+   sendCommand(MAC_TABLE, MAC_PREFIX, true, false);
+   sendCommand(MAC_TABLE, MAC_GET, true, false); // default "get " in between (same as radio get)
+   sendCommand(MAC_GET_SET_TABLE, MAC_CH, true, false);
+   sendCommand(MAC_CH_TABLE, MAC_CHANNEL_STATUS, true, false);
+   modemStream->write(str);
+   modemStream->write(SEND_MSG);
 
-// bool TheThingsNetwork::getChannelStatus (uint8_t channel)
-// {
-//   char str[5];
-//   if (channel > 9)
-//   {
-// 	str[0] = ((channel - (channel % 10)) / 10) + 48;
-// 	str[1] = (channel % 10) + 48;
-// 	str[2] = '\0';
-//   }
-//   else
-//   {
-// 	str[0] = channel + 48;
-// 	str[1] = '\0';
-//   }
-//   sendCommand(MAC_TABLE, MAC_PREFIX, true, false);
-//   sendCommand(MAC_TABLE, MAC_GET, true, false); // default "get " in between (same as radio get)
-//   sendCommand(MAC_GET_SET_TABLE, MAC_CH, true, false);
-//   sendCommand(MAC_CH_TABLE, MAC_CHANNEL_STATUS, true, false);
-//   modemStream->write(str);
-//   modemStream->write(SEND_MSG);
+   if (readLine(buffer, sizeof(buffer)))
+ 	  return (pgmstrcmp(buffer, CMP_ON) == 0); // true if on, false if off or an error occurs
+   else
+ 	  return false; // error
+ }
 
-//   if (readLine(buffer, sizeof(buffer)))
-// 	  return (pgmstrcmp(buffer, CMP_ON) == 0); // true if on, false if off or an error occurs
-//   else
-// 	  return false; // error
-// }
+ ttn_response_code_t TheThingsNetwork::getLastError(){
 
-// ttn_response_code_t TheThingsNetwork::getLastError(){
+ 	int match, pos;
+ 	for (pos=0; pos <= CMP_ERR_LAST; pos++){
+ 		match = pgmstrcmp(buffer, pos, CMP_ERR_TABLE);
+ 		if (match == 0)
+ 			break;
+ 	}
 
-// 	int match, pos;
-// 	for (pos=0; pos <= CMP_ERR_LAST; pos++){
-// 		match = pgmstrcmp(buffer, pos, CMP_ERR_TABLE);
-// 		if (match == 0)
-// 			break;
-// 	}
-
-// 	return (ttn_response_code_t)(-1* pos); // code order is equal
-// }
-
+ 	return (ttn_response_code_t)(-1* pos); // code order is equal
+ }
+*/
+/**
+ * @brief Prints debug information for a given index and value.
+ * 
+ * This function prints debug information based on the provided index and value.
+ * Debug printing is enabled only if YES_DEBUG is defined.
+ * 
+ * @param index The index of the debug information to be printed.
+ * @param value The value associated with the debug information.
+ */
 void TheThingsNetwork::debugPrintIndex(uint8_t index, const char *value)
 {
 #if defined(YES_DEBUG)
@@ -731,11 +756,15 @@ void TheThingsNetwork::debugPrintIndex(uint8_t index, const char *value)
   {
     debugPrintLn(value);
   }
-#else
-  // Do nothing
 #endif
 }
-
+/**
+ * @brief Prints debug message of specified type with optional value.
+ * 
+ * @param type Type of message: ERR_MESSAGE or SUCCESS_MESSAGE.
+ * @param index Index of the message in the respective message array.
+ * @param value Optional value to append to the message.
+ */
 void TheThingsNetwork::debugPrintMessage(uint8_t type, uint8_t index, const char *value)
 {
 #if defined(YES_DEBUG)
@@ -758,8 +787,6 @@ void TheThingsNetwork::debugPrintMessage(uint8_t type, uint8_t index, const char
   {
     debugPrintLn();
   }
-#else
-  // Do nothing, not debugging
 #endif
 }
 
