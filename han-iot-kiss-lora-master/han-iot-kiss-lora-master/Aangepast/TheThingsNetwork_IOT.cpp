@@ -366,72 +366,84 @@ const char *const mac_options[] PROGMEM = {mac_devaddr, mac_deveui, mac_appeui, 
                                           };/**< MAC options list*/
 
 
+#define MAC_DEVADDR 0 /**< MAC device address index. */
+#define MAC_DEVEUI 1 /**< MAC device EUI index. */
+#define MAC_APPEUI 2 /**< MAC application EUI index. */
+#define MAC_NWKSKEY 3 /**< MAC network session key index. */
+#define MAC_APPSKEY 4 /**< MAC application session key index. */
+#define MAC_APPKEY 5 /**< MAC application key index. */
+#define MAC_PWRIDX 6 /**< MAC power index index. */
+#define MAC_DR 7 /**< MAC data rate index. */
+#define MAC_ADR 8 /**< MAC adaptive data rate index. */
+#define MAC_BAT 9 /**< MAC battery index. */
+#define MAC_RETX 10 /**< MAC retransmissions index. */
+#define MAC_LINKCHK 11 /**< MAC link check index. */
+#define MAC_RXDELAY1 12 /**< MAC receive delay 1 index. */
+#define MAC_RXDELAY2 13 /**< MAC receive delay 2 index. */
+#define MAC_BAND 14 /**< MAC band index. */
+#define MAC_AR 15 /**< MAC acknowledgment request index. */
+#define MAC_RX2 16 /**< MAC receive window 2 index. */
+#define MAC_CH 17 /**< MAC channel index. */
+#define MAC_GWNB 18 /**< MAC gateway count index. */
+#define MAC_MRGN 19 /**< MAC margin index. */
+#define MAC_CLASS 20 /**< MAC class index. */
+#define MAC_STATUS 21 /**< MAC status index. */
+#define MAC_UPCTR 22 /**< MAC uplink counter index. */
+#define MAC_DNCTR 23 /**< MAC downlink counter index. */
 
-#define MAC_DEVADDR 0
-#define MAC_DEVEUI 1
-#define MAC_APPEUI 2
-#define MAC_NWKSKEY 3
-#define MAC_APPSKEY 4
-#define MAC_APPKEY 5
-#define MAC_PWRIDX 6
-#define MAC_DR 7
-#define MAC_ADR 8
-#define MAC_BAT 9
-#define MAC_RETX 10
-#define MAC_LINKCHK 11
-#define MAC_RXDELAY1 12
-#define MAC_RXDELAY2 13
-#define MAC_BAND 14
-#define MAC_AR 15
-#define MAC_RX2 16
-#define MAC_CH 17
-#define MAC_GWNB 18
-#define MAC_MRGN 19
-#define MAC_CLASS 20
-#define MAC_STATUS 21
-#define MAC_UPCTR 22
-#define MAC_DNCTR 23
+const char mac_join_mode_otaa[] PROGMEM = "otaa"; /**< MAC join mode OTAA. */
+const char mac_join_mode_abp[] PROGMEM = "abp"; /**< MAC join mode ABP. */
 
-const char mac_join_mode_otaa[] PROGMEM = "otaa";
-const char mac_join_mode_abp[] PROGMEM = "abp";
+const char *const mac_join_mode[] PROGMEM = {mac_join_mode_otaa, mac_join_mode_abp}; /**< Array of MAC join modes. */
 
-const char *const mac_join_mode[] PROGMEM = {mac_join_mode_otaa, mac_join_mode_abp}; // Maybe we dont use the mac_join_mode_abp mode so look for that
+#define MAC_JOIN_MODE_OTAA 0 /**< MAC join mode OTAA index. */
+#define MAC_JOIN_MODE_ABP 1 /**< MAC join mode ABP index. */
 
-#define MAC_JOIN_MODE_OTAA 0
-#define MAC_JOIN_MODE_ABP 1
+const char channel_dcycle[] PROGMEM = "dcycle"; /**< Channel duty cycle option. */
+const char channel_drrange[] PROGMEM = "drrange"; /**< Channel data rate range option. */
+const char channel_freq[] PROGMEM = "freq"; /**< Channel frequency option. */
+const char channel_status[] PROGMEM = "status"; /**< Channel status option. */
 
-const char channel_dcycle[] PROGMEM = "dcycle";
-const char channel_drrange[] PROGMEM = "drrange";
-const char channel_freq[] PROGMEM = "freq";
-const char channel_status[] PROGMEM = "status";
+const char *const mac_ch_options[] PROGMEM = {channel_dcycle, channel_drrange, channel_freq, channel_status}; /**< Array of MAC channel options. */
 
-const char *const mac_ch_options[] PROGMEM = {channel_dcycle, channel_drrange, channel_freq, channel_status};
+#define MAC_CHANNEL_DCYCLE 0 /**< MAC channel duty cycle index. */
+#define MAC_CHANNEL_DRRANGE 1 /**< MAC channel data rate range index. */
+#define MAC_CHANNEL_FREQ 2 /**< MAC channel frequency index. */
+#define MAC_CHANNEL_STATUS 3 /**< MAC channel status index. */
 
-#define MAC_CHANNEL_DCYCLE 0
-#define MAC_CHANNEL_DRRANGE 1
-#define MAC_CHANNEL_FREQ 2
-#define MAC_CHANNEL_STATUS 3
+const char mac_tx_type_cnf[] PROGMEM = "cnf"; /**< MAC transmission type confirmation. */
+const char mac_tx_type_ucnf[] PROGMEM = "uncnf"; /**< MAC transmission type unconfirmed. */
 
-const char mac_tx_type_cnf[] PROGMEM = "cnf";
-const char mac_tx_type_ucnf[] PROGMEM = "uncnf";
+const char *const mac_tx_table[] PROGMEM = {mac_tx_type_cnf, mac_tx_type_ucnf}; /**< Array of MAC transmission types. */
 
-const char *const mac_tx_table[] PROGMEM = {mac_tx_type_cnf, mac_tx_type_ucnf};
+#define MAC_TX_TYPE_CNF 0 /**< MAC transmission type confirmation index. */
+#define MAC_TX_TYPE_UCNF 1 /**< MAC transmission type unconfirmed index. */
 
-#define MAC_TX_TYPE_CNF 0
-#define MAC_TX_TYPE_UCNF 1
+#define MAC_TABLE 0 /**< MAC table index. */
+#define MAC_GET_SET_TABLE 1 /**< MAC get/set table index. */
+#define MAC_JOIN_TABLE 2 /**< MAC join table index. */
+#define MAC_CH_TABLE 3 /**< MAC channel table index. */
+#define MAC_TX_TABLE 4 /**< MAC transmission table index. */
+#define SYS_TABLE 5 /**< System table index. */
+#define RADIO_TABLE 6 /**< Radio table index. */
+#define ERR_MESSAGE 7 /**< Error message index. */
+#define SUCCESS_MESSAGE 8 /**< Success message index. */
+#define CMP_TABLE 9 /**< Comparison table index. */
+#define CMP_ERR_TABLE 10 /**< Comparison error table index. */
 
-#define MAC_TABLE 0
-#define MAC_GET_SET_TABLE 1
-#define MAC_JOIN_TABLE 2
-#define MAC_CH_TABLE 3
-#define MAC_TX_TABLE 4
-#define SYS_TABLE 5
-#define RADIO_TABLE 6
-#define ERR_MESSAGE 7
-#define SUCCESS_MESSAGE 8
-#define CMP_TABLE 9
-#define CMP_ERR_TABLE 10
-
+/**
+ * @brief Compares a string with a string stored in PROGMEM.
+ * 
+ * This function compares a null-terminated string with a string stored in PROGMEM
+ * and returns the result of the comparison.
+ * 
+ * @param str1 The null-terminated string to compare.
+ * @param str2Index The index of the string stored in PROGMEM to compare with.
+ * @param table The table index specifying the PROGMEM table to search from.
+ *              Default is CMP_TABLE.
+ * @return An integer less than, equal to, or greater than zero if str1 is found,
+ *         respectively, to be less than, to match, or be greater than str2.
+ */
 int pgmstrcmp(const char *str1, uint8_t str2Index, uint8_t table = CMP_TABLE)
 {
   if (0 == strlen(str1))
@@ -452,6 +464,14 @@ int pgmstrcmp(const char *str1, uint8_t str2Index, uint8_t table = CMP_TABLE)
   return memcmp(str1, str2, min(strlen(str1), strlen(str2)));
 }
 
+/**
+ * @brief Calculates the number of digits in a number.
+ * 
+ * This function calculates the number of digits in a given number.
+ * 
+ * @param port The number to calculate the digits for.
+ * @return The number of digits in the given number.
+ */
 uint8_t digits(uint8_t port)
 {
   if (port >= 100)
@@ -465,6 +485,14 @@ uint8_t digits(uint8_t port)
   return 1;
 }
 
+/**
+ * @brief Extracts the port number from a string.
+ * 
+ * This function extracts the port number from a given string.
+ * 
+ * @param s The string containing the port number.
+ * @return The port number extracted from the string.
+ */
 uint8_t receivedPort(const char *s)
 {
   uint8_t port = 0;
@@ -478,7 +506,20 @@ uint8_t receivedPort(const char *s)
   return port;
 }
 
-//TheThingsNetwork::TheThingsNetwork(Stream &modemStream, Stream &debugStream, ttn_fp_t fp, uint8_t sf, uint8_t fsb)
+/**
+ * @brief Constructor for TheThingsNetwork class.
+ * 
+ * Initializes an instance of TheThingsNetwork class with the provided modem stream,
+ * debug stream, spreading factor (SF), and frequency sub-band (FSB).
+ * 
+ * The original function is TheThingsNetwork::TheThingsNetwork(Stream &modemStream, Stream &debugStream, ttn_fp_t fp, uint8_t sf, uint8_t fsb).
+ * In the edited function sf is nolonger a parm for the function because we use constant value.
+ * 
+ * @param modemStream The stream for communicating with the modem.
+ * @param debugStream The stream for debug output.
+ * @param sf The spreading factor to be used.
+ * @param fsb The frequency sub-band to be used.
+ */
 TheThingsNetwork::TheThingsNetwork(Stream &modemStream, Stream &debugStream, uint8_t sf, uint8_t fsb)
 {
   this->debugStream = &debugStream;
@@ -491,16 +532,43 @@ TheThingsNetwork::TheThingsNetwork(Stream &modemStream, Stream &debugStream, uin
   this->messageCallback = NULL;
 }
 
+/**
+ * @brief Retrieves the Application EUI (AppEUI) from the device.
+ * 
+ * This function reads the AppEUI from the device and stores it in the provided buffer.
+ * 
+ * @param buffer A pointer to the buffer where the AppEUI will be stored.
+ * @param size The size of the buffer.
+ * @return The number of characters read and stored in the buffer.
+ */
 size_t TheThingsNetwork::getAppEui(char *buffer, size_t size)
 {
   return readResponse(MAC_TABLE, MAC_GET_SET_TABLE, MAC_APPEUI, buffer, size);
 }
 
+/**
+ * @brief Retrieves the Hardware EUI (HWEUI) from the device.
+ * 
+ * This function reads the HWEUI from the device and stores it in the provided buffer.
+ * 
+ * @param buffer A pointer to the buffer where the HWEUI will be stored.
+ * @param size The size of the buffer.
+ * @return The number of characters read and stored in the buffer.
+ */
 size_t TheThingsNetwork::getHardwareEui(char *buffer, size_t size)
 {
   return readResponse(SYS_TABLE, SYS_TABLE, SYS_GET_HWEUI, buffer, size);
 }
 
+/**
+ * @brief Retrieves the firmware version from the device.
+ * 
+ * This function reads the firmware version from the device and stores it in the provided buffer.
+ * 
+ * @param buffer A pointer to the buffer where the firmware version will be stored.
+ * @param size The size of the buffer.
+ * @return The number of characters read and stored in the buffer.
+ */
 size_t TheThingsNetwork::getVersion(char *buffer, size_t size)
 {
   return readResponse(SYS_TABLE, SYS_TABLE, SYS_GET_VER, buffer, size);
@@ -513,55 +581,55 @@ uint16_t TheThingsNetwork::getVDD()
   }
   return 0;
 }
+/** @brief These functions are not used and not needed by default.
+ uint8_t TheThingsNetwork::getBW()
+ {
+   if (readResponse(RADIO_TABLE, RADIO_TABLE, RADIO_GET_BW, buffer, sizeof(buffer)) > 0) {
+     return atoi(buffer);
+   }
+   return 0;
+ }
 
-// uint8_t TheThingsNetwork::getBW()
-// {
-//   if (readResponse(RADIO_TABLE, RADIO_TABLE, RADIO_GET_BW, buffer, sizeof(buffer)) > 0) {
-//     return atoi(buffer);
-//   }
-//   return 0;
-// }
+ uint8_t TheThingsNetwork::getCR()
+ {
+   if (readResponse(RADIO_TABLE, RADIO_TABLE, RADIO_GET_CR, buffer, sizeof(buffer)) > 2) {
+     return atoi(buffer+2); // skip the first two chars "4/"
+   }
+   return 0;
+ }
 
-// uint8_t TheThingsNetwork::getCR()
-// {
-//   if (readResponse(RADIO_TABLE, RADIO_TABLE, RADIO_GET_CR, buffer, sizeof(buffer)) > 2) {
-//     return atoi(buffer+2); // skip the first two chars "4/"
-//   }
-//   return 0;
-// }
+ uint32_t TheThingsNetwork::getFrequency()
+ {
+   if (readResponse(RADIO_TABLE, RADIO_TABLE, RADIO_GET_FREQ, buffer, sizeof(buffer)) > 0) {
+     return atol(buffer);
+   }
+   return 0;
+ }
 
-// uint32_t TheThingsNetwork::getFrequency()
-// {
-//   if (readResponse(RADIO_TABLE, RADIO_TABLE, RADIO_GET_FREQ, buffer, sizeof(buffer)) > 0) {
-//     return atol(buffer);
-//   }
-//   return 0;
-// }
+ uint32_t TheThingsNetwork::getFCU()
+ {
+   if (readResponse(MAC_TABLE, MAC_GET_SET_TABLE, MAC_UPCTR, buffer, sizeof(buffer)) > 0) {
+     return strtoul(buffer, NULL, 10);
+   }
+   return 0;
+ }
 
-// uint32_t TheThingsNetwork::getFCU()
-// {
-//   if (readResponse(MAC_TABLE, MAC_GET_SET_TABLE, MAC_UPCTR, buffer, sizeof(buffer)) > 0) {
-//     return strtoul(buffer, NULL, 10);
-//   }
-//   return 0;
-// }
+ uint32_t TheThingsNetwork::getFCD()
+ {
+   if (readResponse(MAC_TABLE, MAC_GET_SET_TABLE, MAC_DNCTR, buffer, sizeof(buffer)) > 0) {
+     return strtoul(buffer, NULL, 10);
+   }
+   return 0;
+ }
 
-// uint32_t TheThingsNetwork::getFCD()
-// {
-//   if (readResponse(MAC_TABLE, MAC_GET_SET_TABLE, MAC_DNCTR, buffer, sizeof(buffer)) > 0) {
-//     return strtoul(buffer, NULL, 10);
-//   }
-//   return 0;
-// }
-
-// uint32_t TheThingsNetwork::getWatchDogTimer()
-// {
-//   if (readResponse(RADIO_TABLE, RADIO_TABLE, RADIO_GET_WDT, buffer, sizeof(buffer)) > 0) {
-//     return atol(buffer);
-//   }
-//   return 0;
-// }
-
+ uint32_t TheThingsNetwork::getWatchDogTimer()
+ {
+   if (readResponse(RADIO_TABLE, RADIO_TABLE, RADIO_GET_WDT, buffer, sizeof(buffer)) > 0) {
+     return atol(buffer);
+   }
+   return 0;
+ }
+*/
 enum ttn_modem_status_t TheThingsNetwork::getStatus()
 {
   if (readResponse(MAC_TABLE, MAC_GET_SET_TABLE, MAC_STATUS, buffer, sizeof(buffer)) > 0) {
