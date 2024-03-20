@@ -35,7 +35,7 @@ void setup() {
 
   // Join the network
   DEBUG_SERIAL.println("-- JOINING");
-  ttn.join(AppEUI, AppKey, DevEUI);  // Use the extracted DevEUI
+  ttn.join(DevEUI, AppEUI, AppKey);  // Use the extracted DevEUI
 }
 
 void loop() {

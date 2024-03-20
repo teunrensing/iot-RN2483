@@ -1081,7 +1081,7 @@ bool TheThingsNetwork::provision(const char *appEui, const char *appKey, bool re
  * @param appKey The application key (APPKEY) to be provisioned.
  * @return True if the device is successfully provisioned, false otherwise.
  */
-bool TheThingsNetwork::provision(const char *devEui, const char *appEui, const char appKey)
+bool TheThingsNetwork::provision(const char *devEui, const char *appEui, const char *appKey)
 {
   reset(adr);
   if (strlen(appEui) != 16 || strlen(appKey) != 32)
