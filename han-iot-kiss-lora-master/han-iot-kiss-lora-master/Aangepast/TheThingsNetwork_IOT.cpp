@@ -336,34 +336,34 @@ const char *const mac_table[] PROGMEM = {mac_prefix, mac_reset, mac_tx, mac_join
 #define MAC_SET 8 /**< @brief MAC set command index. */
 #define MAC_GET 9 /**< @brief MAC get command index. */
 
-const char mac_devaddr[] PROGMEM = "devaddr";
-const char mac_deveui[] PROGMEM = "deveui";
-const char mac_appeui[] PROGMEM = "appeui";
-const char mac_nwkskey[] PROGMEM = "nwkskey";
-const char mac_appskey[] PROGMEM = "appskey";
-const char mac_appkey[] PROGMEM = "appkey";
-const char mac_pwridx[] PROGMEM = "pwridx";
-const char mac_dr[] PROGMEM = "dr";
-const char mac_adr[] PROGMEM = "adr";
-const char mac_bat[] PROGMEM = "bat";
-const char mac_retx[] PROGMEM = "retx";
-const char mac_linkchk[] PROGMEM = "linkchk";
-const char mac_rxdelay1[] PROGMEM = "rxdelay1";
-const char mac_rxdelay2[] PROGMEM = "rxdelay2";
-const char mac_band[] PROGMEM = "band";
-const char mac_ar[] PROGMEM = "ar";
-const char mac_rx2[] PROGMEM = "rx2";
-const char mac_ch[] PROGMEM = "ch";
-const char mac_gwnb[] PROGMEM = "gwnb";
-const char mac_mrgn[] PROGMEM = "mrgn";
-const char mac_class[] PROGMEM = "class";
-const char mac_status[] PROGMEM = "status";
-const char mac_upctr[] PROGMEM = "upctr";
-const char mac_dnctr[] PROGMEM = "dnctr";
+const char mac_devaddr[] PROGMEM = "devaddr"; /**< MAC device address key. */
+const char mac_deveui[] PROGMEM = "deveui"; /**< MAC device EUI key. */
+const char mac_appeui[] PROGMEM = "appeui"; /**< MAC application EUI key. */
+const char mac_nwkskey[] PROGMEM = "nwkskey"; /**< MAC network session key key. */
+const char mac_appskey[] PROGMEM = "appskey"; /**< MAC application session key key. */
+const char mac_appkey[] PROGMEM = "appkey"; /**< MAC application key key. */
+const char mac_pwridx[] PROGMEM = "pwridx"; /**< MAC power index key. */
+const char mac_dr[] PROGMEM = "dr"; /**< MAC data rate key. */
+const char mac_adr[] PROGMEM = "adr"; /**< MAC adaptive data rate key. */
+const char mac_bat[] PROGMEM = "bat"; /**< MAC battery key. */
+const char mac_retx[] PROGMEM = "retx"; /**< MAC retransmissions key. */
+const char mac_linkchk[] PROGMEM = "linkchk"; /**< MAC link check key. */
+const char mac_rxdelay1[] PROGMEM = "rxdelay1"; /**< MAC receive delay 1 key. */
+const char mac_rxdelay2[] PROGMEM = "rxdelay2"; /**< MAC receive delay 2 key. */
+const char mac_band[] PROGMEM = "band"; /**< MAC band key. */
+const char mac_ar[] PROGMEM = "ar"; /**< MAC acknowledgment request key. */
+const char mac_rx2[] PROGMEM = "rx2"; /**< MAC receive window 2 key. */
+const char mac_ch[] PROGMEM = "ch"; /**< MAC channel key. */
+const char mac_gwnb[] PROGMEM = "gwnb"; /**< MAC gateway count key. */
+const char mac_mrgn[] PROGMEM = "mrgn"; /**< MAC margin key. */
+const char mac_class[] PROGMEM = "class"; /**< MAC class key. */
+const char mac_status[] PROGMEM = "status"; /**< MAC status key. */
+const char mac_upctr[] PROGMEM = "upctr"; /**< MAC uplink counter key. */
+const char mac_dnctr[] PROGMEM = "dnctr"; /**< MAC downlink counter key. */
 
 const char *const mac_options[] PROGMEM = {mac_devaddr, mac_deveui, mac_appeui, mac_nwkskey, mac_appskey, mac_appkey, mac_pwridx, mac_dr, mac_adr, mac_bat, mac_retx, mac_linkchk, mac_rxdelay1, mac_rxdelay2, mac_band,
                                            mac_ar, mac_rx2, mac_ch, mac_gwnb, mac_mrgn, mac_class, mac_status, mac_upctr, mac_dnctr
-                                          };
+                                          };/**< MAC options list*/
 
 
 
