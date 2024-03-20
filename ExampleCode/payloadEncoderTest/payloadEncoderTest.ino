@@ -1,4 +1,4 @@
-#include "CayenneLPP.h"
+#include "CayenneLPP.hpp"
 #include "TheThingsNetwork_IOT.h"
 #include "SparkFun_Si7021_Breakout_Library.h" //Include for the temperature and humidity sensor
 
@@ -10,7 +10,7 @@ const char* AppKey = "C30F1715DFA6B9F21C2DCB07AC65FF00";
 #define debugSerial Serial
 
 // Initialize Cayenne LPP
-CayenneLPP lpp(50);
+PAYLOAD_ENCODER::CayenneLPP<51> lpp(50);
 
 Weather sensor; //sensors
 
@@ -52,7 +52,7 @@ void loop() {
   // Add sensor data to Cayenne LPP payload
   lpp.reset();
   lpp.addTemperature(1, temperature); // Add temperature data (Channel 1)
-  lpp.addRelativeHumidity(2, humidity); // Add humidity data (Channel 2)
+  lpp.addHumidity(2, humidity); // Add humidity data (Channel 2)
 
   // Send Cayenne LPP payload over LoRaWAN
   ttn.sendBytes(lpp.getBuffer(), lpp.getSize());

@@ -3,7 +3,7 @@
 
 #include "TheThingsNetwork_IOT.h"
 
-#define DEBUG_SESSION 0 // Set to 1 to use debug functions
+#define DEBUG_SESSION 1 // Set to 1 to use debug functions
 
 #if DEBUG_SESSION == 1
 #define YES_DEBUG
