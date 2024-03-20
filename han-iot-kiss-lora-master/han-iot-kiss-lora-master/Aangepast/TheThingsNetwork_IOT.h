@@ -1,5 +1,12 @@
-// Copyright © 2017 The Things Network
-// Use of this source code is governed by the MIT license that can be found in the LICENSE file.
+/**
+ * @file TheThingsNetwork_IOT.h
+ * @brief This library provides an interface for LoRaWAN communication with an RN2384 using The Things Network.
+ * Based on the original code from https://github.com/TheThingsNetwork/arduino-device-lib.git
+ * This version is a library with reduced payload.
+ * @author Marelle Vink, Teun Rensing, Lucas Nillesen, Raymon Albricht
+ * @date 2024-03-10 (10 March)
+ * @version 1.0
+ */
 
 #ifndef _THETHINGSNETWORK_H_
 #define _THETHINGSNETWORK_H_
@@ -12,14 +19,33 @@
 #include <pgmspace.h>
 #endif
 
-// These default can be adjusted to just using
-#define TTN_DEFAULT_SF 7 // = Spreading factor
+
+
+/**
+ * @def TTN_DEFAULT_SF
+ * Default spreading factor.
+ */
+#define TTN_DEFAULT_SF 7
+
+/**
+ * @def TTN_DEFAULT_FSB
+ * Default frame sub-band.
+ */
 #define TTN_DEFAULT_FSB 2
+
+/**
+ * @def TTN_RETX
+ * Default number of retransmissions.
+ */
 #define TTN_RETX "7"
 
+/**
+ * @def TTN_PWRIDX_EU868
+ * Default power index for EU868 frequency plan.
+ */
 #define TTN_PWRIDX_EU868 "1"
 
-/* Next all removed because EU868 is used.
+/** All defines for regions are removed because we assume that the RN2384 is used in Europe.
 // #define TTN_PWRIDX_US915 "5"
 // #define TTN_PWRIDX_AU915 "5"
 // #define TTN_PWRIDX_AS920_923 "1" // TODO: should be 0, but the current RN2903AS firmware doesn't accept that value (probably still using EU868: 1=14dBm)
@@ -28,11 +54,28 @@
 // #define TTN_PWRIDX_IN865_867 "1" // TODO: should be 0
 */
 
+/**
+ * @def TTN_BUFFER_SIZE
+ * Size of the buffer used for communication.
+ */
 #define TTN_BUFFER_SIZE 300
-#define TTN_DEFAULT_TIMEOUT 10000	// Default modem timeout in ms
 
+/**
+ * @def TTN_DEFAULT_TIMEOUT
+ * Default modem timeout in milliseconds.
+ */
+#define TTN_DEFAULT_TIMEOUT 10000
+
+/**
+ * @typedef port_t
+ * Type definition for port number.
+ */
 typedef uint8_t port_t;
 
+/**
+ * @enum ttn_response_t
+ * Enumerates possible responses from The Things Network operations.
+ */
 enum ttn_response_t
 {
   TTN_ERROR_SEND_COMMAND_FAILED = (-1),
@@ -43,9 +86,10 @@ enum ttn_response_t
 };
 
 
-// Maybe we can replace every ttn_fp_t in de cpp file with TTN_FP_EU868, to delete this enum.
-// Test the changes on the devboard first!
-// Use the instance of it on line 104 when the code doesn't work. 
+/**
+ * @enum ttn_fp_t
+ * Enumerates frequency plans for The Things Network. Deleted because we assume the library is used in Europe.
+ */
 /*
 enum ttn_fp_t
 {
@@ -59,8 +103,12 @@ enum ttn_fp_t
 };*/
 
 
-// Class A device used
-// Class A is a must for LoRaWan and class B and C are optionel
+/**
+ * @enum lorawan_class_t
+ * Enumerates LoRaWAN device classes.
+ * Class A device used -> Class A is a must for LoRaWan and class B and C are optional
+ */
+
 enum lorawan_class_t
 {
   CLASS_A,
@@ -68,6 +116,11 @@ enum lorawan_class_t
   // CLASS_C
 };
 
+
+/**
+ * @enum ttn_response_code_t
+ * Enumerates response codes for The Things Network operations.
+ */
 enum ttn_response_code_t
 {
 	TTN_OK,
@@ -85,6 +138,10 @@ enum ttn_response_code_t
 	TTN_ERROR_ERR = (-12),
 };
 
+/**
+ * @enum ttn_modem_status_t
+ * Enumerates modem status codes.
+ */
 enum ttn_modem_status_t
 {
 	TTN_MODEM_READ_ERR = -1,
@@ -99,19 +156,30 @@ enum ttn_modem_status_t
 	TTN_MODEM_C_RX2
 };
 
+/**
+ * @class TheThingsNetwork
+ * @brief Class providing an interface for LoRaWAN communication.
+ */
 class TheThingsNetwork
+
+/** @note !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+* All functions in this class are documented in de .cpp file. 
+* Also the commented out functions are documented, and why they are deleted.
+* !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+*/
+
 {
 private:
-  Stream *modemStream;
-  Stream *debugStream = NULL;
+  Stream *modemStream; ///< Pointer to the modem stream.
+  Stream *debugStream = NULL; ///< Pointer to the debug stream.
   //ttn_fp_t fp; // See line 45. Enum could be deleted
-  uint8_t sf; // Constant, so could be deleted. 
-  uint8_t fsb; // Constant? So could be deleted. 
-  bool adr;
-  char buffer[512];
-  bool baudDetermined = false;
-  void (*messageCallback)(const uint8_t *payload, size_t size, port_t port);
-  lorawan_class_t lw_class = CLASS_A;
+  uint8_t sf; ///< Spreading factor.
+  uint8_t fsb; ///< Frame sub-band. 
+  bool adr; ///< Adaptive data rate setting.
+  char buffer[512]; ///< Communication buffer.
+  bool baudDetermined = false; ///< Flag indicating whether baud rate is determined.
+  void (*messageCallback)(const uint8_t *payload, size_t size, port_t port); ///< Callback function for message reception.
+  lorawan_class_t lw_class = CLASS_A; ///< LoRaWAN device class.
 
   void clearReadBuffer();
   size_t readLine(char *buffer, size_t size, uint8_t attempts = 3);
@@ -146,14 +214,26 @@ private:
   void sendGetValue(uint8_t table, uint8_t prefix, uint8_t index);
 
 public:
-/* Commented functions are not neccessary public functions for compatibility wiht the TTN-library. If functions are'nt commented
+/* Commented functions are not neccessary public functions for compatibility wiht the TTN-library. If functions are not commented
   out but also not needed, a explanation is given where the function is used.
   */
 
+/**
+ * @brief Flag indicating whether a hard reset is needed.
+ */
   bool needsHardReset = false;
 
   //TheThingsNetwork(Stream &modemStream, Stream &debugStream, ttn_fp_t fp, uint8_t sf = TTN_DEFAULT_SF, uint8_t fsb = TTN_DEFAULT_FSB);
+    /**
+     * @brief Constructor.
+     * @param modemStream The stream for communication with the LoRaWAN modem.
+     * @param debugStream The stream for debugging output.
+     * @param sf The default spreading factor.
+     * @param fsb The default frequency sub-band.
+     * @param fp This parameter is deleted, because one region is used.
+     */
   TheThingsNetwork(Stream &modemStream, Stream &debugStream, uint8_t sf = TTN_DEFAULT_SF, uint8_t fsb = TTN_DEFAULT_FSB); //removed ttn_fp_t fp
+
   void reset(bool adr = true); 
   void resetHard(uint8_t resetPin); 
   void showStatus(); 
@@ -162,6 +242,7 @@ public:
   size_t getVersion(char *buffer, size_t size);
   enum ttn_modem_status_t getStatus();
   uint16_t getVDD(); 
+
   // int16_t getRSSI();
   // uint32_t getFrequency();
   // uint32_t getWatchDogTimer();
@@ -175,13 +256,13 @@ public:
   // int8_t getPowerIndex();
   // bool getChannelStatus (uint8_t channel);
   // ttn_response_code_t getLastError();
-  void onMessage(void (*cb)(const uint8_t *payload, size_t size, port_t port)); //
-  bool provision(const char *appEui, const char *appKey, bool resetFirst = true); // yes, but changes
+  void onMessage(void (*cb)(const uint8_t *payload, size_t size, port_t port)); 
+  bool provision(const char *appEui, const char *appKey, bool resetFirst = true);
   bool provision(const char *devEui, const char *appEui, const char *appKey);
-  bool join(const char *appEui, const char *appKey, int8_t retries = -1, uint32_t retryDelay = 10000); // yes but changes
+  bool join(const char *appEui, const char *appKey, int8_t retries = -1, uint32_t retryDelay = 10000); 
   bool join(const char *devEui, const char *appEui, const char *appKey, int8_t retries = -1, uint32_t retryDelay = 10000);
   bool join(int8_t retries = -1, uint32_t retryDelay = 10000); 
-  bool personalize(const char *devAddr, const char *nwkSKey, const char *appSKey, bool resetFirst = true); // yes but changes
+  bool personalize(const char *devAddr, const char *nwkSKey, const char *appSKey, bool resetFirst = true);
   bool personalize(); 
   //bool setClass(lorawan_class_t p_lw_class); // Used in join function
   ttn_response_t sendBytes(const uint8_t *payload, size_t length, port_t port = 1, bool confirm = false, uint8_t sf = 0); 
