@@ -657,7 +657,7 @@ enum ttn_modem_status_t TheThingsNetwork::getStatus()
   return TTN_MODEM_READ_ERR; // unable to read status
 }
 /**
-    @brief These functions are removed because they are not used and are not included in the default use case
+    @brief These functions are removed because they are not used and are not included in the default usecase
   int8_t TheThingsNetwork::getPower()
   {
    if (readResponse(RADIO_TABLE, RADIO_TABLE, RADIO_GET_PWR, buffer, sizeof(buffer)) > 0) {
