@@ -108,12 +108,12 @@ const char silent[] PROGMEM = "silent"; /**< @brief String constant stored in PR
 const char err[] PROGMEM = "err"; /**< @brief String constant stored in PROGMEM representing "err". */
 
 /**
- * @brief Array of PROGMEM strings used for comparison.
- * 
- * This array contains PROGMEM strings that are used for comparison purposes.
- * It includes strings like "busy", "invalid_param", "not_joined", etc.
- * These strings are stored in program memory to save RAM space.
- */
+   @brief Array of PROGMEM strings used for comparison.
+
+   This array contains PROGMEM strings that are used for comparison purposes.
+   It includes strings like "busy", "invalid_param", "not_joined", etc.
+   These strings are stored in program memory to save RAM space.
+*/
 const char *const compareerr_table[] PROGMEM = {ok, busy, fram_counter_err_rejoin_needed, invalid_class, invalid_data_len, invalid_param, keys_not_init, mac_paused, multicast_keys_not_set, no_free_ch, not_joined, silent, err};
 
 #if defined(YES_DEBUG)
@@ -237,10 +237,10 @@ const char successful_transmission_received[] PROGMEM = "Successful transmission
 const char valid_module[] PROGMEM = "Valid module connected.";
 
 /**
- * @brief Array of success messages.
- * 
- * Contains messages indicating various success states.
- */
+   @brief Array of success messages.
+
+   Contains messages indicating various success states.
+*/
 const char *const success_msg[] PROGMEM = {personalize_accepted, join_accepted, successful_transmission, successful_transmission_received, valid_module};
 #endif
 
@@ -432,18 +432,18 @@ const char *const mac_tx_table[] PROGMEM = {mac_tx_type_cnf, mac_tx_type_ucnf}; 
 #define CMP_ERR_TABLE 10 /**< Comparison error table index. */
 
 /**
- * @brief Compares a string with a string stored in PROGMEM.
- * 
- * This function compares a null-terminated string with a string stored in PROGMEM
- * and returns the result of the comparison.
- * 
- * @param str1 The null-terminated string to compare.
- * @param str2Index The index of the string stored in PROGMEM to compare with.
- * @param table The table index specifying the PROGMEM table to search from.
- *              Default is CMP_TABLE.
- * @return An integer less than, equal to, or greater than zero if str1 is found,
- *         respectively, to be less than, to match, or be greater than str2.
- */
+   @brief Compares a string with a string stored in PROGMEM.
+
+   This function compares a null-terminated string with a string stored in PROGMEM
+   and returns the result of the comparison.
+
+   @param str1 The null-terminated string to compare.
+   @param str2Index The index of the string stored in PROGMEM to compare with.
+   @param table The table index specifying the PROGMEM table to search from.
+                Default is CMP_TABLE.
+   @return An integer less than, equal to, or greater than zero if str1 is found,
+           respectively, to be less than, to match, or be greater than str2.
+*/
 int pgmstrcmp(const char *str1, uint8_t str2Index, uint8_t table = CMP_TABLE)
 {
   if (0 == strlen(str1))
@@ -465,13 +465,13 @@ int pgmstrcmp(const char *str1, uint8_t str2Index, uint8_t table = CMP_TABLE)
 }
 
 /**
- * @brief Calculates the number of digits in a number.
- * 
- * This function calculates the number of digits in a given number.
- * 
- * @param port The number to calculate the digits for.
- * @return The number of digits in the given number.
- */
+   @brief Calculates the number of digits in a number.
+
+   This function calculates the number of digits in a given number.
+
+   @param port The number to calculate the digits for.
+   @return The number of digits in the given number.
+*/
 uint8_t digits(uint8_t port)
 {
   if (port >= 100)
@@ -486,13 +486,13 @@ uint8_t digits(uint8_t port)
 }
 
 /**
- * @brief Extracts the port number from a string.
- * 
- * This function extracts the port number from a given string.
- * 
- * @param s The string containing the port number.
- * @return The port number extracted from the string.
- */
+   @brief Extracts the port number from a string.
+
+   This function extracts the port number from a given string.
+
+   @param s The string containing the port number.
+   @return The port number extracted from the string.
+*/
 uint8_t receivedPort(const char *s)
 {
   uint8_t port = 0;
@@ -507,19 +507,19 @@ uint8_t receivedPort(const char *s)
 }
 
 /**
- * @brief Constructor for TheThingsNetwork class.
- * 
- * Initializes an instance of TheThingsNetwork class with the provided modem stream,
- * debug stream, spreading factor (SF), and frequency sub-band (FSB).
- * 
- * The original function is TheThingsNetwork::TheThingsNetwork(Stream &modemStream, Stream &debugStream, ttn_fp_t fp, uint8_t sf, uint8_t fsb).
- * In the edited function sf is nolonger a parm for the function because we use constant value.
- * 
- * @param modemStream The stream for communicating with the modem.
- * @param debugStream The stream for debug output.
- * @param sf The spreading factor to be used.
- * @param fsb The frequency sub-band to be used.
- */
+   @brief Constructor for TheThingsNetwork class.
+
+   Initializes an instance of TheThingsNetwork class with the provided modem stream,
+   debug stream, spreading factor (SF), and frequency sub-band (FSB).
+
+   The original function is TheThingsNetwork::TheThingsNetwork(Stream &modemStream, Stream &debugStream, ttn_fp_t fp, uint8_t sf, uint8_t fsb).
+   In the edited function sf is nolonger a parm for the function because we use constant value.
+
+   @param modemStream The stream for communicating with the modem.
+   @param debugStream The stream for debug output.
+   @param sf The spreading factor to be used.
+   @param fsb The frequency sub-band to be used.
+*/
 TheThingsNetwork::TheThingsNetwork(Stream &modemStream, Stream &debugStream, uint8_t sf, uint8_t fsb)
 {
   this->debugStream = &debugStream;
@@ -533,54 +533,54 @@ TheThingsNetwork::TheThingsNetwork(Stream &modemStream, Stream &debugStream, uin
 }
 
 /**
- * @brief Retrieves the Application EUI (AppEUI) from the device.
- * 
- * This function reads the AppEUI from the device and stores it in the provided buffer.
- * 
- * @param buffer A pointer to the buffer where the AppEUI will be stored.
- * @param size The size of the buffer.
- * @return The number of characters read and stored in the buffer.
- */
+   @brief Retrieves the Application EUI (AppEUI) from the device.
+
+   This function reads the AppEUI from the device and stores it in the provided buffer.
+
+   @param buffer A pointer to the buffer where the AppEUI will be stored.
+   @param size The size of the buffer.
+   @return The number of characters read and stored in the buffer.
+*/
 size_t TheThingsNetwork::getAppEui(char *buffer, size_t size)
 {
   return readResponse(MAC_TABLE, MAC_GET_SET_TABLE, MAC_APPEUI, buffer, size);
 }
 
 /**
- * @brief Retrieves the Hardware EUI (HWEUI) from the device.
- * 
- * This function reads the HWEUI from the device and stores it in the provided buffer.
- * 
- * @param buffer A pointer to the buffer where the HWEUI will be stored.
- * @param size The size of the buffer.
- * @return The number of characters read and stored in the buffer.
- */
+   @brief Retrieves the Hardware EUI (HWEUI) from the device.
+
+   This function reads the HWEUI from the device and stores it in the provided buffer.
+
+   @param buffer A pointer to the buffer where the HWEUI will be stored.
+   @param size The size of the buffer.
+   @return The number of characters read and stored in the buffer.
+*/
 size_t TheThingsNetwork::getHardwareEui(char *buffer, size_t size)
 {
   return readResponse(SYS_TABLE, SYS_TABLE, SYS_GET_HWEUI, buffer, size);
 }
 
 /**
- * @brief Retrieves the firmware version from the device.
- * 
- * This function reads the firmware version from the device and stores it in the provided buffer.
- * 
- * @param buffer A pointer to the buffer where the firmware version will be stored.
- * @param size The size of the buffer.
- * @return The number of characters read and stored in the buffer.
- */
+   @brief Retrieves the firmware version from the device.
+
+   This function reads the firmware version from the device and stores it in the provided buffer.
+
+   @param buffer A pointer to the buffer where the firmware version will be stored.
+   @param size The size of the buffer.
+   @return The number of characters read and stored in the buffer.
+*/
 size_t TheThingsNetwork::getVersion(char *buffer, size_t size)
 {
   return readResponse(SYS_TABLE, SYS_TABLE, SYS_GET_VER, buffer, size);
 }
 
 /**
- * @brief Retrieves the supply voltage (VDD) from the device.
- * 
- * This function reads the supply voltage from the device.
- * 
- * @return The supply voltage value in millivolts.
- */
+   @brief Retrieves the supply voltage (VDD) from the device.
+
+   This function reads the supply voltage from the device.
+
+   @return The supply voltage value in millivolts.
+*/
 uint16_t TheThingsNetwork::getVDD()
 {
   if (readResponse(SYS_TABLE, SYS_TABLE, SYS_GET_VDD, buffer, sizeof(buffer)) > 0) {
@@ -589,62 +589,62 @@ uint16_t TheThingsNetwork::getVDD()
   return 0;
 }
 /** @brief These functions are not used and not needed by default.
- uint8_t TheThingsNetwork::getBW()
- {
+  uint8_t TheThingsNetwork::getBW()
+  {
    if (readResponse(RADIO_TABLE, RADIO_TABLE, RADIO_GET_BW, buffer, sizeof(buffer)) > 0) {
      return atoi(buffer);
    }
    return 0;
- }
+  }
 
- uint8_t TheThingsNetwork::getCR()
- {
+  uint8_t TheThingsNetwork::getCR()
+  {
    if (readResponse(RADIO_TABLE, RADIO_TABLE, RADIO_GET_CR, buffer, sizeof(buffer)) > 2) {
      return atoi(buffer+2); // skip the first two chars "4/"
    }
    return 0;
- }
+  }
 
- uint32_t TheThingsNetwork::getFrequency()
- {
+  uint32_t TheThingsNetwork::getFrequency()
+  {
    if (readResponse(RADIO_TABLE, RADIO_TABLE, RADIO_GET_FREQ, buffer, sizeof(buffer)) > 0) {
      return atol(buffer);
    }
    return 0;
- }
+  }
 
- uint32_t TheThingsNetwork::getFCU()
- {
+  uint32_t TheThingsNetwork::getFCU()
+  {
    if (readResponse(MAC_TABLE, MAC_GET_SET_TABLE, MAC_UPCTR, buffer, sizeof(buffer)) > 0) {
      return strtoul(buffer, NULL, 10);
    }
    return 0;
- }
+  }
 
- uint32_t TheThingsNetwork::getFCD()
- {
+  uint32_t TheThingsNetwork::getFCD()
+  {
    if (readResponse(MAC_TABLE, MAC_GET_SET_TABLE, MAC_DNCTR, buffer, sizeof(buffer)) > 0) {
      return strtoul(buffer, NULL, 10);
    }
    return 0;
- }
+  }
 
- uint32_t TheThingsNetwork::getWatchDogTimer()
- {
+  uint32_t TheThingsNetwork::getWatchDogTimer()
+  {
    if (readResponse(RADIO_TABLE, RADIO_TABLE, RADIO_GET_WDT, buffer, sizeof(buffer)) > 0) {
      return atol(buffer);
    }
    return 0;
- }
+  }
 */
 /**
- * @brief Retrieves the status of the modem.
- * 
- * This function reads the status of the modem from the device.
- * 
- * @return The status of the modem as an enum value of type ttn_modem_status_t.
- *         If the status cannot be read, TTN_MODEM_READ_ERR is returned.
- */
+   @brief Retrieves the status of the modem.
+
+   This function reads the status of the modem from the device.
+
+   @return The status of the modem as an enum value of type ttn_modem_status_t.
+           If the status cannot be read, TTN_MODEM_READ_ERR is returned.
+*/
 enum ttn_modem_status_t TheThingsNetwork::getStatus()
 {
   if (readResponse(MAC_TABLE, MAC_GET_SET_TABLE, MAC_STATUS, buffer, sizeof(buffer)) > 0) {
@@ -656,50 +656,50 @@ enum ttn_modem_status_t TheThingsNetwork::getStatus()
   }
   return TTN_MODEM_READ_ERR; // unable to read status
 }
-/** 
- *  @brief These functions are removed because they are not used and are not included in the default use case
- int8_t TheThingsNetwork::getPower()
- {
+/**
+    @brief These functions are removed because they are not used and are not included in the default use case
+  int8_t TheThingsNetwork::getPower()
+  {
    if (readResponse(RADIO_TABLE, RADIO_TABLE, RADIO_GET_PWR, buffer, sizeof(buffer)) > 0) {
      return atoi(buffer);
    }
    return -128;
- }
+  }
 
- int16_t TheThingsNetwork::getRSSI()
- {
+  int16_t TheThingsNetwork::getRSSI()
+  {
    if (readResponse(RADIO_TABLE, RADIO_TABLE, RADIO_GET_RSSI, buffer, sizeof(buffer)) > 0) {
      return atoi(buffer);
    }
    return -255;
- }
+  }
 
- int8_t TheThingsNetwork::getSNR()
- {
+  int8_t TheThingsNetwork::getSNR()
+  {
    if (readResponse(RADIO_TABLE, RADIO_TABLE, RADIO_GET_SNR, buffer, sizeof(buffer)) > 0) {
      return atoi(buffer);
    }
    return -128;
- }
+  }
 
- int8_t TheThingsNetwork::getDR()
- {
+  int8_t TheThingsNetwork::getDR()
+  {
    if (readResponse(MAC_TABLE, MAC_GET_SET_TABLE, MAC_DR, buffer, sizeof(buffer))){
      return atoi(buffer);
    }
    return -1;
- }
+  }
 
- int8_t TheThingsNetwork::getPowerIndex()
- {
+  int8_t TheThingsNetwork::getPowerIndex()
+  {
    if (readResponse(MAC_TABLE, MAC_GET_SET_TABLE, MAC_PWRIDX, buffer, sizeof(buffer)) > 0) {
      return atoi(buffer);
    }
    return -1;
- }
+  }
 
- bool TheThingsNetwork::getChannelStatus (uint8_t channel)
- {
+  bool TheThingsNetwork::getChannelStatus (uint8_t channel)
+  {
    char str[5];
    if (channel > 9)
    {
@@ -723,9 +723,9 @@ enum ttn_modem_status_t TheThingsNetwork::getStatus()
  	  return (pgmstrcmp(buffer, CMP_ON) == 0); // true if on, false if off or an error occurs
    else
  	  return false; // error
- }
+  }
 
- ttn_response_code_t TheThingsNetwork::getLastError(){
+  ttn_response_code_t TheThingsNetwork::getLastError(){
 
  	int match, pos;
  	for (pos=0; pos <= CMP_ERR_LAST; pos++){
@@ -735,17 +735,17 @@ enum ttn_modem_status_t TheThingsNetwork::getStatus()
  	}
 
  	return (ttn_response_code_t)(-1* pos); // code order is equal
- }
+  }
 */
 /**
- * @brief Prints debug information for a given index and value.
- * 
- * This function prints debug information based on the provided index and value.
- * Debug printing is enabled only if YES_DEBUG is defined.
- * 
- * @param index The index of the debug information to be printed.
- * @param value The value associated with the debug information.
- */
+   @brief Prints debug information for a given index and value.
+
+   This function prints debug information based on the provided index and value.
+   Debug printing is enabled only if YES_DEBUG is defined.
+
+   @param index The index of the debug information to be printed.
+   @param value The value associated with the debug information.
+*/
 void TheThingsNetwork::debugPrintIndex(uint8_t index, const char *value)
 {
 #if defined(YES_DEBUG)
@@ -759,12 +759,12 @@ void TheThingsNetwork::debugPrintIndex(uint8_t index, const char *value)
 #endif
 }
 /**
- * @brief Prints debug message of specified type with optional value.
- * 
- * @param type Type of message: ERR_MESSAGE or SUCCESS_MESSAGE.
- * @param index Index of the message in the respective message array.
- * @param value Optional value to append to the message.
- */
+   @brief Prints debug message of specified type with optional value.
+
+   @param type Type of message: ERR_MESSAGE or SUCCESS_MESSAGE.
+   @param index Index of the message in the respective message array.
+   @param value Optional value to append to the message.
+*/
 void TheThingsNetwork::debugPrintMessage(uint8_t type, uint8_t index, const char *value)
 {
 #if defined(YES_DEBUG)
@@ -790,8 +790,8 @@ void TheThingsNetwork::debugPrintMessage(uint8_t type, uint8_t index, const char
 #endif
 }
 /**
- * @brief Clears the read buffer of the modemStream.
- */
+   @brief Clears the read buffer of the modemStream.
+*/
 void TheThingsNetwork::clearReadBuffer()
 {
   while (modemStream->available())
@@ -800,13 +800,13 @@ void TheThingsNetwork::clearReadBuffer()
   }
 }
 /**
- * @brief Reads a line from the modemStream into the provided buffer.
- * 
- * @param buffer Pointer to the buffer to store the read line.
- * @param size Size of the buffer.
- * @param attempts Number of attempts to read the line.
- * @return The number of characters read, or 0 if no characters were read.
- */
+   @brief Reads a line from the modemStream into the provided buffer.
+
+   @param buffer Pointer to the buffer to store the read line.
+   @param size Size of the buffer.
+   @param attempts Number of attempts to read the line.
+   @return The number of characters read, or 0 if no characters were read.
+*/
 size_t TheThingsNetwork::readLine(char *buffer, size_t size, uint8_t attempts)
 {
   size_t read = 0;
@@ -826,14 +826,14 @@ size_t TheThingsNetwork::readLine(char *buffer, size_t size, uint8_t attempts)
   return read;
 }
 /**
- * @brief Reads a response from the modemStream based on the provided prefix and index.
- * 
- * @param prefixTable The prefix table identifier.
- * @param index The index in the specified prefix table.
- * @param buffer Pointer to the buffer to store the response.
- * @param size Size of the buffer.
- * @return The number of characters read.
- */
+   @brief Reads a response from the modemStream based on the provided prefix and index.
+
+   @param prefixTable The prefix table identifier.
+   @param index The index in the specified prefix table.
+   @param buffer Pointer to the buffer to store the response.
+   @param size Size of the buffer.
+   @return The number of characters read.
+*/
 size_t TheThingsNetwork::readResponse(uint8_t prefixTable, uint8_t index, char *buffer, size_t size)
 {
   clearReadBuffer();
@@ -843,15 +843,15 @@ size_t TheThingsNetwork::readResponse(uint8_t prefixTable, uint8_t index, char *
   return readLine(buffer, size);
 }
 /**
- * @brief Reads a response from the modemStream based on the provided prefix and index tables.
- * 
- * @param prefixTable The prefix table identifier.
- * @param indexTable The index table identifier.
- * @param index The index in the specified index table.
- * @param buffer Pointer to the buffer to store the response.
- * @param size Size of the buffer.
- * @return The number of characters read.
- */
+   @brief Reads a response from the modemStream based on the provided prefix and index tables.
+
+   @param prefixTable The prefix table identifier.
+   @param indexTable The index table identifier.
+   @param index The index in the specified index table.
+   @param buffer Pointer to the buffer to store the response.
+   @param size Size of the buffer.
+   @return The number of characters read.
+*/
 size_t TheThingsNetwork::readResponse(uint8_t prefixTable, uint8_t indexTable, uint8_t index, char *buffer, size_t size)
 {
   clearReadBuffer();
@@ -862,12 +862,12 @@ size_t TheThingsNetwork::readResponse(uint8_t prefixTable, uint8_t indexTable, u
   return readLine(buffer, size);
 }
 /**
- * @brief Automatically determines the baud rate of the modemStream.
- * 
- * This function sends a series of commands to the modem to detect the baud rate.
- * 
- * @note This function should be called after initializing the modemStream.
- */
+   @brief Automatically determines the baud rate of the modemStream.
+
+   This function sends a series of commands to the modem to detect the baud rate.
+
+   @note This function should be called after initializing the modemStream.
+*/
 void TheThingsNetwork::autoBaud()
 {
   // Courtesy of @jpmeijers
@@ -892,17 +892,17 @@ void TheThingsNetwork::autoBaud()
   baudDetermined = true;
 }
 /**
- * @brief Resets the LoRaWAN modem.
- * 
- * This function performs the following operations:
- * 1. Automatically determines the baud rate of the modemStream.
- * 2. Sends a "sys reset" command to reset the modem.
- * 3. Determines the hardware model and software version of the modem.
- * 4. Sets the HWEUI (Hardware EUI) as DEVEUI.
- * 5. Sets the Adaptive Data Rate (ADR) based on the provided parameter.
- * 
- * @param adr Set to `true` to enable Adaptive Data Rate (ADR), `false` otherwise.
- */
+   @brief Resets the LoRaWAN modem.
+
+   This function performs the following operations:
+   1. Automatically determines the baud rate of the modemStream.
+   2. Sends a "sys reset" command to reset the modem.
+   3. Determines the hardware model and software version of the modem.
+   4. Sets the HWEUI (Hardware EUI) as DEVEUI.
+   5. Sets the Adaptive Data Rate (ADR) based on the provided parameter.
+
+   @param adr Set to `true` to enable Adaptive Data Rate (ADR), `false` otherwise.
+*/
 
 void TheThingsNetwork::reset(bool adr)
 {
@@ -927,12 +927,12 @@ void TheThingsNetwork::reset(bool adr)
   setADR(adr);
 }
 /**
- * @brief Performs a hard reset of the LoRaWAN modem using a hardware pin.
- * 
- * This function resets the LoRaWAN modem by toggling a specified hardware pin.
- * 
- * @param resetPin The digital pin connected to the reset pin of the LoRaWAN modem.
- */
+   @brief Performs a hard reset of the LoRaWAN modem using a hardware pin.
+
+   This function resets the LoRaWAN modem by toggling a specified hardware pin.
+
+   @param resetPin The digital pin connected to the reset pin of the LoRaWAN modem.
+*/
 
 void TheThingsNetwork::resetHard(uint8_t resetPin) {
   digitalWrite(resetPin, LOW);
@@ -940,12 +940,12 @@ void TheThingsNetwork::resetHard(uint8_t resetPin) {
   digitalWrite(resetPin, HIGH);
 }
 /**
- * @brief Saves the current LoRaWAN modem state.
- * 
- * This function instructs the LoRaWAN modem to save its current state.
- * 
- * @note This function is typically used to save configuration changes.
- */
+   @brief Saves the current LoRaWAN modem state.
+
+   This function instructs the LoRaWAN modem to save its current state.
+
+   @note This function is typically used to save configuration changes.
+*/
 
 void TheThingsNetwork::saveState()
 {
@@ -960,39 +960,39 @@ void TheThingsNetwork::saveState()
 }
 
 /**
- * @brief Sets the callback function for receiving downlink messages.
- * 
- * This function sets the callback function to be called when a downlink message is received.
- * 
- * @param cb Pointer to the callback function.
- * @note The callback function should have the following signature:
- * @code
- * void callback(const uint8_t *payload, size_t size, port_t port)
- * @endcode
- * Where:
- * - payload: Pointer to the received data payload.
- * - size: Size of the received data payload.
- * - port: Port number on which the message was received.
- */
+   @brief Sets the callback function for receiving downlink messages.
+
+   This function sets the callback function to be called when a downlink message is received.
+
+   @param cb Pointer to the callback function.
+   @note The callback function should have the following signature:
+   @code
+   void callback(const uint8_t *payload, size_t size, port_t port)
+   @endcode
+   Where:
+   - payload: Pointer to the received data payload.
+   - size: Size of the received data payload.
+   - port: Port number on which the message was received.
+*/
 void TheThingsNetwork::onMessage(void (*cb)(const uint8_t *payload, size_t size, port_t port))
 {
   messageCallback = cb;
 }
 
 /**
- * @brief Personalizes the LoRaWAN device with the given device address and session keys.
- * 
- * This function personalizes the LoRaWAN device with the provided device address (DevAddr), 
- * network session key (NwkSKey), and application session key (AppSKey). Optionally, it can 
- * reset the device first.
- * 
- * @param devAddr Pointer to the device address (DevAddr).
- * @param nwkSKey Pointer to the network session key (NwkSKey).
- * @param appSKey Pointer to the application session key (AppSKey).
- * @param resetFirst Flag indicating whether to reset the device first (true) or not (false).
- * @return True if the device is successfully personalized, false otherwise.
- * @note If resetFirst is true, the device will be reset before personalization.
- */
+   @brief Personalizes the LoRaWAN device with the given device address and session keys.
+
+   This function personalizes the LoRaWAN device with the provided device address (DevAddr),
+   network session key (NwkSKey), and application session key (AppSKey). Optionally, it can
+   reset the device first.
+
+   @param devAddr Pointer to the device address (DevAddr).
+   @param nwkSKey Pointer to the network session key (NwkSKey).
+   @param appSKey Pointer to the application session key (AppSKey).
+   @param resetFirst Flag indicating whether to reset the device first (true) or not (false).
+   @return True if the device is successfully personalized, false otherwise.
+   @note If resetFirst is true, the device will be reset before personalization.
+*/
 bool TheThingsNetwork::personalize(const char *devAddr, const char *nwkSKey, const char *appSKey, bool resetFirst)
 {
   if (resetFirst) {
@@ -1012,15 +1012,15 @@ bool TheThingsNetwork::personalize(const char *devAddr, const char *nwkSKey, con
 }
 
 /**
- * @brief Personalizes the LoRaWAN device.
- * 
- * This function personalizes the LoRaWAN device by configuring channels, setting up the 
- * frequency plan for EU868, configuring the spreading factor (SF), and sending a join 
- * request with activation by personalization (ABP). It then checks if the join request 
- * is accepted and returns true if successful.
- * 
- * @return True if the device is successfully personalized, false otherwise.
- */
+   @brief Personalizes the LoRaWAN device.
+
+   This function personalizes the LoRaWAN device by configuring channels, setting up the
+   frequency plan for EU868, configuring the spreading factor (SF), and sending a join
+   request with activation by personalization (ABP). It then checks if the join request
+   is accepted and returns true if successful.
+
+   @return True if the device is successfully personalized, false otherwise.
+*/
 bool TheThingsNetwork::personalize()
 {
   //configureChannels(fsb);
@@ -1041,17 +1041,17 @@ bool TheThingsNetwork::personalize()
 }
 
 /**
- * @brief Provisions the LoRaWAN device.
- * 
- * This function provisions the LoRaWAN device by setting up the device EUI (DEVEUI) 
- * with the hardware EUI (HWEUI), the application EUI (APPEUI), and the application 
- * key (APPKEY). If specified, it performs a hard reset before provisioning. 
- * 
- * @param appEui The application EUI (APPEUI) to be provisioned.
- * @param appKey The application key (APPKEY) to be provisioned.
- * @param resetFirst If true, performs a hard reset before provisioning.
- * @return True if the device is successfully provisioned, false otherwise.
- */
+   @brief Provisions the LoRaWAN device.
+
+   This function provisions the LoRaWAN device by setting up the device EUI (DEVEUI)
+   with the hardware EUI (HWEUI), the application EUI (APPEUI), and the application
+   key (APPKEY). If specified, it performs a hard reset before provisioning.
+
+   @param appEui The application EUI (APPEUI) to be provisioned.
+   @param appKey The application key (APPKEY) to be provisioned.
+   @param resetFirst If true, performs a hard reset before provisioning.
+   @return True if the device is successfully provisioned, false otherwise.
+*/
 bool TheThingsNetwork::provision(const char *appEui, const char *appKey, bool resetFirst)
 {
   if (resetFirst) {
@@ -1071,16 +1071,16 @@ bool TheThingsNetwork::provision(const char *appEui, const char *appKey, bool re
 }
 
 /**
- * @brief Provisions the LoRaWAN device.
- * 
- * This function provisions the LoRaWAN device by setting up the device EUI (DEVEUI), 
- * the application EUI (APPEUI), and the application key (APPKEY). 
- * 
- * @param devEui The device EUI (DEVEUI) to be provisioned.
- * @param appEui The application EUI (APPEUI) to be provisioned.
- * @param appKey The application key (APPKEY) to be provisioned.
- * @return True if the device is successfully provisioned, false otherwise.
- */
+   @brief Provisions the LoRaWAN device.
+
+   This function provisions the LoRaWAN device by setting up the device EUI (DEVEUI),
+   the application EUI (APPEUI), and the application key (APPKEY).
+
+   @param devEui The device EUI (DEVEUI) to be provisioned.
+   @param appEui The application EUI (APPEUI) to be provisioned.
+   @param appKey The application key (APPKEY) to be provisioned.
+   @return True if the device is successfully provisioned, false otherwise.
+*/
 bool TheThingsNetwork::provision(const char *devEui, const char *appEui, const char *appKey)
 {
   reset(adr);
@@ -1096,10 +1096,36 @@ bool TheThingsNetwork::provision(const char *devEui, const char *appEui, const c
   return true;
 }
 
+/**
+   @brief Initiates the joining process of the LoRaWAN device.
+
+   This function initiates the joining process of the LoRaWAN device by provisioning
+   the device EUI (DEVEUI), the application EUI (APPEUI), and the application key (APPKEY),
+   and then attempting to join the network.
+
+   @param devEui The device EUI (DEVEUI) to be provisioned and used for joining.
+   @param appEui The application EUI (APPEUI) to be provisioned and used for joining.
+   @param appKey The application key (APPKEY) to be provisioned and used for joining.
+   @param retries The number of join retries. Default is -1, indicating infinite retries.
+   @param retryDelay The delay between join retries, in milliseconds. Default is 10000 milliseconds.
+   @return True if the device successfully joins the network, false otherwise.
+*/
 bool TheThingsNetwork::join(const char *devEui, const char *appEui, const char *appKey, int8_t retries = -1, uint32_t retryDelay = 10000)
 {
   return provision(devEui, appEui, appKey) && join(retries, retryDelay);
 }
+
+/**
+   @brief Initiates the joining process of the LoRaWAN device.
+
+   This function initiates the joining process of the LoRaWAN device by configuring channels,
+   setting spreading factor (SF), and attempting to join the network. It retries joining if
+   unsuccessful based on the specified number of retries and retry delay.
+
+   @param retries The number of join retries. Set to -1 for infinite retries.
+   @param retryDelay The delay between join retries, in milliseconds.
+   @return True if the device successfully joins the network, false otherwise.
+*/
 bool TheThingsNetwork::join(int8_t retries, uint32_t retryDelay)
 {
   int8_t attempts = 0;
@@ -1132,7 +1158,7 @@ bool TheThingsNetwork::join(int8_t retries, uint32_t retryDelay)
   return false;
 }
 // Only CLASS A is used and iets made the default
-/*
+/** @brief Removed the function because we only use CLASS_A and its the only class that is needed
   bool TheThingsNetwork::setClass(lorawan_class_t p_lw_class)
   {
   switch (p_lw_class)
@@ -1160,6 +1186,19 @@ bool TheThingsNetwork::join(int8_t retries, uint32_t retryDelay)
   }
   }
 */
+/**
+   @brief Initiates the joining process of the LoRaWAN device using OTAA.
+
+   This function initiates the joining process of the LoRaWAN device using Over-the-Air Activation (OTAA)
+   by provisioning the application EUI and application key, and then attempting to join the network.
+
+   @param appEui The application EUI used for joining the network.
+   @param appKey The application key used for joining the network.
+   @param retries The number of join retries. Set to -1 for infinite retries.
+   @param retryDelay The delay between join retries, in milliseconds.
+   @return True if the device successfully joins the network, false otherwise.
+*/
+
 bool TheThingsNetwork::join(const char *appEui, const char *appKey, int8_t retries, uint32_t retryDelay)
 {
   return provision(appEui, appKey) && join(retries, retryDelay) && lw_class;
@@ -1198,6 +1237,22 @@ ttn_response_t TheThingsNetwork::parseBytes() {
   return TTN_ERROR_UNEXPECTED_RESPONSE;
 }
 
+/**
+   @brief Sends a byte array over LoRaWAN with the specified transmission parameters.
+
+   This function sends a byte array over LoRaWAN with the specified transmission parameters,
+   including payload, port, confirmation mode, and spreading factor (SF).
+
+   @param payload Pointer to the byte array containing the payload data.
+   @param length The length of the payload data.
+   @param port The port number used for sending the payload.
+   @param confirm Set to true to request confirmation from the network, false otherwise.
+   @param sf The spreading factor (SF) to be used for transmission. Set to 0 to use the default SF.
+   @return The status of the transmission operation.
+       - TTN_SUCCESSFUL_TRANSMISSION: Transmission successful.
+       - TTN_ERROR_SEND_COMMAND_FAILED: Failed to send the command.
+       - TTN_UNSUCCESSFUL_RECEIVE: Unsuccessful reception or confirmed transmission with RX timeout.
+*/
 ttn_response_t TheThingsNetwork::sendBytes(const uint8_t *payload, size_t length, port_t port, bool confirm, uint8_t sf)
 {
   if (sf != 0)
@@ -1230,6 +1285,19 @@ ttn_response_t TheThingsNetwork::sendBytes(const uint8_t *payload, size_t length
   return parseBytes();
 }
 
+/**
+   @brief Polls the LoRaWAN network for pending messages or transmissions.
+
+   This function polls the LoRaWAN network for pending messages or transmissions.
+   The switch is removed because we only use the CLASS_A, because the other classes are not needed.
+
+   @param port The port number used for sending the poll request.
+   @param confirm Set to true to request confirmation from the network, false otherwise.
+   @param modem_only Set to true to poll the modem only, false to send an uplink message and wait for receive windows.
+   @return The status of the poll operation.
+       - TTN_SUCCESSFUL_TRANSMISSION: Transmission successful.
+       - TTN_UNSUCCESSFUL_RECEIVE: Unsuccessful reception or confirmed transmission with RX timeout.
+*/
 ttn_response_t TheThingsNetwork::poll(port_t port, bool confirm, bool modem_only)
 {
   // switch (lw_class)
@@ -1282,6 +1350,12 @@ ttn_response_t TheThingsNetwork::poll(port_t port, bool confirm, bool modem_only
   //}
 }
 
+/**
+   @brief Displays the status of the LoRaWAN network.
+
+   This function reads and displays various parameters related to the LoRaWAN network status,
+   such as hardware EUI, battery voltage, application EUI, device EUI, data rate, and receive delay.
+*/
 void TheThingsNetwork::showStatus()
 {
   readResponse(SYS_TABLE, SYS_TABLE, SYS_GET_HWEUI, buffer, sizeof(buffer));
@@ -1300,36 +1374,46 @@ void TheThingsNetwork::showStatus()
   debugPrintIndex(SHOW_RX_DELAY_2, buffer);
 }
 
+/** @brief The LoRaWAN class typically focuses on generic functionality and abstracts away hardware-specific details, making specific module validation unnecessary for flexibility, compatibility, and maintenance reasons.
+  bool TheThingsNetwork::checkValidModuleConnected(bool autoBaudFirst)
+  {
+   // check if we want to autobaud first
+   if(autoBaudFirst)
+   {
+     autoBaud();
+   }
+   // send "sys get ver" to check if (and what) module is connected
+   getVersion(buffer, sizeof(buffer));
+   // check if we got a response (whatever it might be)
+   // needsHardReset flag is set by readLine() (called at some point down the line by getVersion())
+   if(this->needsHardReset)
+   {
+     return false;                                               // no response
+   }
+   // buffer contains "RN2xx3[xx] x.x.x ...", getting only model (RN2xx3[xx])
+   char *model = strtok(buffer, " ");
+   debugPrintIndex(SHOW_MODEL, model);
+   // check if module is valid (must be RN2483, RN2483A, RN2903 or RN2903AS)
+   //if(pgmstrcmp(model, CMP_RN2483) == 0 || pgmstrcmp(model, CMP_RN2483A) == 0 || pgmstrcmp(model, CMP_RN2903) == 0 || pgmstrcmp(model, CMP_RN2903AS) == 0)
+  if(pgmstrcmp(model, CMP_RN2483) == 0)// Changed because the others are not in use
+   {
+     debugPrintMessage(SUCCESS_MESSAGE, SCS_VALID_MODULE);
+     return true;                                                // module responded and is valid (recognized/supported)
+   }
+   debugPrintMessage(ERR_MESSAGE, ERR_INVALID_MODULE);
+   return false;                                                 // module responded but is invalid (unrecognized/unsupported)
+  }*/
 
-// bool TheThingsNetwork::checkValidModuleConnected(bool autoBaudFirst)
-// {
-//   // check if we want to autobaud first
-//   if(autoBaudFirst)
-//   {
-//     autoBaud();
-//   }
-//   // send "sys get ver" to check if (and what) module is connected
-//   getVersion(buffer, sizeof(buffer));
-//   // check if we got a response (whatever it might be)
-//   // needsHardReset flag is set by readLine() (called at some point down the line by getVersion())
-//   if(this->needsHardReset)
-//   {
-//     return false;                                               // no response
-//   }
-//   // buffer contains "RN2xx3[xx] x.x.x ...", getting only model (RN2xx3[xx])
-//   char *model = strtok(buffer, " ");
-//   debugPrintIndex(SHOW_MODEL, model);
-//   // check if module is valid (must be RN2483, RN2483A, RN2903 or RN2903AS)
-//   //if(pgmstrcmp(model, CMP_RN2483) == 0 || pgmstrcmp(model, CMP_RN2483A) == 0 || pgmstrcmp(model, CMP_RN2903) == 0 || pgmstrcmp(model, CMP_RN2903AS) == 0)
-//  if(pgmstrcmp(model, CMP_RN2483) == 0)// Changed because the others are not in use
-//   {
-//     debugPrintMessage(SUCCESS_MESSAGE, SCS_VALID_MODULE);
-//     return true;                                                // module responded and is valid (recognized/supported)
-//   }
-//   debugPrintMessage(ERR_MESSAGE, ERR_INVALID_MODULE);
-//   return false;                                                 // module responded but is invalid (unrecognized/unsupported)
-// }
+/**
+   @brief Configures the LoRaWAN channels for EU868 frequency band.
 
+   This function configures LoRaWAN channels for the European 868 MHz frequency band.
+   It sets up RX2 frequency and data rate, as well as the frequencies, data rates,
+   and duty cycles for the eight channels available in this band.
+
+   @note This function assumes a specific configuration for the EU868 band and may
+   need adjustments for other frequency bands.
+*/
 void TheThingsNetwork::configureEU868()
 {
   sendMacSet(MAC_RX2, 3, 869525000);
@@ -1354,179 +1438,180 @@ void TheThingsNetwork::configureEU868()
   }
   sendMacSet(MAC_PWRIDX, TTN_PWRIDX_EU868);
 }
+/** @brief It's not included in the LoRaWAN class as a standard criteria because it is tailored specifically for the US915 frequency band and may need adjustments for other frequency bands or regional regulations.
+  void TheThingsNetwork::configureUS915(uint8_t fsb)
+  {
+   uint8_t ch;
+   uint8_t chLow = fsb > 0 ? (fsb - 1) * 8 : 0;
+   uint8_t chHigh = fsb > 0 ? chLow + 7 : 71;
+   uint8_t ch500 = fsb + 63;
+   for (ch = 0; ch < 72; ch++)
+   {
+     if (ch == ch500 || (ch <= chHigh && ch >= chLow))
+     {
+       setChannelStatus(ch, true);
+       if (ch < 63)
+       {
+         sendChSet(MAC_CHANNEL_DRRANGE, ch, "0 3");
+       }
+     }
+     else
+     {
+     	setChannelStatus(ch, false);
+     }
+   }
+   sendMacSet(MAC_PWRIDX, TTN_PWRIDX_US915);
+  }*/
+/** @brief It's not included in the LoRaWAN class as a standard criteria because it is tailored specifically for the US915 frequency band and may need adjustments for other frequency bands or regional regulations.
+  void TheThingsNetwork::configureAU915(uint8_t fsb)
+  {
+   uint8_t ch;
+   uint8_t chLow = fsb > 0 ? (fsb - 1) * 8 : 0;
+   uint8_t chHigh = fsb > 0 ? chLow + 7 : 71;
+   uint8_t ch500 = fsb + 63;
+   for (ch = 0; ch < 72; ch++)
+   {
+     if (ch == ch500 || (ch <= chHigh && ch >= chLow))
+     {
+       setChannelStatus(ch, true);
+       if (ch < 63)
+       {
+         sendChSet(MAC_CHANNEL_DRRANGE, ch, "0 3");
+       }
+     }
+     else
+     {
+     	setChannelStatus(ch, false);
+     }
+   }
+   sendMacSet(MAC_PWRIDX, TTN_PWRIDX_AU915);
+  }*/
+/** @brief It's not included in the LoRaWAN class as a standard criteria because it is tailored specifically for the AS920-923 frequency band and may need adjustments for other frequency bands or regional regulations.
+  void TheThingsNetwork::configureAS920_923()
+  {
+   /* RN2903AS 1.0.3rc9 defaults
+      CH0 = 923.2MHz
+      CH1 = 923.4MHz
 
-// void TheThingsNetwork::configureUS915(uint8_t fsb)
-// {
-//   uint8_t ch;
-//   uint8_t chLow = fsb > 0 ? (fsb - 1) * 8 : 0;
-//   uint8_t chHigh = fsb > 0 ? chLow + 7 : 71;
-//   uint8_t ch500 = fsb + 63;
-//   for (ch = 0; ch < 72; ch++)
-//   {
-//     if (ch == ch500 || (ch <= chHigh && ch >= chLow))
-//     {
-//       setChannelStatus(ch, true);
-//       if (ch < 63)
-//       {
-//         sendChSet(MAC_CHANNEL_DRRANGE, ch, "0 3");
-//       }
-//     }
-//     else
-//     {
-//     	setChannelStatus(ch, false);
-//     }
-//   }
-//   sendMacSet(MAC_PWRIDX, TTN_PWRIDX_US915);
-// }
+   setADR(false); // TODO: remove when ADR is implemented for this plan
+   sendMacSet(MAC_RX2, 2, 923200000);
 
-// void TheThingsNetwork::configureAU915(uint8_t fsb)
-// {
-//   uint8_t ch;
-//   uint8_t chLow = fsb > 0 ? (fsb - 1) * 8 : 0;
-//   uint8_t chHigh = fsb > 0 ? chLow + 7 : 71;
-//   uint8_t ch500 = fsb + 63;
-//   for (ch = 0; ch < 72; ch++)
-//   {
-//     if (ch == ch500 || (ch <= chHigh && ch >= chLow))
-//     {
-//       setChannelStatus(ch, true);
-//       if (ch < 63)
-//       {
-//         sendChSet(MAC_CHANNEL_DRRANGE, ch, "0 3");
-//       }
-//     }
-//     else
-//     {
-//     	setChannelStatus(ch, false);
-//     }
-//   }
-//   sendMacSet(MAC_PWRIDX, TTN_PWRIDX_AU915);
-// }
+   char buf[10];
+   uint32_t freq = 922000000;
+   uint8_t ch;
+   for (ch = 0; ch < 8; ch++)
+   {
+     sendChSet(MAC_CHANNEL_DCYCLE, ch, 799);
+     if (ch > 1)
+     {
+       sprintf(buf, "%lu", freq);
+       sendChSet(MAC_CHANNEL_FREQ, ch, buf);
+       sendChSet(MAC_CHANNEL_DRRANGE, ch, "0 5");
+       setChannelStatus(ch, true);
+       freq = freq + 200000;
+     }
+   }
+    TODO: SF7BW250/DR6 channel, not properly supported by RN2903AS yet
+   sendChSet(MAC_CHANNEL_DCYCLE, 8, 799);
+   sendChSet(MAC_CHANNEL_FREQ, 8, 922100000);
+   sendChSet(MAC_CHANNEL_DRRANGE, 8, "6 6");
+   setChannelStatus(8, true);
+    TODO: Add FSK channel on 921800000
+   sendMacSet(MAC_PWRIDX, TTN_PWRIDX_AS920_923);
+  }*/
+/** @brief It's not included in the LoRaWAN class as a standard criteria because it is tailored specifically for the AS923_925 frequency band and may need adjustments for other frequency bands or regional regulations.
+  void TheThingsNetwork::configureAS923_925()
+  {
+   /* RN2903AS 1.0.3rc9 defaults
+      CH0 = 923.2MHz
+      CH1 = 923.4MHz
 
-// void TheThingsNetwork::configureAS920_923()
-// {
-//   /* RN2903AS 1.0.3rc9 defaults
-//    * CH0 = 923.2MHz
-//    * CH1 = 923.4MHz
-//    */
-//   setADR(false); // TODO: remove when ADR is implemented for this plan
-//   sendMacSet(MAC_RX2, 2, 923200000);
+   setADR(false); // TODO: remove when ADR is implemented for this plan
+   sendMacSet(MAC_RX2, 2, 923200000);
 
-//   char buf[10];
-//   uint32_t freq = 922000000;
-//   uint8_t ch;
-//   for (ch = 0; ch < 8; ch++)
-//   {
-//     sendChSet(MAC_CHANNEL_DCYCLE, ch, 799);
-//     if (ch > 1)
-//     {
-//       sprintf(buf, "%lu", freq);
-//       sendChSet(MAC_CHANNEL_FREQ, ch, buf);
-//       sendChSet(MAC_CHANNEL_DRRANGE, ch, "0 5");
-//       setChannelStatus(ch, true);
-//       freq = freq + 200000;
-//     }
-//   }
-//   // TODO: SF7BW250/DR6 channel, not properly supported by RN2903AS yet
-//   //sendChSet(MAC_CHANNEL_DCYCLE, 8, 799);
-//   //sendChSet(MAC_CHANNEL_FREQ, 8, 922100000);
-//   //sendChSet(MAC_CHANNEL_DRRANGE, 8, "6 6");
-//   //setChannelStatus(8, true);
-//   // TODO: Add FSK channel on 921800000
-//   sendMacSet(MAC_PWRIDX, TTN_PWRIDX_AS920_923);
-// }
+   char buf[10];
+   uint32_t freq = 923600000;
+   uint8_t ch;
+   for (ch = 0; ch < 8; ch++)
+   {
+     sendChSet(MAC_CHANNEL_DCYCLE, ch, 799);
+     if (ch > 1)
+     {
+       sprintf(buf, "%lu", freq);
+       sendChSet(MAC_CHANNEL_FREQ, ch, buf);
+       sendChSet(MAC_CHANNEL_DRRANGE, ch, "0 5");
+       setChannelStatus(ch, true);
+       freq = freq + 200000;
+     }
+   }
+    TODO: SF7BW250/DR6 channel, not properly supported by RN2903AS yet
+   sendChSet(MAC_CHANNEL_DCYCLE, 8, 799);
+   sendChSet(MAC_CHANNEL_FREQ, 8, 924500000);
+   sendChSet(MAC_CHANNEL_DRRANGE, 8, "6 6");
+   setChannelStatus(8, true);
+    TODO: Add FSK channel on 924800000
+   sendMacSet(MAC_PWRIDX, TTN_PWRIDX_AS923_925);
+  }*/
+/** @brief It's not included in the LoRaWAN class as a standard criteria because it is tailored specifically for the KR920_923 frequency band and may need adjustments for other frequency bands or regional regulations.
+  void TheThingsNetwork::configureKR920_923()
+  {
+  setADR(false); // TODO: remove when ADR is implemented for this plan
+  sendMacSet(MAC_RX2, 0, 921900000); // KR still uses SF12 for now. Might change to SF9 later.
 
-// void TheThingsNetwork::configureAS923_925()
-// {
-//   /* RN2903AS 1.0.3rc9 defaults
-//    * CH0 = 923.2MHz
-//    * CH1 = 923.4MHz
-//    */
-//   setADR(false); // TODO: remove when ADR is implemented for this plan
-//   sendMacSet(MAC_RX2, 2, 923200000);
+  //disable two default LoRaWAN channels
+  setChannelStatus(0, false);
+  setChannelStatus(1, false);
 
-//   char buf[10];
-//   uint32_t freq = 923600000;
-//   uint8_t ch;
-//   for (ch = 0; ch < 8; ch++)
-//   {
-//     sendChSet(MAC_CHANNEL_DCYCLE, ch, 799);
-//     if (ch > 1)
-//     {
-//       sprintf(buf, "%lu", freq);
-//       sendChSet(MAC_CHANNEL_FREQ, ch, buf);
-//       sendChSet(MAC_CHANNEL_DRRANGE, ch, "0 5");
-//       setChannelStatus(ch, true);
-//       freq = freq + 200000;
-//     }
-//   }
-//   // TODO: SF7BW250/DR6 channel, not properly supported by RN2903AS yet
-//   //sendChSet(MAC_CHANNEL_DCYCLE, 8, 799);
-//   //sendChSet(MAC_CHANNEL_FREQ, 8, 924500000);
-//   //sendChSet(MAC_CHANNEL_DRRANGE, 8, "6 6");
-//   //setChannelStatus(8, true);
-//   // TODO: Add FSK channel on 924800000
-//   sendMacSet(MAC_PWRIDX, TTN_PWRIDX_AS923_925);
-// }
+  char buf[10];
+  uint32_t freq = 922100000;
+  uint8_t ch;
+  for (ch = 2; ch < 9; ch++)
+  {
+    sendChSet(MAC_CHANNEL_DCYCLE, ch, 799);
+    sprintf(buf, "%lu", freq);
+    sendChSet(MAC_CHANNEL_FREQ, ch, buf);
+    sendChSet(MAC_CHANNEL_DRRANGE, ch, "0 5");
+    setChannelStatus(ch, true);
+    freq = freq + 200000;
+  }
+  sendMacSet(MAC_PWRIDX, TTN_PWRIDX_KR920_923);
+  }*/
+/** @brief It's not included in the LoRaWAN class as a standard criteria because it is tailored specifically for the IN865_867 frequency band and may need adjustments for other frequency bands or regional regulations.
+  void TheThingsNetwork::configureIN865_867()
+  {
+   setADR(false); // TODO: remove when ADR is implemented for this plan
+   sendMacSet(MAC_RX2, 2, 866550000); // SF10
 
-// void TheThingsNetwork::configureKR920_923()
-// {
-//   setADR(false); // TODO: remove when ADR is implemented for this plan
-//   sendMacSet(MAC_RX2, 0, 921900000); // KR still uses SF12 for now. Might change to SF9 later.
+   // Disable the three default LoRaWAN channels
+   setChannelStatus(0, false);
+   setChannelStatus(1, false);
+   setChannelStatus(2, false);
 
-//   //disable two default LoRaWAN channels
-//   setChannelStatus(0, false);
-//   setChannelStatus(1, false);
+   // Channel 3
+   sendChSet(MAC_CHANNEL_DCYCLE, 3, 299);
+   sendChSet(MAC_CHANNEL_FREQ, 3, 865062500);
+   sendChSet(MAC_CHANNEL_DRRANGE, 3, "0 5");
+   setChannelStatus(3, true);
 
-//   char buf[10];
-//   uint32_t freq = 922100000;
-//   uint8_t ch;
-//   for (ch = 2; ch < 9; ch++)
-//   {
-//     sendChSet(MAC_CHANNEL_DCYCLE, ch, 799);
-//     sprintf(buf, "%lu", freq);
-//     sendChSet(MAC_CHANNEL_FREQ, ch, buf);
-//     sendChSet(MAC_CHANNEL_DRRANGE, ch, "0 5");
-//     setChannelStatus(ch, true);
-//     freq = freq + 200000;
-//   }
-//   sendMacSet(MAC_PWRIDX, TTN_PWRIDX_KR920_923);
-// }
+   // Channel 4
+   sendChSet(MAC_CHANNEL_DCYCLE, 4, 299);
+   sendChSet(MAC_CHANNEL_FREQ, 4, 865402500);
+   sendChSet(MAC_CHANNEL_DRRANGE, 4, "0 5");
+   setChannelStatus(4, true);
 
-// void TheThingsNetwork::configureIN865_867()
-// {
-//   setADR(false); // TODO: remove when ADR is implemented for this plan
-//   sendMacSet(MAC_RX2, 2, 866550000); // SF10
+   // Channel 5
+   sendChSet(MAC_CHANNEL_DCYCLE, 5, 299);
+   sendChSet(MAC_CHANNEL_FREQ, 5, 865985000);
+   sendChSet(MAC_CHANNEL_DRRANGE, 5, "0 5");
+   setChannelStatus(5, true);
 
-//   // Disable the three default LoRaWAN channels
-//   setChannelStatus(0, false);
-//   setChannelStatus(1, false);
-//   setChannelStatus(2, false);
-
-//   // Channel 3
-//   sendChSet(MAC_CHANNEL_DCYCLE, 3, 299);
-//   sendChSet(MAC_CHANNEL_FREQ, 3, 865062500);
-//   sendChSet(MAC_CHANNEL_DRRANGE, 3, "0 5");
-//   setChannelStatus(3, true);
-
-//   // Channel 4
-//   sendChSet(MAC_CHANNEL_DCYCLE, 4, 299);
-//   sendChSet(MAC_CHANNEL_FREQ, 4, 865402500);
-//   sendChSet(MAC_CHANNEL_DRRANGE, 4, "0 5");
-//   setChannelStatus(4, true);
-
-//   // Channel 5
-//   sendChSet(MAC_CHANNEL_DCYCLE, 5, 299);
-//   sendChSet(MAC_CHANNEL_FREQ, 5, 865985000);
-//   sendChSet(MAC_CHANNEL_DRRANGE, 5, "0 5");
-//   setChannelStatus(5, true);
-
-//   sendMacSet(MAC_PWRIDX, TTN_PWRIDX_IN865_867);
-// }
+   sendMacSet(MAC_PWRIDX, TTN_PWRIDX_IN865_867);
+  }*/
 
 
 // We could delete this function, because one channel is used
-/*void TheThingsNetwork::configureChannels(uint8_t fsb)
+/** @brief We don't use it because we use TTN_FP_EU868 and the rest is not needed for our usecase.
+   void TheThingsNetwork::configureChannels(uint8_t fsb)
   {
   switch (fp)
   {
@@ -1559,40 +1644,48 @@ void TheThingsNetwork::configureEU868()
   }
 */
 
-/* Next two functions are not used in the code, as far as i know. So therefore deleted
-  // bool TheThingsNetwork::setChannel(uint8_t channel, uint32_t frequency, uint8_t dr_min, uint8_t dr_max){
+/** @brief Including this function as a standard criteria may introduce unnecessary complexity for most users
+   bool TheThingsNetwork::setChannel(uint8_t channel, uint32_t frequency, uint8_t dr_min, uint8_t dr_max){
 
-  //   bool done = true;
+     bool done = true;
 
-  //   if (channel > 15)
-  // 	  return false;
+     if (channel > 15)
+   	  return false;
 
-  //   if (frequency){
-  // 	char buf[11];
-  // 	sprintf(buf, "%lu", frequency);
-  // 	done &= sendChSet(MAC_CHANNEL_FREQ, channel, buf);
-  //   }
+     if (frequency){
+   	char buf[11];
+   	sprintf(buf, "%lu", frequency);
+   	done &= sendChSet(MAC_CHANNEL_FREQ, channel, buf);
+     }
 
-  //   if (done && (dr_min < 16) && (dr_max < 16)){
-  // 	char buf[11];
-  // 	sprintf(buf, "%u %u", dr_min, dr_max);
-  // 	done &= sendChSet(MAC_CHANNEL_DRRANGE, channel, buf);
-  //   }
-  //   else
-  // 	done &= (dr_min == 255) && (dr_max == 255);
+     if (done && (dr_min < 16) && (dr_max < 16)){
+   	char buf[11];
+   	sprintf(buf, "%u %u", dr_min, dr_max);
+   	done &= sendChSet(MAC_CHANNEL_DRRANGE, channel, buf);
+     }
+     else
+   	done &= (dr_min == 255) && (dr_max == 255);
 
-  //   return done;
-  // }
+     return done;
+   }
 
 
-  // bool TheThingsNetwork::setRx2Channel(uint32_t frequency, uint8_t dr){
+   bool TheThingsNetwork::setRx2Channel(uint32_t frequency, uint8_t dr){
 
-  //   char buf[15];
-  //   sprintf(buf, "%u %lu", dr, frequency);
-  //   return sendMacSet(MAC_RX2, buf);
-  // }
+     char buf[15];
+     sprintf(buf, "%u %lu", dr, frequency);
+     return sendMacSet(MAC_RX2, buf);
+   }
 */
-
+/**
+ * @brief Sets the status of a channel.
+ * 
+ * This function allows setting the status of a specific channel to either on or off.
+ * 
+ * @param channel The channel number to set the status for.
+ * @param status The desired status of the channel. True for on, false for off.
+ * @return True if the status was successfully set, false otherwise.
+ */
 bool TheThingsNetwork::setChannelStatus (uint8_t channel, bool status) {
   if (status)
     return sendChSet(MAC_CHANNEL_STATUS, channel, "on");
@@ -1639,6 +1732,14 @@ bool TheThingsNetwork::setADR(bool adr) {
   return ret;
 }
 
+/**
+ * @brief Sets the spreading factor (SF) for data transmission.
+ * 
+ * This function sets the spreading factor (SF) for data transmission.
+ * This function is edited to our needs to reduce the size and we only use the default case.
+ * @param sf The desired spreading factor. Valid values depend on the region.
+ * @return True if the spreading factor was successfully set, false otherwise.
+ */
 bool TheThingsNetwork::setSF(uint8_t sf)
 {
   //sf default = 7, maybe this function can be reduced more( you can find the define in the file TheThingsNetwork.h line 7)
@@ -1666,26 +1767,38 @@ bool TheThingsNetwork::setSF(uint8_t sf)
   return sendMacSet(MAC_DR, s);
 }
 
-/* Next three functions not used
+/** @brief This function is not included in the LoRaWAN class's standard criteria because it is specifically tailored to set the RX1 delay, 
+ *  which may not be a universal requirement across different LoRaWAN implementations or applications.
   bool TheThingsNetwork::setRX1Delay(uint16_t delay){
 	  char buf[6];
 	  sprintf(buf, "%u",delay);
 	  return sendMacSet(MAC_RXDELAY1, buf);
-  }
-
+  }*/
+/** @brief This function is not included in the LoRaWAN class's standard criteria because it specifically deals with setting the frame counter up, 
+ *  which may not be a universally required functionality across different LoRaWAN implementations or applications.
   bool TheThingsNetwork::setFCU(uint32_t fcu){
   char buf[10];
   sprintf(buf, "%lu", fcu);
   return sendMacSet(MAC_UPCTR, buf);
-  }
-
+  }*/
+/** @brief This function is not included in the LoRaWAN class's standard criteria because it specifically deals with setting the downlink frame counter, 
+ *  which may not be a universally required functionality across different LoRaWAN implementations or applications.
   bool TheThingsNetwork::setFCD(uint32_t fcd){
   char buf[10];
   sprintf(buf, "%lu", fcd);
   return sendMacSet(MAC_DNCTR, buf);
   }
 */
-
+/**
+ * @brief Sends a command to the LoRaWAN module.
+ * 
+ * This function sends a command to the LoRaWAN module based on the specified table and index.
+ * 
+ * @param table The table identifier.
+ * @param index The index of the command in the specified table.
+ * @param appendSpace Whether to append a space after the command.
+ * @param print Whether to print the command for debugging.
+ */
 void TheThingsNetwork::sendCommand(uint8_t table, uint8_t index, bool appendSpace, bool print)
 {
   char command[100];
@@ -1728,7 +1841,16 @@ void TheThingsNetwork::sendCommand(uint8_t table, uint8_t index, bool appendSpac
   }
 #endif
 }
-
+/**
+ * @brief Sends a MAC set command with two values to the LoRaWAN module.
+ * 
+ * This function sends a MAC set command to the LoRaWAN module with two values.
+ * 
+ * @param index The index of the command.
+ * @param value1 The first value to be set.
+ * @param value2 The second value to be set.
+ * @return true if the command is sent successfully, false otherwise.
+ */
 bool TheThingsNetwork::sendMacSet(uint8_t index, uint8_t value1, unsigned long value2)
 {
 #if defined(YES_DEBUG)
@@ -1739,7 +1861,15 @@ bool TheThingsNetwork::sendMacSet(uint8_t index, uint8_t value1, unsigned long v
   // Do nothing, debug off
 #endif
 }
-
+/**
+ * @brief Sends a MAC set command with a single value to the LoRaWAN module.
+ * 
+ * This function sends a MAC set command to the LoRaWAN module with a single value.
+ * 
+ * @param index The index of the command.
+ * @param value The value to be set.
+ * @return true if the command is sent successfully and acknowledged, false otherwise.
+ */
 bool TheThingsNetwork::sendMacSet(uint8_t index, const char *value)
 {
   clearReadBuffer();
@@ -1756,7 +1886,13 @@ bool TheThingsNetwork::sendMacSet(uint8_t index, const char *value)
 #endif
   return waitForOk();
 }
-
+/**
+ * @brief Waits for an "OK" response from the LoRaWAN module.
+ * 
+ * This function waits for an "OK" response from the LoRaWAN module.
+ * 
+ * @return true if the response is "OK", false otherwise.
+ */
 bool TheThingsNetwork::waitForOk()
 {
   readLine(buffer, sizeof(buffer));
@@ -1767,14 +1903,34 @@ bool TheThingsNetwork::waitForOk()
   }
   return true;
 }
-
+/**
+ * @brief Sends a channel configuration command to the LoRaWAN module.
+ * 
+ * This function sends a channel configuration command to the LoRaWAN module with the specified index and channel number,
+ * along with the provided value as a string.
+ * 
+ * @param index The index of the channel configuration.
+ * @param channel The channel number.
+ * @param value The value to be set for the channel configuration.
+ * @return true if the command is successfully sent, false otherwise.
+ */
 bool TheThingsNetwork::sendChSet(uint8_t index, uint8_t channel, unsigned long value)
 {
   char buf[11];
   sprintf(buf, "%lu", value);
   return sendChSet(index, channel, buf);
 }
-
+/**
+ * @brief Sends a channel configuration command to the LoRaWAN module.
+ * 
+ * This function sends a channel configuration command to the LoRaWAN module with the specified index, channel number,
+ * and value as a string.
+ * 
+ * @param index The index of the channel configuration.
+ * @param channel The channel number.
+ * @param value The value to be set for the channel configuration.
+ * @return true if the command is successfully sent, false otherwise.
+ */
 bool TheThingsNetwork::sendChSet(uint8_t index, uint8_t channel, const char *value)
 {
   clearReadBuffer();
@@ -1808,7 +1964,14 @@ bool TheThingsNetwork::sendChSet(uint8_t index, uint8_t channel, const char *val
 #endif
   return waitForOk();
 }
-
+/**
+ * @brief Sends a join configuration command to the LoRaWAN module.
+ * 
+ * This function sends a join configuration command to the LoRaWAN module with the specified type.
+ * 
+ * @param type The type of join configuration.
+ * @return true if the command is successfully sent and acknowledged, false otherwise.
+ */
 bool TheThingsNetwork::sendJoinSet(uint8_t type)
 {
   clearReadBuffer();
@@ -1822,7 +1985,17 @@ bool TheThingsNetwork::sendJoinSet(uint8_t type)
   debugPrintLn();
   return waitForOk();
 }
-
+/**
+ * @brief Sends a payload to the LoRaWAN module.
+ * 
+ * This function sends a payload to the LoRaWAN module with the specified mode, port, payload data, and length.
+ * 
+ * @param mode The transmission mode.
+ * @param port The port number.
+ * @param payload Pointer to the payload data.
+ * @param length The length of the payload data.
+ * @return true if the payload is successfully sent and acknowledged, false otherwise.
+ */
 bool TheThingsNetwork::sendPayload(uint8_t mode, uint8_t port, uint8_t *payload, size_t length)
 {
   clearReadBuffer();
@@ -1881,7 +2054,14 @@ bool TheThingsNetwork::sendPayload(uint8_t mode, uint8_t port, uint8_t *payload,
   debugPrintLn();
   return waitForOk();
 }
-
+/**
+ * @brief Puts the LoRaWAN module into sleep mode for the specified duration.
+ * 
+ * This function puts the LoRaWAN module into sleep mode for the specified duration in milliseconds.
+ * 
+ * @param mseconds The duration of sleep time in milliseconds.
+ * @note The minimum sleep duration supported is 100 milliseconds.
+ */
 void TheThingsNetwork::sleep(uint32_t mseconds)
 {
   if (mseconds < 100)
@@ -1902,12 +2082,20 @@ void TheThingsNetwork::sleep(uint32_t mseconds)
   debugPrintLn(buffer);
 #endif
 }
-
+/**
+ * @brief Wakes up the LoRaWAN module.
+ * 
+ * This function wakes up the LoRaWAN module from sleep mode by performing an auto-baud process.
+ */
 void TheThingsNetwork::wake()
 {
   autoBaud();
 }
-
+/**
+ * @brief Configures the link check mechanism of the LoRaWAN module.
+ * 
+ * @param seconds The time interval between two consecutive link checks, in seconds.
+ */
 void TheThingsNetwork::linkCheck(uint16_t seconds)
 {
   clearReadBuffer();
@@ -1926,7 +2114,12 @@ void TheThingsNetwork::linkCheck(uint16_t seconds)
 #endif
   waitForOk();
 }
-
+/**
+ * @brief Gets the number of gateways that were successfully reached during the last link check.
+ * 
+ * @return The number of gateways reached.
+ *         If the response could not be read or parsed, returns 0.
+ */
 uint8_t TheThingsNetwork::getLinkCheckGateways()
 {
   if (readResponse(MAC_TABLE, MAC_GET_SET_TABLE, MAC_GWNB, buffer, sizeof(buffer))) {
@@ -1937,7 +2130,12 @@ uint8_t TheThingsNetwork::getLinkCheckGateways()
   }
   return 0; // Gateway number defaults to 0
 }
-
+/**
+ * @brief Gets the signal margin of the last link check.
+ * 
+ * @return The signal margin.
+ *         If the response could not be read or parsed, returns 255.
+ */
 uint8_t TheThingsNetwork::getLinkCheckMargin()
 {
   if (readResponse(MAC_TABLE, MAC_GET_SET_TABLE, MAC_MRGN, buffer, sizeof(buffer))) {
