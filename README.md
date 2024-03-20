@@ -7,13 +7,13 @@ This repository contains a custom developed library for the RN2483 module, This 
 2. Include the library in your sketch
 
 ```arduino
-#include "TheThingsNetwork.h"
+#include <TheThingsNetwork.h>
 ```
 
 ## Usage
-1. Initialize the RN2483 module with the desired configuration parameters.
-2. Refer to the examples directory for sample sketches demonstrating various functionalities.
-2. Use the provided sketches to interact with the module and send/receive LoRa messages.
+1. Refer to the examples directory for sample sketches demonstrating various functionalities.
+2. Initialize the RN2483 module with the desired configuration parameters.
+3. Use the provided sketches to interact with the module and send/receive LoRa messages.
 
 
 ```arduino
