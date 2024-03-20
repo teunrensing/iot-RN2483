@@ -156,13 +156,13 @@ const char *const error_msg[] PROGMEM = {invalid_sf, invalid_fp, unexpected_resp
 #define ERR_INVALID_MODULE 11
 
 #if defined(YES_DEBUG)
- const char personalize_accepted[] PROGMEM = "Personalize accepted. Status: ";
- const char join_accepted[] PROGMEM = "Join accepted. Status: ";
- const char successful_transmission[] PROGMEM = "Successful transmission";
- const char successful_transmission_received[] PROGMEM = "Successful transmission. Received ";
- const char valid_module[] PROGMEM = "Valid module connected.";
+const char personalize_accepted[] PROGMEM = "Personalize accepted. Status: ";
+const char join_accepted[] PROGMEM = "Join accepted. Status: ";
+const char successful_transmission[] PROGMEM = "Successful transmission";
+const char successful_transmission_received[] PROGMEM = "Successful transmission. Received ";
+const char valid_module[] PROGMEM = "Valid module connected.";
 
- const char *const success_msg[] PROGMEM = {personalize_accepted, join_accepted, successful_transmission, successful_transmission_received, valid_module};
+const char *const success_msg[] PROGMEM = {personalize_accepted, join_accepted, successful_transmission, successful_transmission_received, valid_module};
 #endif
 
 #define SCS_PERSONALIZE_ACCEPTED 0
@@ -287,7 +287,8 @@ const char mac_upctr[] PROGMEM = "upctr";
 const char mac_dnctr[] PROGMEM = "dnctr";
 
 const char *const mac_options[] PROGMEM = {mac_devaddr, mac_deveui, mac_appeui, mac_nwkskey, mac_appskey, mac_appkey, mac_pwridx, mac_dr, mac_adr, mac_bat, mac_retx, mac_linkchk, mac_rxdelay1, mac_rxdelay2, mac_band,
-			mac_ar, mac_rx2, mac_ch, mac_gwnb, mac_mrgn, mac_class, mac_status, mac_upctr, mac_dnctr};
+                                           mac_ar, mac_rx2, mac_ch, mac_gwnb, mac_mrgn, mac_class, mac_status, mac_upctr, mac_dnctr
+                                          };
 
 
 
@@ -359,18 +360,18 @@ const char *const mac_tx_table[] PROGMEM = {mac_tx_type_cnf, mac_tx_type_ucnf};
 int pgmstrcmp(const char *str1, uint8_t str2Index, uint8_t table = CMP_TABLE)
 {
   if (0 == strlen(str1))
-	  return -1;
+    return -1;
 
   char str2[128];
 
   switch (table) {
-  case CMP_ERR_TABLE:
-    strcpy_P(str2, (char *)pgm_read_word(&(compareerr_table[str2Index])));
-    break;
+    case CMP_ERR_TABLE:
+      strcpy_P(str2, (char *)pgm_read_word(&(compareerr_table[str2Index])));
+      break;
 
-  default:
-  case CMP_TABLE:
-    strcpy_P(str2, (char *)pgm_read_word(&(compare_table[str2Index])));
+    default:
+    case CMP_TABLE:
+      strcpy_P(str2, (char *)pgm_read_word(&(compare_table[str2Index])));
   }
 
   return memcmp(str1, str2, min(strlen(str1), strlen(str2)));
@@ -408,7 +409,7 @@ TheThingsNetwork::TheThingsNetwork(Stream &modemStream, Stream &debugStream, uin
   this->debugStream = &debugStream;
   this->modemStream = &modemStream;
   this->modemStream->setTimeout(TTN_DEFAULT_TIMEOUT);
- // this->fp = fp; 
+  // this->fp = fp;
   this->sf = sf;
   this->fsb = fsb;
   this->adr = false;
@@ -489,11 +490,11 @@ uint16_t TheThingsNetwork::getVDD()
 enum ttn_modem_status_t TheThingsNetwork::getStatus()
 {
   if (readResponse(MAC_TABLE, MAC_GET_SET_TABLE, MAC_STATUS, buffer, sizeof(buffer)) > 0) {
-	char **endptr = NULL;
-	int status = (strtol(buffer, endptr, 16) & 0x0F); // Mask out only active status
+    char **endptr = NULL;
+    int status = (strtol(buffer, endptr, 16) & 0x0F); // Mask out only active status
 
-	if (endptr == NULL)
-		return (enum ttn_modem_status_t)status;
+    if (endptr == NULL)
+      return (enum ttn_modem_status_t)status;
   }
   return TTN_MODEM_READ_ERR; // unable to read status
 }
@@ -579,7 +580,7 @@ enum ttn_modem_status_t TheThingsNetwork::getStatus()
 
 void TheThingsNetwork::debugPrintIndex(uint8_t index, const char *value)
 {
-  #if defined(YES_DEBUG)
+#if defined(YES_DEBUG)
   char message[100];
   strcpy_P(message, (char *)pgm_read_word(&(show_table[index])));
   debugPrint(message);
@@ -588,22 +589,22 @@ void TheThingsNetwork::debugPrintIndex(uint8_t index, const char *value)
     debugPrintLn(value);
   }
 #else
-// Do nothing
+  // Do nothing
 #endif
 }
 
 void TheThingsNetwork::debugPrintMessage(uint8_t type, uint8_t index, const char *value)
 {
-  #if defined(YES_DEBUG)
+#if defined(YES_DEBUG)
   char message[100];
   switch (type)
   {
-  case ERR_MESSAGE:
-    strcpy_P(message, (char *)pgm_read_word(&(error_msg[index])));
-    break;
-  case SUCCESS_MESSAGE:
-    strcpy_P(message, (char *)pgm_read_word(&(success_msg[index])));
-    break;
+    case ERR_MESSAGE:
+      strcpy_P(message, (char *)pgm_read_word(&(error_msg[index])));
+      break;
+    case SUCCESS_MESSAGE:
+      strcpy_P(message, (char *)pgm_read_word(&(success_msg[index])));
+      break;
   }
   debugPrint(message);
   if (value)
@@ -614,9 +615,9 @@ void TheThingsNetwork::debugPrintMessage(uint8_t type, uint8_t index, const char
   {
     debugPrintLn();
   }
-  #else
- // Do nothing, not debugging
-  #endif
+#else
+  // Do nothing, not debugging
+#endif
 }
 
 void TheThingsNetwork::clearReadBuffer()
@@ -637,9 +638,9 @@ size_t TheThingsNetwork::readLine(char *buffer, size_t size, uint8_t attempts)
   if (!read)
   { // If attempts is activated return 0 and set RN state marker
     this->needsHardReset = true; // Inform the application about the radio module is not responsive.
-    #if defined(YES_DEBUG)
+#if defined(YES_DEBUG)
     debugPrintMessage(ERR_MESSAGE, ERR_NO_RESPONSE);
-    #endif
+#endif
     return 0;
   }
   buffer[read - 1] = '\0'; // set \r to \0
@@ -712,7 +713,7 @@ void TheThingsNetwork::reset(bool adr)
   setADR(adr);
 }
 
-void TheThingsNetwork::resetHard(uint8_t resetPin){
+void TheThingsNetwork::resetHard(uint8_t resetPin) {
   digitalWrite(resetPin, LOW);
   delay(1000);
   digitalWrite(resetPin, HIGH);
@@ -720,8 +721,8 @@ void TheThingsNetwork::resetHard(uint8_t resetPin){
 
 void TheThingsNetwork::saveState()
 {
-  #if defined(YES_DEBUG)
-debugPrint(SENDING);
+#if defined(YES_DEBUG)
+  debugPrint(SENDING);
 #endif
   sendCommand(MAC_TABLE, MAC_PREFIX, true);
   sendCommand(MAC_TABLE, MAC_SAVE, false);
@@ -737,14 +738,14 @@ void TheThingsNetwork::onMessage(void (*cb)(const uint8_t *payload, size_t size,
 
 bool TheThingsNetwork::personalize(const char *devAddr, const char *nwkSKey, const char *appSKey, bool resetFirst)
 {
-  if(resetFirst) {
+  if (resetFirst) {
     reset(adr);
   }
   if (strlen(devAddr) != 8 || strlen(appSKey) != 32 || strlen(nwkSKey) != 32)
   {
-    #if defined(YES_DEBUG)
+#if defined(YES_DEBUG)
     debugPrintMessage(ERR_MESSAGE, ERR_KEY_LENGTH);
-    #endif
+#endif
     return false;
   }
   sendMacSet(MAC_DEVADDR, devAddr);
@@ -755,7 +756,7 @@ bool TheThingsNetwork::personalize(const char *devAddr, const char *nwkSKey, con
 
 bool TheThingsNetwork::personalize()
 {
-  //configureChannels(fsb); 
+  //configureChannels(fsb);
   configureEU868();
   setSF(sf);
   sendJoinSet(MAC_JOIN_MODE_ABP);
@@ -774,7 +775,7 @@ bool TheThingsNetwork::personalize()
 
 bool TheThingsNetwork::provision(const char *appEui, const char *appKey, bool resetFirst)
 {
-  if(resetFirst) {
+  if (resetFirst) {
     reset(adr);
   }
   if (strlen(appEui) != 16 || strlen(appKey) != 32)
@@ -789,7 +790,25 @@ bool TheThingsNetwork::provision(const char *appEui, const char *appKey, bool re
   saveState();
   return true;
 }
+bool TheThingsNetwork::provision(const char *devEui, const char *appEui, const char appKey)
+{
+  reset(adr);
+  if (strlen(appEui) != 16 || strlen(appKey) != 32)
+  {
+    debugPrintMessage(ERR_MESSAGE, ERR_KEY_LENGTH);
+    return false;
+  }
+  sendMacSet(MAC_DEVEUI, devEui);
+  sendMacSet(MAC_APPEUI, appEui);
+  sendMacSet(MAC_APPKEY, appKey);
+  saveState();
+  return true;
+}
 
+bool TheThingsNetwork::join(const char *devEui, const char *appEui, const char *appKey, int8_t retries = -1, uint32_t retryDelay = 10000)
+{
+  return provision(devEui, appEui, appKey) && join(retries, retryDelay);
+}
 bool TheThingsNetwork::join(int8_t retries, uint32_t retryDelay)
 {
   int8_t attempts = 0;
@@ -821,70 +840,71 @@ bool TheThingsNetwork::join(int8_t retries, uint32_t retryDelay)
   }
   return false;
 }
-
+// Only CLASS A is used and iets made the default
+/*
 bool TheThingsNetwork::setClass(lorawan_class_t p_lw_class)
 {
-  switch(p_lw_class)
+  switch (p_lw_class)
   {
 
-  case CLASS_A:
-    {
-      lw_class = p_lw_class;
-      return sendMacSet(MAC_CLASS, "a");
-    }
+    case CLASS_A:
+      {
+        lw_class = p_lw_class;
+        return sendMacSet(MAC_CLASS, "a");
+      }
 
-  // case CLASS_B: // Not yet supported. Use default case.
+    // case CLASS_B: // Not yet supported. Use default case.
 
-  // case CLASS_C:
-  //   {
-  //     bool result = sendMacSet(MAC_CLASS, "c");
-  //     // Older firmware does not support Class C. If setting change fails, keep on using Class A.
-  //     if(result) lw_class = p_lw_class;
-  //     return result;
-  //   }
+    // case CLASS_C:
+    //   {
+    //     bool result = sendMacSet(MAC_CLASS, "c");
+    //     // Older firmware does not support Class C. If setting change fails, keep on using Class A.
+    //     if(result) lw_class = p_lw_class;
+    //     return result;
+    //   }
 
-  default:
-    return false;
+    default:
+      return false;
 
   }
 }
-
-bool TheThingsNetwork::join(const char *appEui, const char *appKey, int8_t retries, uint32_t retryDelay, lorawan_class_t p_lw_class)
+*/
+bool TheThingsNetwork::join(const char *appEui, const char *appKey, int8_t retries, uint32_t retryDelay)
 {
-  return provision(appEui, appKey) && join(retries, retryDelay) && setClass(p_lw_class);
+  return provision(appEui, appKey) && join(retries, retryDelay) && lw_class;
 }
 
-ttn_response_t TheThingsNetwork::parseBytes(){
-    if (buffer[0]=='\0')
-  	  return TTN_UNSUCCESSFUL_RECEIVE;
+ttn_response_t TheThingsNetwork::parseBytes() {
+  if (buffer[0] == '\0')
+    return TTN_UNSUCCESSFUL_RECEIVE;
 
-	if (pgmstrcmp(buffer, CMP_MAC_RX) == 0)
+  if (pgmstrcmp(buffer, CMP_MAC_RX) == 0)
+  {
+    port_t downlinkPort = receivedPort(buffer + 7);
+    char *data = buffer + 7 + digits(downlinkPort) + 1;
+    size_t downlinkLength = strlen(data) / 2;
+    if (downlinkLength > 0)
     {
-		port_t downlinkPort = receivedPort(buffer + 7);
-		char *data = buffer + 7 + digits(downlinkPort) + 1;
-		size_t downlinkLength = strlen(data) / 2;
-		if (downlinkLength > 0)
-		{
-		  uint8_t downlink[downlinkLength];
-		  for (size_t i = 0, d = 0; i < downlinkLength; i++, d += 2)
-		  {
-			downlink[i] = TTN_HEX_PAIR_TO_BYTE(data[d], data[d + 1]);
-		  }
-		  debugPrintMessage(SUCCESS_MESSAGE, SCS_SUCCESSFUL_TRANSMISSION_RECEIVED, data);
-		  if (messageCallback)
-		  {
-			messageCallback(downlink, downlinkLength, downlinkPort);
-		  }
-		}
-		else
-		{
-		  debugPrintMessage(SUCCESS_MESSAGE, SCS_SUCCESSFUL_TRANSMISSION);
-		}
-		return TTN_SUCCESSFUL_RECEIVE;
-	}
-    // not REC but buffer FULL
-    debugPrintMessage(ERR_MESSAGE, ERR_UNEXPECTED_RESPONSE, buffer);
-    return TTN_ERROR_UNEXPECTED_RESPONSE;
+      uint8_t downlink[downlinkLength];
+      for (size_t i = 0, d = 0; i < downlinkLength; i++, d += 2)
+      {
+        downlink[i] = TTN_HEX_PAIR_TO_BYTE(data[d], data[d + 1]);
+      }
+      debugPrintMessage(SUCCESS_MESSAGE, SCS_SUCCESSFUL_TRANSMISSION_RECEIVED, data);
+      if (messageCallback)
+      {
+        messageCallback(downlink, downlinkLength, downlinkPort);
+      }
+    }
+    else
+    {
+      debugPrintMessage(SUCCESS_MESSAGE, SCS_SUCCESSFUL_TRANSMISSION);
+    }
+    return TTN_SUCCESSFUL_RECEIVE;
+  }
+  // not REC but buffer FULL
+  debugPrintMessage(ERR_MESSAGE, ERR_UNEXPECTED_RESPONSE, buffer);
+  return TTN_ERROR_UNEXPECTED_RESPONSE;
 }
 
 ttn_response_t TheThingsNetwork::sendBytes(const uint8_t *payload, size_t length, port_t port, bool confirm, uint8_t sf)
@@ -903,8 +923,8 @@ ttn_response_t TheThingsNetwork::sendBytes(const uint8_t *payload, size_t length
 
   // read modem response
   if (!readLine(buffer, sizeof(buffer)) && confirm) // Read response
-	  // confirmed and RX timeout -> ask to poll if necessary
-	  return TTN_UNSUCCESSFUL_RECEIVE;
+    // confirmed and RX timeout -> ask to poll if necessary
+    return TTN_UNSUCCESSFUL_RECEIVE;
 
   // TX only?
   if (pgmstrcmp(buffer, CMP_MAC_TX_OK) == 0)
@@ -913,7 +933,7 @@ ttn_response_t TheThingsNetwork::sendBytes(const uint8_t *payload, size_t length
     return TTN_SUCCESSFUL_TRANSMISSION;
   }
   else if (pgmstrcmp(buffer, CMP_MAC_ERR) == 0)
-	return TTN_UNSUCCESSFUL_RECEIVE;
+    return TTN_UNSUCCESSFUL_RECEIVE;
 
   // Received downlink message?
   return parseBytes();
@@ -921,54 +941,54 @@ ttn_response_t TheThingsNetwork::sendBytes(const uint8_t *payload, size_t length
 
 ttn_response_t TheThingsNetwork::poll(port_t port, bool confirm, bool modem_only)
 {
-  switch(lw_class)
-  {
+ // switch (lw_class)
+ // {
+// Class A is used and the only MUST Class that needs to be implemented
+  //  case CLASS_A:
+      if (!modem_only)
+      {
+        // Class A: send uplink and wait for rx windows
+        uint8_t payload[] = {0x00};
+        return sendBytes(payload, 1, port, confirm);
+      }
+      else
+      {
+        if (!readLine(buffer, sizeof(buffer)) && confirm) // Read response
+          // confirmed and RX timeout -> ask to poll if necessary
+          return TTN_UNSUCCESSFUL_RECEIVE;
 
-  case CLASS_A:
-	  if (!modem_only)
-		{
-		  // Class A: send uplink and wait for rx windows
-		  uint8_t payload[] = {0x00};
-		  return sendBytes(payload, 1, port, confirm);
-		}
-	  else
-	  {
-		  if (!readLine(buffer, sizeof(buffer)) && confirm) // Read response
-			  // confirmed and RX timeout -> ask to poll if necessary
-			  return TTN_UNSUCCESSFUL_RECEIVE;
+        // Here we can have the result of pending TX, or pending RX (for confirmed messages)
+        if (pgmstrcmp(buffer, CMP_MAC_TX_OK) == 0)
+        {
+          debugPrintMessage(SUCCESS_MESSAGE, SCS_SUCCESSFUL_TRANSMISSION);
+          return TTN_SUCCESSFUL_TRANSMISSION;
+        }
+        else if (pgmstrcmp(buffer, CMP_MAC_ERR) == 0)
+          return TTN_UNSUCCESSFUL_RECEIVE;
 
-		  // Here we can have the result of pending TX, or pending RX (for confirmed messages)
-		  if (pgmstrcmp(buffer, CMP_MAC_TX_OK) == 0)
-		  {
-		    debugPrintMessage(SUCCESS_MESSAGE, SCS_SUCCESSFUL_TRANSMISSION);
-		    return TTN_SUCCESSFUL_TRANSMISSION;
-		  }
-		  else if (pgmstrcmp(buffer, CMP_MAC_ERR) == 0)
-			return TTN_UNSUCCESSFUL_RECEIVE;
-
-		  // Receive Message
-		  return parseBytes();
-	  }
+        // Receive Message
+        return parseBytes();
+      }
 
 
-  // case CLASS_C:
-	//   {
-	// 	  // Class C: check rx buffer for any received data
-	// 	  memset(buffer, 0, sizeof(buffer));
+    // case CLASS_C:
+    //   {
+    // 	  // Class C: check rx buffer for any received data
+    // 	  memset(buffer, 0, sizeof(buffer));
 
-	// 	  uint32_t timeout = this->modemStream->getTimeout();
-	// 	  this->modemStream->setTimeout(100);
-	// 	  this->modemStream->readBytesUntil('\n', buffer, sizeof(buffer));
-	// 	  this->modemStream->setTimeout(timeout);
+    // 	  uint32_t timeout = this->modemStream->getTimeout();
+    // 	  this->modemStream->setTimeout(100);
+    // 	  this->modemStream->readBytesUntil('\n', buffer, sizeof(buffer));
+    // 	  this->modemStream->setTimeout(timeout);
 
-	// 	  return parseBytes();
-	//   }
-
-  default:
-  // case CLASS_B: // Not yet supported. Use default case.
-	  return TTN_UNSUCCESSFUL_RECEIVE;
-
-  }
+    // 	  return parseBytes();
+    //   }
+/*
+    default:
+      // case CLASS_B: // Not yet supported. Use default case.
+      return TTN_UNSUCCESSFUL_RECEIVE;
+*/
+  //}
 }
 
 void TheThingsNetwork::showStatus()
@@ -1039,7 +1059,7 @@ void TheThingsNetwork::configureEU868()
       freq = freq + 200000;
     }
     else
-    	sendChSet(MAC_CHANNEL_DCYCLE, ch, 299); // 3*0.33% ETSI band G, total 1%
+      sendChSet(MAC_CHANNEL_DCYCLE, ch, 299); // 3*0.33% ETSI band G, total 1%
   }
   sendMacSet(MAC_PWRIDX, TTN_PWRIDX_EU868);
 }
@@ -1216,7 +1236,7 @@ void TheThingsNetwork::configureEU868()
 
 // We could delete this function, because one channel is used
 /*void TheThingsNetwork::configureChannels(uint8_t fsb)
-{
+  {
   switch (fp)
   {
   case TTN_FP_EU868:
@@ -1245,44 +1265,44 @@ void TheThingsNetwork::configureEU868()
     break;
   }
   sendMacSet(MAC_RETX, TTN_RETX);
-}
-*/ 
-
-/* Next two functions are not used in the code, as far as i know. So therefore deleted
-// bool TheThingsNetwork::setChannel(uint8_t channel, uint32_t frequency, uint8_t dr_min, uint8_t dr_max){
-
-//   bool done = true;
-
-//   if (channel > 15)
-// 	  return false;
-
-//   if (frequency){
-// 	char buf[11];
-// 	sprintf(buf, "%lu", frequency);
-// 	done &= sendChSet(MAC_CHANNEL_FREQ, channel, buf);
-//   }
-
-//   if (done && (dr_min < 16) && (dr_max < 16)){
-// 	char buf[11];
-// 	sprintf(buf, "%u %u", dr_min, dr_max);
-// 	done &= sendChSet(MAC_CHANNEL_DRRANGE, channel, buf);
-//   }
-//   else
-// 	done &= (dr_min == 255) && (dr_max == 255);
-
-//   return done;
-// }
-
-
-// bool TheThingsNetwork::setRx2Channel(uint32_t frequency, uint8_t dr){
-
-//   char buf[15];
-//   sprintf(buf, "%u %lu", dr, frequency);
-//   return sendMacSet(MAC_RX2, buf);
-// }
+  }
 */
 
-bool TheThingsNetwork::setChannelStatus (uint8_t channel, bool status){
+/* Next two functions are not used in the code, as far as i know. So therefore deleted
+  // bool TheThingsNetwork::setChannel(uint8_t channel, uint32_t frequency, uint8_t dr_min, uint8_t dr_max){
+
+  //   bool done = true;
+
+  //   if (channel > 15)
+  // 	  return false;
+
+  //   if (frequency){
+  // 	char buf[11];
+  // 	sprintf(buf, "%lu", frequency);
+  // 	done &= sendChSet(MAC_CHANNEL_FREQ, channel, buf);
+  //   }
+
+  //   if (done && (dr_min < 16) && (dr_max < 16)){
+  // 	char buf[11];
+  // 	sprintf(buf, "%u %u", dr_min, dr_max);
+  // 	done &= sendChSet(MAC_CHANNEL_DRRANGE, channel, buf);
+  //   }
+  //   else
+  // 	done &= (dr_min == 255) && (dr_max == 255);
+
+  //   return done;
+  // }
+
+
+  // bool TheThingsNetwork::setRx2Channel(uint32_t frequency, uint8_t dr){
+
+  //   char buf[15];
+  //   sprintf(buf, "%u %lu", dr, frequency);
+  //   return sendMacSet(MAC_RX2, buf);
+  // }
+*/
+
+bool TheThingsNetwork::setChannelStatus (uint8_t channel, bool status) {
   if (status)
     return sendChSet(MAC_CHANNEL_STATUS, channel, "on");
   else
@@ -1314,18 +1334,18 @@ bool TheThingsNetwork::setChannelStatus (uint8_t channel, bool status){
 //   return sendMacSet(MAC_DR, buf);
 // }
 
-bool TheThingsNetwork::setADR(bool adr){
-	bool ret;
-	if (adr)
-	{
-		ret = sendMacSet(MAC_ADR, "on");
-	}
-	else
-	{
-		ret = sendMacSet(MAC_ADR, "off");
-	}
-	this->adr = adr;
-	return ret;
+bool TheThingsNetwork::setADR(bool adr) {
+  bool ret;
+  if (adr)
+  {
+    ret = sendMacSet(MAC_ADR, "on");
+  }
+  else
+  {
+    ret = sendMacSet(MAC_ADR, "off");
+  }
+  this->adr = adr;
+  return ret;
 }
 
 bool TheThingsNetwork::setSF(uint8_t sf)
@@ -1334,20 +1354,20 @@ bool TheThingsNetwork::setSF(uint8_t sf)
   uint8_t dr;
   // The switch below is not in use because we use only the case of EU868
   /*switch (fp)
-  {
-  case TTN_FP_EU868:
-  case TTN_FP_IN865_867:
-  case TTN_FP_AS920_923:
-  case TTN_FP_AS923_925:
-  case TTN_FP_KR920_923:
-  default:
+    {
+    case TTN_FP_EU868:
+    case TTN_FP_IN865_867:
+    case TTN_FP_AS920_923:
+    case TTN_FP_AS923_925:
+    case TTN_FP_KR920_923:
+    default:
     dr = 12 - sf;
     break;
-  case TTN_FP_US915:
-  case TTN_FP_AU915:
+    case TTN_FP_US915:
+    case TTN_FP_AU915:
     dr = 10 - sf;
     break;
-  }*/
+    }*/
   dr = 12 - sf;
   char s[2];
   s[0] = '0' + dr;
@@ -1355,24 +1375,24 @@ bool TheThingsNetwork::setSF(uint8_t sf)
   return sendMacSet(MAC_DR, s);
 }
 
-/* Next three functions not used 
-bool TheThingsNetwork::setRX1Delay(uint16_t delay){
+/* Next three functions not used
+  bool TheThingsNetwork::setRX1Delay(uint16_t delay){
 	  char buf[6];
 	  sprintf(buf, "%u",delay);
 	  return sendMacSet(MAC_RXDELAY1, buf);
-}
+  }
 
-bool TheThingsNetwork::setFCU(uint32_t fcu){
+  bool TheThingsNetwork::setFCU(uint32_t fcu){
   char buf[10];
   sprintf(buf, "%lu", fcu);
   return sendMacSet(MAC_UPCTR, buf);
-}
+  }
 
-bool TheThingsNetwork::setFCD(uint32_t fcd){
+  bool TheThingsNetwork::setFCD(uint32_t fcd){
   char buf[10];
   sprintf(buf, "%lu", fcd);
   return sendMacSet(MAC_DNCTR, buf);
-}
+  }
 */
 
 void TheThingsNetwork::sendCommand(uint8_t table, uint8_t index, bool appendSpace, bool print)
@@ -1380,69 +1400,69 @@ void TheThingsNetwork::sendCommand(uint8_t table, uint8_t index, bool appendSpac
   char command[100];
   switch (table)
   {
-  case MAC_TABLE:
-    strcpy_P(command, (char *)pgm_read_word(&(mac_table[index])));
-    break;
-  case MAC_GET_SET_TABLE:
-    strcpy_P(command, (char *)pgm_read_word(&(mac_options[index])));
-    break;
-  case MAC_JOIN_TABLE:
-    strcpy_P(command, (char *)pgm_read_word(&(mac_join_mode[index])));
-    break;
-  case MAC_CH_TABLE:
-    strcpy_P(command, (char *)pgm_read_word(&(mac_ch_options[index])));
-    break;
-  case MAC_TX_TABLE:
-    strcpy_P(command, (char *)pgm_read_word(&(mac_tx_table[index])));
-    break;
-  case SYS_TABLE:
-    strcpy_P(command, (char *)pgm_read_word(&(sys_table[index])));
-    break;
-  // case RADIO_TABLE:
-  //   strcpy_P(command, (char *)pgm_read_word(&(radio_table[index])));
-  //   break;
-  default:
-    return;
+    case MAC_TABLE:
+      strcpy_P(command, (char *)pgm_read_word(&(mac_table[index])));
+      break;
+    case MAC_GET_SET_TABLE:
+      strcpy_P(command, (char *)pgm_read_word(&(mac_options[index])));
+      break;
+    case MAC_JOIN_TABLE:
+      strcpy_P(command, (char *)pgm_read_word(&(mac_join_mode[index])));
+      break;
+    case MAC_CH_TABLE:
+      strcpy_P(command, (char *)pgm_read_word(&(mac_ch_options[index])));
+      break;
+    case MAC_TX_TABLE:
+      strcpy_P(command, (char *)pgm_read_word(&(mac_tx_table[index])));
+      break;
+    case SYS_TABLE:
+      strcpy_P(command, (char *)pgm_read_word(&(sys_table[index])));
+      break;
+    // case RADIO_TABLE:
+    //   strcpy_P(command, (char *)pgm_read_word(&(radio_table[index])));
+    //   break;
+    default:
+      return;
   }
   modemStream->write(command);
   if (appendSpace)
   {
     modemStream->write(" ");
   }
-  #if defined(YES_DEBUG)
+#if defined(YES_DEBUG)
   if (print)
   {
     debugPrint(command);
     debugPrint(F(" "));
   }
-  #endif
+#endif
 }
 
 bool TheThingsNetwork::sendMacSet(uint8_t index, uint8_t value1, unsigned long value2)
 {
-  #if defined(YES_DEBUG)
-	char buf[15];
-	sprintf(buf, "%u %lu", value1, value2);
-	return sendMacSet(index, buf);
-  #else
+#if defined(YES_DEBUG)
+  char buf[15];
+  sprintf(buf, "%u %lu", value1, value2);
+  return sendMacSet(index, buf);
+#else
   // Do nothing, debug off
-  #endif
+#endif
 }
 
 bool TheThingsNetwork::sendMacSet(uint8_t index, const char *value)
 {
   clearReadBuffer();
-  #if defined(YES_DEBUG)
-debugPrint(SENDING);
+#if defined(YES_DEBUG)
+  debugPrint(SENDING);
 #endif
   sendCommand(MAC_TABLE, MAC_PREFIX, true);
   sendCommand(MAC_TABLE, MAC_SET, true);
   sendCommand(MAC_GET_SET_TABLE, index, true);
   modemStream->write(value);
   modemStream->write(SEND_MSG);
-  #if defined(YES_DEBUG)
+#if defined(YES_DEBUG)
   debugPrintLn(value);
-  #endif
+#endif
   return waitForOk();
 }
 
@@ -1459,9 +1479,9 @@ bool TheThingsNetwork::waitForOk()
 
 bool TheThingsNetwork::sendChSet(uint8_t index, uint8_t channel, unsigned long value)
 {
-	char buf[11];
-	sprintf(buf, "%lu", value);
-	return sendChSet(index, channel, buf);
+  char buf[11];
+  sprintf(buf, "%lu", value);
+  return sendChSet(index, channel, buf);
 }
 
 bool TheThingsNetwork::sendChSet(uint8_t index, uint8_t channel, const char *value)
@@ -1479,9 +1499,9 @@ bool TheThingsNetwork::sendChSet(uint8_t index, uint8_t channel, const char *val
     ch[0] = channel + 48;
     ch[1] = '\0';
   }
-  #if defined(YES_DEBUG)
+#if defined(YES_DEBUG)
   debugPrint(F(SENDING));
-  #endif
+#endif
   sendCommand(MAC_TABLE, MAC_PREFIX, true);
   sendCommand(MAC_TABLE, MAC_SET, true);
   sendCommand(MAC_GET_SET_TABLE, MAC_CH, true);
@@ -1490,19 +1510,19 @@ bool TheThingsNetwork::sendChSet(uint8_t index, uint8_t channel, const char *val
   modemStream->write(" ");
   modemStream->write(value);
   modemStream->write(SEND_MSG);
-  #if defined(YES_DEBUG)
+#if defined(YES_DEBUG)
   debugPrint(channel);
   debugPrint(F(" "));
   debugPrintLn(value);
-  #endif
+#endif
   return waitForOk();
 }
 
 bool TheThingsNetwork::sendJoinSet(uint8_t type)
 {
   clearReadBuffer();
-  #if defined(YES_DEBUG)
-debugPrint(F(SENDING));
+#if defined(YES_DEBUG)
+  debugPrint(F(SENDING));
 #endif
   sendCommand(MAC_TABLE, MAC_PREFIX, true);
   sendCommand(MAC_TABLE, MAC_JOIN, true);
@@ -1515,8 +1535,8 @@ debugPrint(F(SENDING));
 bool TheThingsNetwork::sendPayload(uint8_t mode, uint8_t port, uint8_t *payload, size_t length)
 {
   clearReadBuffer();
-  #if defined(YES_DEBUG)
-debugPrint(F(SENDING));
+#if defined(YES_DEBUG)
+  debugPrint(F(SENDING));
 #endif
   sendCommand(MAC_TABLE, MAC_PREFIX, true);
   sendCommand(MAC_TABLE, MAC_TX, true);
@@ -1542,10 +1562,10 @@ debugPrint(F(SENDING));
   }
   modemStream->write(sport);
   modemStream->print(" ");
-  #if defined(YES_DEBUG)
+#if defined(YES_DEBUG)
   debugPrint(sport);
   debugPrint(F(" "));
-  #endif
+#endif
   uint8_t i = 0;
   for (i = 0; i < length; i++)
   {
@@ -1553,17 +1573,17 @@ debugPrint(F(SENDING));
     {
       modemStream->print("0");
       modemStream->print(payload[i], HEX);
-      #if defined(YES_DEBUG)
+#if defined(YES_DEBUG)
       debugPrint(F("0"));
       debugPrint(payload[i], HEX);
-      #endif
+#endif
     }
     else
     {
       modemStream->print(payload[i], HEX);
-      #if defined(YES_DEBUG)
+#if defined(YES_DEBUG)
       debugPrint(payload[i], HEX);
-      #endif
+#endif
     }
   }
   modemStream->write(SEND_MSG);
@@ -1578,8 +1598,8 @@ void TheThingsNetwork::sleep(uint32_t mseconds)
     return;
   }
 
-  #if defined(YES_DEBUG)
-debugPrint(F(SENDING));
+#if defined(YES_DEBUG)
+  debugPrint(F(SENDING));
 #endif
   sendCommand(SYS_TABLE, SYS_PREFIX, true);
   sendCommand(SYS_TABLE, SYS_SLEEP, true);
@@ -1587,9 +1607,9 @@ debugPrint(F(SENDING));
   sprintf(buffer, "%lu", mseconds);
   modemStream->write(buffer);
   modemStream->write(SEND_MSG);
-  #if defined(YES_DEBUG)
+#if defined(YES_DEBUG)
   debugPrintLn(buffer);
-  #endif
+#endif
 }
 
 void TheThingsNetwork::wake()
@@ -1600,8 +1620,8 @@ void TheThingsNetwork::wake()
 void TheThingsNetwork::linkCheck(uint16_t seconds)
 {
   clearReadBuffer();
-  #if defined(YES_DEBUG)
-debugPrint(SENDING);
+#if defined(YES_DEBUG)
+  debugPrint(SENDING);
 #endif
   sendCommand(MAC_TABLE, MAC_PREFIX, true);
   sendCommand(MAC_TABLE, MAC_SET, true);
@@ -1610,30 +1630,30 @@ debugPrint(SENDING);
   sprintf(buffer, "%u", seconds);
   modemStream->write(buffer);
   modemStream->write(SEND_MSG);
-  #if defined(YES_DEBUG)
+#if defined(YES_DEBUG)
   debugPrintLn(buffer);
-  #endif
+#endif
   waitForOk();
 }
 
 uint8_t TheThingsNetwork::getLinkCheckGateways()
 {
-  if (readResponse(MAC_TABLE, MAC_GET_SET_TABLE, MAC_GWNB, buffer, sizeof(buffer))){
-	  char **endptr = NULL;
-	  uint8_t gwnb = strtol(buffer, endptr, 10);
-	  if (endptr == NULL)
-		  return gwnb;
+  if (readResponse(MAC_TABLE, MAC_GET_SET_TABLE, MAC_GWNB, buffer, sizeof(buffer))) {
+    char **endptr = NULL;
+    uint8_t gwnb = strtol(buffer, endptr, 10);
+    if (endptr == NULL)
+      return gwnb;
   }
   return 0; // Gateway number defaults to 0
 }
 
 uint8_t TheThingsNetwork::getLinkCheckMargin()
 {
-  if (readResponse(MAC_TABLE, MAC_GET_SET_TABLE, MAC_MRGN, buffer, sizeof(buffer))){
-	  char **endptr = NULL;
-	  uint8_t mgn = strtol(buffer, endptr, 10);
-	  if (endptr == NULL)
-		  return mgn;
+  if (readResponse(MAC_TABLE, MAC_GET_SET_TABLE, MAC_MRGN, buffer, sizeof(buffer))) {
+    char **endptr = NULL;
+    uint8_t mgn = strtol(buffer, endptr, 10);
+    if (endptr == NULL)
+      return mgn;
   }
   return 255; // Signal margin defaults to 255
 }

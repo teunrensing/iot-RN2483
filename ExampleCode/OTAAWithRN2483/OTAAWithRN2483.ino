@@ -16,9 +16,10 @@ void setup() {
   DEBUG_SERIAL.begin(9600);
 
   // Wait for the Serial Monitor to open
-  while (!DEBUG_SERIAL && millis() < 10000);
+  while (!DEBUG_SERIAL && millis() < 10000)
+    ;
 
-  pinMode(LED_BUILTIN, OUTPUT); // Initialize LED output pin
+  pinMode(LED_BUILTIN, OUTPUT);  // Initialize LED output pin
 
   // Display module status
   DEBUG_SERIAL.println("-- STATUS");
@@ -28,26 +29,27 @@ void setup() {
   if (!extractDevEUI(ttn)) {
     DEBUG_SERIAL.println("Failed to extract DevEUI.");
     // Handle error
-    while (true);
+    while (true)
+      ;
   }
-
-if (extractDevEUI(ttn))
-{
-  DEBUG_SERIAL.print("DevEUI: ");
-  DEBUG_SERIAL.println(DevEUI);
-}
 
   // Join the network
   DEBUG_SERIAL.println("-- JOINING");
-  ttn.join(AppEUI, AppKey, DevEUI); // Use the extracted DevEUI
+  ttn.join(AppEUI, AppKey, DevEUI);  // Use the extracted DevEUI
 }
 
 void loop() {
+
+  if (extractDevEUI(ttn)) {
+    DEBUG_SERIAL.print("DevEUI: ");
+    DEBUG_SERIAL.println(DevEUI);
+  }
+  delay(10000);
 }
 
 bool extractDevEUI(TheThingsNetwork& ttn) {
   // The showStatus function outputs to debugSerial, wait for it to become available
-  delay(1000); // Wait for the status output to complete
+  delay(1000);  // Wait for the status output to complete
 
   while (DEBUG_SERIAL) {
     size_t size = ttn.getHardwareEui(DevEUI, sizeof(DevEUI));
@@ -55,5 +57,5 @@ bool extractDevEUI(TheThingsNetwork& ttn) {
       return true;
     }
   }
-  return false; // DevEUI not found or error occurred
+  return false;  // DevEUI not found or error occurred
 }

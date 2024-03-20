@@ -840,7 +840,8 @@ bool TheThingsNetwork::join(int8_t retries, uint32_t retryDelay)
   }
   return false;
 }
-
+// Only CLASS A is used and iets made the default
+/*
 bool TheThingsNetwork::setClass(lorawan_class_t p_lw_class)
 {
   switch (p_lw_class)
@@ -867,10 +868,10 @@ bool TheThingsNetwork::setClass(lorawan_class_t p_lw_class)
 
   }
 }
-
-bool TheThingsNetwork::join(const char *appEui, const char *appKey, int8_t retries, uint32_t retryDelay, lorawan_class_t p_lw_class)
+*/
+bool TheThingsNetwork::join(const char *appEui, const char *appKey, int8_t retries, uint32_t retryDelay)
 {
-  return provision(appEui, appKey) && join(retries, retryDelay) && setClass(p_lw_class);
+  return provision(appEui, appKey) && join(retries, retryDelay) && lw_class;
 }
 
 ttn_response_t TheThingsNetwork::parseBytes() {
@@ -940,10 +941,10 @@ ttn_response_t TheThingsNetwork::sendBytes(const uint8_t *payload, size_t length
 
 ttn_response_t TheThingsNetwork::poll(port_t port, bool confirm, bool modem_only)
 {
-  switch (lw_class)
-  {
-
-    case CLASS_A:
+ // switch (lw_class)
+ // {
+// Class A is used and the only MUST Class that needs to be implemented
+  //  case CLASS_A:
       if (!modem_only)
       {
         // Class A: send uplink and wait for rx windows
@@ -982,12 +983,12 @@ ttn_response_t TheThingsNetwork::poll(port_t port, bool confirm, bool modem_only
 
     // 	  return parseBytes();
     //   }
-
+/*
     default:
       // case CLASS_B: // Not yet supported. Use default case.
       return TTN_UNSUCCESSFUL_RECEIVE;
-
-  }
+*/
+  //}
 }
 
 void TheThingsNetwork::showStatus()
