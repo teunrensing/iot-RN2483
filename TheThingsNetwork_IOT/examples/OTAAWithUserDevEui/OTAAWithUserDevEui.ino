@@ -1,4 +1,4 @@
-#include "TheThingsNetwork_IOT.h"
+#include <TheThingsNetwork_IOT.h>
 
 const char* AppEUI = "0000000000000000";
 const char* DevEUI = "0004A30B001F2259"; //DEFINE YOUR DEVEUI

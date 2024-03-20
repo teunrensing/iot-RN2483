@@ -1,5 +1,5 @@
 #include "CayenneLPP.hpp"
-#include "TheThingsNetwork_IOT.h"
+#include <TheThingsNetwork_IOT.h>
 #include "SparkFun_Si7021_Breakout_Library.h" //Include for the temperature and humidity sensor
 
 const char* AppEUI = "0000000000000000";
