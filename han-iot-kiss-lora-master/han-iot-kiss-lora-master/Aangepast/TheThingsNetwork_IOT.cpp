@@ -789,7 +789,9 @@ void TheThingsNetwork::debugPrintMessage(uint8_t type, uint8_t index, const char
   }
 #endif
 }
-
+/**
+ * @brief Clears the read buffer of the modemStream.
+ */
 void TheThingsNetwork::clearReadBuffer()
 {
   while (modemStream->available())
@@ -797,7 +799,14 @@ void TheThingsNetwork::clearReadBuffer()
     modemStream->read();
   }
 }
-
+/**
+ * @brief Reads a line from the modemStream into the provided buffer.
+ * 
+ * @param buffer Pointer to the buffer to store the read line.
+ * @param size Size of the buffer.
+ * @param attempts Number of attempts to read the line.
+ * @return The number of characters read, or 0 if no characters were read.
+ */
 size_t TheThingsNetwork::readLine(char *buffer, size_t size, uint8_t attempts)
 {
   size_t read = 0;
@@ -816,7 +825,15 @@ size_t TheThingsNetwork::readLine(char *buffer, size_t size, uint8_t attempts)
   buffer[read - 1] = '\0'; // set \r to \0
   return read;
 }
-
+/**
+ * @brief Reads a response from the modemStream based on the provided prefix and index.
+ * 
+ * @param prefixTable The prefix table identifier.
+ * @param index The index in the specified prefix table.
+ * @param buffer Pointer to the buffer to store the response.
+ * @param size Size of the buffer.
+ * @return The number of characters read.
+ */
 size_t TheThingsNetwork::readResponse(uint8_t prefixTable, uint8_t index, char *buffer, size_t size)
 {
   clearReadBuffer();
@@ -825,7 +842,16 @@ size_t TheThingsNetwork::readResponse(uint8_t prefixTable, uint8_t index, char *
   modemStream->write(SEND_MSG);
   return readLine(buffer, size);
 }
-
+/**
+ * @brief Reads a response from the modemStream based on the provided prefix and index tables.
+ * 
+ * @param prefixTable The prefix table identifier.
+ * @param indexTable The index table identifier.
+ * @param index The index in the specified index table.
+ * @param buffer Pointer to the buffer to store the response.
+ * @param size Size of the buffer.
+ * @return The number of characters read.
+ */
 size_t TheThingsNetwork::readResponse(uint8_t prefixTable, uint8_t indexTable, uint8_t index, char *buffer, size_t size)
 {
   clearReadBuffer();
@@ -835,7 +861,13 @@ size_t TheThingsNetwork::readResponse(uint8_t prefixTable, uint8_t indexTable, u
   modemStream->write(SEND_MSG);
   return readLine(buffer, size);
 }
-
+/**
+ * @brief Automatically determines the baud rate of the modemStream.
+ * 
+ * This function sends a series of commands to the modem to detect the baud rate.
+ * 
+ * @note This function should be called after initializing the modemStream.
+ */
 void TheThingsNetwork::autoBaud()
 {
   // Courtesy of @jpmeijers
@@ -859,6 +891,18 @@ void TheThingsNetwork::autoBaud()
   modemStream->setTimeout(TTN_DEFAULT_TIMEOUT);
   baudDetermined = true;
 }
+/**
+ * @brief Resets the LoRaWAN modem.
+ * 
+ * This function performs the following operations:
+ * 1. Automatically determines the baud rate of the modemStream.
+ * 2. Sends a "sys reset" command to reset the modem.
+ * 3. Determines the hardware model and software version of the modem.
+ * 4. Sets the HWEUI (Hardware EUI) as DEVEUI.
+ * 5. Sets the Adaptive Data Rate (ADR) based on the provided parameter.
+ * 
+ * @param adr Set to `true` to enable Adaptive Data Rate (ADR), `false` otherwise.
+ */
 
 void TheThingsNetwork::reset(bool adr)
 {
@@ -882,12 +926,26 @@ void TheThingsNetwork::reset(bool adr)
   // set ADR
   setADR(adr);
 }
+/**
+ * @brief Performs a hard reset of the LoRaWAN modem using a hardware pin.
+ * 
+ * This function resets the LoRaWAN modem by toggling a specified hardware pin.
+ * 
+ * @param resetPin The digital pin connected to the reset pin of the LoRaWAN modem.
+ */
 
 void TheThingsNetwork::resetHard(uint8_t resetPin) {
   digitalWrite(resetPin, LOW);
   delay(1000);
   digitalWrite(resetPin, HIGH);
 }
+/**
+ * @brief Saves the current LoRaWAN modem state.
+ * 
+ * This function instructs the LoRaWAN modem to save its current state.
+ * 
+ * @note This function is typically used to save configuration changes.
+ */
 
 void TheThingsNetwork::saveState()
 {
@@ -901,11 +959,40 @@ void TheThingsNetwork::saveState()
   waitForOk();
 }
 
+/**
+ * @brief Sets the callback function for receiving downlink messages.
+ * 
+ * This function sets the callback function to be called when a downlink message is received.
+ * 
+ * @param cb Pointer to the callback function.
+ * @note The callback function should have the following signature:
+ * @code
+ * void callback(const uint8_t *payload, size_t size, port_t port)
+ * @endcode
+ * Where:
+ * - payload: Pointer to the received data payload.
+ * - size: Size of the received data payload.
+ * - port: Port number on which the message was received.
+ */
 void TheThingsNetwork::onMessage(void (*cb)(const uint8_t *payload, size_t size, port_t port))
 {
   messageCallback = cb;
 }
 
+/**
+ * @brief Personalizes the LoRaWAN device with the given device address and session keys.
+ * 
+ * This function personalizes the LoRaWAN device with the provided device address (DevAddr), 
+ * network session key (NwkSKey), and application session key (AppSKey). Optionally, it can 
+ * reset the device first.
+ * 
+ * @param devAddr Pointer to the device address (DevAddr).
+ * @param nwkSKey Pointer to the network session key (NwkSKey).
+ * @param appSKey Pointer to the application session key (AppSKey).
+ * @param resetFirst Flag indicating whether to reset the device first (true) or not (false).
+ * @return True if the device is successfully personalized, false otherwise.
+ * @note If resetFirst is true, the device will be reset before personalization.
+ */
 bool TheThingsNetwork::personalize(const char *devAddr, const char *nwkSKey, const char *appSKey, bool resetFirst)
 {
   if (resetFirst) {
@@ -924,6 +1011,16 @@ bool TheThingsNetwork::personalize(const char *devAddr, const char *nwkSKey, con
   return personalize();
 }
 
+/**
+ * @brief Personalizes the LoRaWAN device.
+ * 
+ * This function personalizes the LoRaWAN device by configuring channels, setting up the 
+ * frequency plan for EU868, configuring the spreading factor (SF), and sending a join 
+ * request with activation by personalization (ABP). It then checks if the join request 
+ * is accepted and returns true if successful.
+ * 
+ * @return True if the device is successfully personalized, false otherwise.
+ */
 bool TheThingsNetwork::personalize()
 {
   //configureChannels(fsb);
@@ -943,6 +1040,18 @@ bool TheThingsNetwork::personalize()
   return true;
 }
 
+/**
+ * @brief Provisions the LoRaWAN device.
+ * 
+ * This function provisions the LoRaWAN device by setting up the device EUI (DEVEUI) 
+ * with the hardware EUI (HWEUI), the application EUI (APPEUI), and the application 
+ * key (APPKEY). If specified, it performs a hard reset before provisioning. 
+ * 
+ * @param appEui The application EUI (APPEUI) to be provisioned.
+ * @param appKey The application key (APPKEY) to be provisioned.
+ * @param resetFirst If true, performs a hard reset before provisioning.
+ * @return True if the device is successfully provisioned, false otherwise.
+ */
 bool TheThingsNetwork::provision(const char *appEui, const char *appKey, bool resetFirst)
 {
   if (resetFirst) {
@@ -960,6 +1069,18 @@ bool TheThingsNetwork::provision(const char *appEui, const char *appKey, bool re
   saveState();
   return true;
 }
+
+/**
+ * @brief Provisions the LoRaWAN device.
+ * 
+ * This function provisions the LoRaWAN device by setting up the device EUI (DEVEUI), 
+ * the application EUI (APPEUI), and the application key (APPKEY). 
+ * 
+ * @param devEui The device EUI (DEVEUI) to be provisioned.
+ * @param appEui The application EUI (APPEUI) to be provisioned.
+ * @param appKey The application key (APPKEY) to be provisioned.
+ * @return True if the device is successfully provisioned, false otherwise.
+ */
 bool TheThingsNetwork::provision(const char *devEui, const char *appEui, const char appKey)
 {
   reset(adr);
