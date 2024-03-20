@@ -176,9 +176,9 @@ public:
   // ttn_response_code_t getLastError();
   void onMessage(void (*cb)(const uint8_t *payload, size_t size, port_t port)); //
   bool provision(const char *appEui, const char *appKey, bool resetFirst = true); // yes, but changes
-  // Missing: bool provision(const char *devEui, const char *appEui, const char appKey);
+  bool provision(const char *devEui, const char *appEui, const char appKey);
   bool join(const char *appEui, const char *appKey, int8_t retries = -1, uint32_t retryDelay = 10000, lorawan_class_t = CLASS_A); // yes but changes
-  // Missing: bool join(const char *devEui, const char *appEui, const char *appKey, int8_t retries = -1, uint32_t retryDelay = 10000);
+  bool join(const char *devEui, const char *appEui, const char *appKey, int8_t retries = -1, uint32_t retryDelay = 10000);
   bool join(int8_t retries = -1, uint32_t retryDelay = 10000); 
   bool personalize(const char *devAddr, const char *nwkSKey, const char *appSKey, bool resetFirst = true); // yes but changes
   bool personalize(); 
