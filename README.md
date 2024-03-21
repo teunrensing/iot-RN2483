@@ -1,23 +1,27 @@
 # iot-RN2483
 
-This repository contains a custom developed library for the RN2483 module, This library specially aims to address the code size
+This repository contains documentation and a custom developed library for the RN2483 module. This library specially aims to address the code size. 
+The library, named 'TheThingsNetwork_IOT', provides an interface for LoRaWAN communication with an RN2384 using The Things Network.
+This adjusted library is based on the original code from https://github.com/TheThingsNetwork/arduino-device-lib.git
 
 ## Installation
-1. Clone this repository to your Arduino libraries directory
-2. Include the library in your sketch
+1. Clone this repository to your Arduino libraries directory for full documentation, ór
+2. For just using the library, copy the TheThingsNetwork_IOT library in your /Arduino/libraries folder.
+3. Include the library in your sketch as showed below.
 
 ```arduino
-#include <TheThingsNetwork.h>
+#include <TheThingsNetwork_IOT.h>
 ```
 
 ## Usage
-1. Refer to the examples directory for sample sketches demonstrating various functionalities.
-2. Initialize the RN2483 module with the desired configuration parameters.
-3. Use the provided sketches to interact with the module and send/receive LoRa messages.
+1. Make sure your device with LoRaWan compatibility is registered at the things network (https://www.thethingsindustries.com/docs/devices/adding-devices/).
+2. Refer to the examples directory for sample sketches demonstrating various functionalities.
+3. Initialize the RN2483 module with the desired configuration parameters described at the top of the example sketches.
+4. Now compile and upload the code to the RN2483 to interact with the module and send/receive LoRa messages.
 
 
 ```arduino
-#include "TheThingsNetwork_IOT.h"
+#include <TheThingsNetwork_IOT.h>
 
 #define LORA_SERIAL Serial1
 #define DEBUG_SERIAL Serial
