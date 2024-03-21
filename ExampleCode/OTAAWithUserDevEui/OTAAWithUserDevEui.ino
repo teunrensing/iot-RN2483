@@ -3,7 +3,7 @@
    @brief Example code for connecting to The Things Network.
 */
 
-#include "TheThingsNetwork_IOT.h"
+#include <TheThingsNetwork_IOT.h>
 
 /** @brief The AppEUI for connecting to The Things Network. */
 const char* AppEUI = "0000000000000000";

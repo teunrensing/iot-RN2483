@@ -4,7 +4,7 @@
 */
 
 #include "CayenneLPP.hpp"
-#include "TheThingsNetwork_IOT.h"
+#include <TheThingsNetwork_IOT.h>
 #include "SparkFun_Si7021_Breakout_Library.h" //Include for the temperature and humidity sensor
 
 /** @brief The AppEUI for connecting to The Things Network. */

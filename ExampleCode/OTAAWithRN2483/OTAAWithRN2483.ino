@@ -3,7 +3,7 @@
  * @brief Example code for using The Things Network library.
  */
 
-#include "TheThingsNetwork_IOT.h"
+#include <TheThingsNetwork_IOT.h>
 
 #define LORA_SERIAL Serial1
 #define DEBUG_SERIAL Serial
