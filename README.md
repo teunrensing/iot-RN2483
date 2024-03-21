@@ -5,8 +5,8 @@ The library, named 'TheThingsNetwork_IOT', provides an interface for LoRaWAN com
 This adjusted library is based on the original code from https://github.com/TheThingsNetwork/arduino-device-lib.git
 
 ## Installation
-1. Clone this repository to your Arduino libraries directory for full documentation, ór
-2. For just using the library, copy the TheThingsNetwork_IOT library in your /Arduino/libraries folder.
+1. (Clone this repository to your Arduino libraries directory for full documentation).
+2. For using the library, copy the 'TheThingsNetwork_IOT' library in your /Arduino/libraries folder.
 3. Include the library in your sketch as showed below.
 
 ```arduino
@@ -19,6 +19,7 @@ This adjusted library is based on the original code from https://github.com/TheT
 3. Initialize the RN2483 module with the desired configuration parameters described at the top of the example sketches.
 4. Now compile and upload the code to the RN2483 to interact with the module and send/receive LoRa messages.
 
+Below, one of the examples is shown for reference. 
 
 ```arduino
 #include <TheThingsNetwork_IOT.h>
